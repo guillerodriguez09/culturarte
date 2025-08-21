@@ -21,7 +21,7 @@ public class Culturarte {
 
         System.out.println(p.getNick() + " " + p.getNombre() + " " +  p.getApellido() + " " + p.getCorreo() + " " + p.getFechaNac() + " " + p.getDirImagen() + " " + p.getDireccion() + " " + p.getBiografia() + " " + p.getLink());
 
-        Colaborador c = new Colaborador("Fede", "Federico", "Valdez", "FedeBaldes@gmail.com", LocalDate.of(2003, 07, 10), "C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
+        Colaborador c = new Colaborador("Fede", "Federico", "Valdez", "FedeBaldes@gmail.com", LocalDate.of(2003, 7, 10), "C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
 
         System.out.println(c.getNick() + " " + c.getNombre() + " " +  c.getApellido() + " " + c.getCorreo() + " " + c.getFechaNac() + " " + c.getDirImagen());
 
