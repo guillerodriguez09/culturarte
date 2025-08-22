@@ -1,4 +1,4 @@
-package com.culturarte.logica;
+package com.culturarte.logica.clases;
 
 import java.time.LocalDate;
 

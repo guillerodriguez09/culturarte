@@ -1,12 +1,15 @@
-package com.culturarte.logica;
+package com.culturarte.logica.clases;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Proponente extends Usuario {
 
     String direccion;
     String biografia;
     String link;
+    ArrayList<Colaboracion> propuestas;
+
 
     public Proponente(){}
 
