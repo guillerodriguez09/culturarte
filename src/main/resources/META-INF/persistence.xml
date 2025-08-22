@@ -1,0 +1,13 @@
+<persistence-unit name="ManejaDoor">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.example.MyApp.models.ProductsEntity</class>
+    <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+    ...
+
+    <properties>
+        <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/culturarte"/>
+        <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="eclipselink.jdbc.user" value="root"/>
+        <property name="eclipselink.jdbc.password" value="1234"/>
+    </properties>
+</persistence-unit>
