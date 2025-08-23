@@ -1,13 +1,34 @@
-<persistence-unit name="ManejaDoor">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.example.MyApp.models.ProductsEntity</class>
-    <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
-    ...
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="3.0"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 
-    <properties>
-        <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/culturarte"/>
-        <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-        <property name="eclipselink.jdbc.user" value="root"/>
-        <property name="eclipselink.jdbc.password" value="1234"/>
-    </properties>
-</persistence-unit>
+    <persistence-unit name="CulturartePU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+        <!-- Lista de entidades -->
+        <class>com.culturarte.logica.clases.Usuario</class>
+        <class>com.culturarte.logica.clases.Proponente</class>
+        <class>com.culturarte.logica.clases.Colaborador</class>
+        <class>com.culturarte.logica.clases.Propuesta</class>
+        <class>com.culturarte.logica.clases.Colaboracion</class>
+        <class>com.culturarte.logica.clases.Categoria</class>
+        <class>com.culturarte.logica.clases.Estado</class>
+
+        <properties>
+            <!-- Conexión MySQL XAMPP -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/culturarte?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+
+            <!-- EclipseLink config (solo DEV) -->
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,10 +1,17 @@
 package com.culturarte.logica.clases;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 
+@Entity
+@Table
 public class Usuario {
 
-    String nickname;
+    @Id
+   String nickname;
     String nombre;
     String apellido;
     String correo;

@@ -12,6 +12,7 @@ public class DTOPropuesta {
     public String titulo, descripcion, lugar;
     public LocalDate fecha;
     public Integer precioEntrada, montoAReunir;
+    public ETipoRetorno tipoRetorno;
 }
 
 

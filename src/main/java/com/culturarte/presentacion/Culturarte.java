@@ -2,9 +2,13 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.clases.*;
 import com.culturarte.logica.controllers.*;
+import com.culturarte.persistencia.*;
 import com.culturarte.logica.fabrica.Fabrica;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +16,7 @@ import java.util.ArrayList;
 public class Culturarte {
     public static void main(String[] args) {
 
-        System.out.println("Hello and welcome!");
+        /*System.out.println("Hello and welcome!");
         System.out.println(" ");
         System.out.println("Chivito");
 
@@ -30,9 +34,6 @@ public class Culturarte {
 
         System.out.println(c.getNick() + " " + c.getNombre() + " " +  c.getApellido() + " " + c.getCorreo() + " " + c.getFechaNac() + " " + c.getDirImagen());
 
-        //esto es para probar
-       Propuesta prop = new Propuesta(cat, p, "cancionero", "muchas canciones", "maldo", LocalDate.of(2025, 11,30),
-                34, 2000, LocalDate.of(2025, 12, 1));
 
         Colaborador juan = new Colaborador("juan", "Juan", "Pérez", "juan@mail.com", LocalDate.of(2000, 5, 12), "C:\\Users\\blabla\\Pictures\\sesi.jpg");
         Colaboracion c1 = new Colaboracion(2000, ETipoRetorno.ENTRADAS_GRATIS, LocalDate.now(), prop, juan);
@@ -42,7 +43,33 @@ public class Culturarte {
         System.out.println("Total colaboraciones en propuesta: " + prop.getColaboraciones().size());
         System.out.println("Recaudado: " + c1.getMonto());
 
+        */
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CulturartePU");
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            Usuario u = new Usuario();
+            u.setNick("guillerod");
+            u.setNombre("Guille");
+            u.setApellido("Rodriguez");
+            u.setCorreo("rodgui@gmail.com");
+            u.setFechaNac(LocalDate.of(2004, 05, 25));
+            u.setDirImagen("kit.png");
+
+            em.persist(u);
+            em.getTransaction().commit();
+
+            System.out.println("Usuario guardado en la BD");
+
+            Usuario encontrado = em.find(Usuario.class, "guillerod");
+            System.out.println("Recuperado: " + encontrado.getNombre() + " " + encontrado.getApellido());
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
 
 
     }
-}
