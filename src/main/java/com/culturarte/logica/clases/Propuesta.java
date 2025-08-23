@@ -18,7 +18,6 @@ public class Propuesta {
     private LocalDate fechaPublicacion;
 
     private Categoria categoria;
-    private ArrayList<Colaboracion> colaboraciones;
     private Estado estadoActual;
     private ArrayList<Estado> historialEstados;
     private Proponente proponente;
@@ -36,7 +35,6 @@ public class Propuesta {
         this.fechaPublicacion = fechaPublicacion;
         this.categoria = categoria;
         this.historialEstados = new ArrayList<>();
-        this.colaboraciones = new ArrayList<>();
         this.estadoActual = new Estado();
         this.proponente = proponente;
     }
@@ -51,11 +49,10 @@ public class Propuesta {
     public Integer getMontoAReunir() { return montoAReunir; }
     public LocalDate getFechaPublicacion() { return fechaPublicacion; }
     public Categoria getCategoria() { return categoria; }
-    public ArrayList<Colaboracion> getColaboraciones() { return colaboraciones; }
     public Estado getEstadoActual() { return estadoActual; }
     public ArrayList<Estado> getHistorialEstados() { return historialEstados; }
     public Proponente getProponente() { return proponente; }
-    //public ArrayList<ETipoRetorno> getRetornos() { return retornos; }
+    public ArrayList<ETipoRetorno> getRetornos() { return retornos; }
 
 
     //setters
@@ -68,11 +65,8 @@ public class Propuesta {
     public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
     public void setProponente(Proponente proponente) { this.proponente = proponente; }
-    //public void setRetornos(ArrayList<ETipoRetorno> retornos) {  this.retornos = retornos; }
+    public void setRetornos(ArrayList<ETipoRetorno> retornos) {  this.retornos = retornos; }
 
-    public void addColaboracion(Colaboracion colab) {
-        colaboraciones.add(colab);
-    }
 
     public void cambiarEstado(Estado nuevoEstado) {
         this.estadoActual = nuevoEstado;
