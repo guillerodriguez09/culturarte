@@ -12,9 +12,50 @@ import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import com.culturarte.logica.dtos.DTOPropuesta;
 public class Culturarte {
     public static void main(String[] args) {
+
+      /* PRUEBA ALTA
+       PropuestaController controller = new PropuestaController();
+
+         Proponente prop = new Proponente(
+                "juan123",
+                "Juan",
+                "Pérez",
+                "juan@mail.com",
+                LocalDate.of(1990,1,1),
+                "img.jpg",
+                "Calle Falsa 123",
+                "Músico",
+                "http://link.com"
+        );
+
+        Categoria cat = new Categoria("Musica");
+
+            DTOPropuesta dto = new DTOPropuesta(
+                prop,
+                cat,
+	            "Concierto Solidario",
+	            "Evento para recaudar fondos",
+	            "Teatro Solís",
+	            LocalDate.of(2025, 9, 10),
+	            500,
+	            10000,
+	            LocalDate.now(),
+	            ETipoRetorno.ENTRADAS_GRATIS
+            );
+
+        controller.altaPropuesta(dto);
+
+        System.out.println("Propuestas ingresadas:");
+        ArrayList<Propuesta> ingresadas = controller.listarPropuestasPorEstado(EEstadoPropuesta.INGRESADA);
+        for (Propuesta p : ingresadas) {
+            System.out.println(p.getTitulo() + " - " + p.getEstadoActual());
+        }
+
+    }
+}*/
 
         /*System.out.println("Hello and welcome!");
         System.out.println(" ");
@@ -44,6 +85,7 @@ public class Culturarte {
         System.out.println("Recaudado: " + c1.getMonto());
 
         */
+        /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("CulturartePU");
         EntityManager em = emf.createEntityManager();
 
@@ -73,3 +115,4 @@ public class Culturarte {
 
 
     }
+ */
