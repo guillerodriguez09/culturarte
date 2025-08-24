@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Usuario {
 
     @Id
-   String nickname;
+    String nickname;
     String nombre;
     String apellido;
     String correo;

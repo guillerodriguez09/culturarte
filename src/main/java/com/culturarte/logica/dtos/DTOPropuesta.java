@@ -1,49 +1,56 @@
 package com.culturarte.logica.dtos;
 
-import com.culturarte.logica.clases.Categoria;
-import com.culturarte.logica.clases.Estado;
-import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.enums.ETipoRetorno;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 public class DTOPropuesta {
-    private Proponente proponenteNick;
-    private Categoria categoriaNombre;
-    private String titulo;
-    private String descripcion;
-    private String lugar;
-    private LocalDate fecha;
-    private Integer precioEntrada;
-    private Integer montoAReunir;
-    private LocalDate fechaPublicacion;
-    private ETipoRetorno tipoRetorno;
 
-    // Constructor
+    public String titulo;
+    public String descripcion;
+    public String lugar;
+    public LocalDate fecha;
+    public Integer precioEntrada;
+    public Integer montoAReunir;
+    public LocalDate fechaPublicacion;
+    public String imagen;
 
-    public DTOPropuesta(Proponente proponente, Categoria categoria, String titulo, String descripcion,
-                        String lugar, LocalDate fecha, Integer precioEntrada, Integer montoAReunir,
-                        LocalDate fechaPublicacion, ETipoRetorno tipoRetorno) {
-        this.proponenteNick = proponente;
-        this.categoriaNombre = categoria;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.lugar = lugar;
-        this.fecha = fecha;
-        this.precioEntrada = precioEntrada;
-        this.montoAReunir = montoAReunir;
-        this.fechaPublicacion = fechaPublicacion;
-        this.tipoRetorno = tipoRetorno;
+    public String proponenteNick;
+    public String categoriaNombre;
+
+    public List<ETipoRetorno> retornos;
+
+    public String estadoActual;
+
+        public DTOPropuesta() {}
+
+        // getters
+        public String getTitulo() { return titulo; }
+        public String getDescripcion() { return descripcion; }
+        public String getLugar() { return lugar; }
+        public LocalDate getFecha() { return fecha; }
+        public Integer getPrecioEntrada() { return precioEntrada; }
+        public Integer getMontoAReunir() { return montoAReunir; }
+        public String getImagen() { return imagen; }
+        public String getProponenteNick() { return proponenteNick; }
+        public String getCategoria() { return categoriaNombre; }
+        public List<ETipoRetorno> getRetornos() { return retornos; }
+        public LocalDate getFechaPublicacion() { return fechaPublicacion; }
+        public String getEstadoActual() { return estadoActual; }
+
+        // setters
+        public void setTitulo(String titulo) { this.titulo = titulo; }
+        public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+        public void setLugar(String lugar) { this.lugar = lugar; }
+        public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+        public void setPrecioEntrada(Integer precioEntrada) { this.precioEntrada = precioEntrada; }
+        public void setMontoAReunir(Integer montoAReunir) { this.montoAReunir = montoAReunir; }
+        public void setImagen(String imagen) { this.imagen = imagen; }
+        public void setProponenteNick(String proponenteNick) { this.proponenteNick = proponenteNick; }
+        public void setCategoriaNombre(String categoriaNombre) { this.categoriaNombre = categoriaNombre; }
+        public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
+        public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
+        public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
     }
 
-    public Proponente getProponente() { return proponenteNick; }
-    public Categoria getCategoria() { return categoriaNombre; }
-    public String getTitulo() { return titulo; }
-    public String getDescripcion() { return descripcion; }
-    public String getLugar() { return lugar; }
-    public LocalDate getFecha() { return fecha; }
-    public Integer getPrecioEntrada() { return precioEntrada; }
-    public Integer getMontoAReunir() { return montoAReunir; }
-    public LocalDate getFechaPublicacion() { return fechaPublicacion; }
-    public ETipoRetorno getTipoRetorno() { return tipoRetorno; }
-}

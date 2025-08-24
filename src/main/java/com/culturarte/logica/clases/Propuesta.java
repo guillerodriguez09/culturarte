@@ -1,31 +1,56 @@
 package com.culturarte.logica.clases;
 
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-
+@Entity
+@Table(name = "propuestas", uniqueConstraints = @UniqueConstraint(columnNames = "titulo"))
 public class Propuesta {
 
+    @Id
     private String titulo;
+
     private String descripcion;
-    private String imagen; // opcional
+    private String imagen; // opc
     private String lugar;
     private LocalDate fecha;
     private Integer precioEntrada;
     private Integer montoAReunir;
     private LocalDate fechaPublicacion;
 
-    private Categoria categoria;
-    private Estado estadoActual;
-    private ArrayList<Estado> historialEstados;
-    private Proponente proponente;
-    private ArrayList<ETipoRetorno> retornos;
+  //una prop va a 1 cat
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "CATEGORIA_NOMBRE", nullable = false)
+  private Categoria categoria;
 
-    // Constructor
-    public Propuesta(Categoria categoria, Proponente proponente, String titulo, String descripcion, String lugar, LocalDate fecha,
-                     Integer precioEntrada, Integer montoAReunir, LocalDate fechaPublicacion) {
+    @OneToOne
+    private Estado estadoActual;
+
+    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Estado> historialEstados = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "PROPONENTE_NICKNAME")  // fk
+    private Proponente proponente;
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "propuesta_retornos", joinColumns = @JoinColumn(name = "propuesta_titulo"))
+    @Enumerated(EnumType.STRING)//se crea una tabla prop retornos con un campo q apunta a la propuesta
+    @Column(name = "retorno", nullable = false)
+    private List<ETipoRetorno> retornos = new ArrayList<>();
+
+    // constructor vacio para jpa
+    protected Propuesta() {}
+
+    // constructor con param
+    public Propuesta(Categoria categoria, Proponente proponente, String titulo,
+                     String descripcion, String lugar, LocalDate fecha, Integer precioEntrada, Integer montoAReunir, LocalDate fechaPublicacion, List<ETipoRetorno> retornos) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -34,12 +59,12 @@ public class Propuesta {
         this.montoAReunir = montoAReunir;
         this.fechaPublicacion = fechaPublicacion;
         this.categoria = categoria;
-        this.historialEstados = new ArrayList<>();
-        this.estadoActual = new Estado();
         this.proponente = proponente;
+        this.retornos = retornos != null ? new ArrayList<>(retornos) : new ArrayList<>();
+        this.historialEstados = new ArrayList<>();
     }
 
-    // getters
+    // Getters
     public String getTitulo() { return titulo; }
     public String getDescripcion() { return descripcion; }
     public String getImagen() { return imagen; }
@@ -50,12 +75,11 @@ public class Propuesta {
     public LocalDate getFechaPublicacion() { return fechaPublicacion; }
     public Categoria getCategoria() { return categoria; }
     public Estado getEstadoActual() { return estadoActual; }
-    public ArrayList<Estado> getHistorialEstados() { return historialEstados; }
+    public List<Estado> getHistorialEstados() { return historialEstados; }
     public Proponente getProponente() { return proponente; }
-    public ArrayList<ETipoRetorno> getRetornos() { return retornos; }
+    public List<ETipoRetorno> getRetornos() { return retornos; }
 
-
-    //setters
+    // Setters
     public void setImagen(String imagen) { this.imagen = imagen; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setLugar(String lugar) { this.lugar = lugar; }
@@ -65,11 +89,13 @@ public class Propuesta {
     public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
     public void setProponente(Proponente proponente) { this.proponente = proponente; }
-    public void setRetornos(ArrayList<ETipoRetorno> retornos) {  this.retornos = retornos; }
-
+    public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
+    public void setEstadoActual(Estado estadoActual) { this.estadoActual = estadoActual; }
 
     public void cambiarEstado(Estado nuevoEstado) {
         this.estadoActual = nuevoEstado;
         this.historialEstados.add(nuevoEstado);
     }
 }
+
+
