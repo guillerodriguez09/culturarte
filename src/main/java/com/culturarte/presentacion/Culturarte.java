@@ -16,9 +16,9 @@ public class Culturarte {
 
         Categoria cat = new Categoria("diversion");
 
-        Usuario u = new Usuario("Crepi", "Luca", "Crespi", "CrepsiPerrera@gmail.com", LocalDate.of(2004, 10, 28), "C:\\Users\\Chorizo-Cosmico\\Pictures\\Hellmo.jpg");
+        //Usuario u = new Usuario("Crepi", "Luca", "Crespi", "CrepsiPerrera@gmail.com", LocalDate.of(2004, 10, 28), "C:\\Users\\Chorizo-Cosmico\\Pictures\\Hellmo.jpg");
 
-        System.out.println(u.getNick() + " " + u.getNombre() + " " + u.getApellido() + " " + u.getCorreo() + " " + u.getFechaNac() + " " + u.getDirImagen());
+        //System.out.println(u.getNick() + " " + u.getNombre() + " " + u.getApellido() + " " + u.getCorreo() + " " + u.getFechaNac() + " " + u.getDirImagen());
 
         Proponente p = new Proponente("Andre", "Andres", "Ferreira", "AndreFerreteria@gmail.com", LocalDate.of(2004, 1, 12), "C:\\Users\\Chorizo-Cosmico\\Pictures\\KeeperOoh.png", "Abajo de un puente", "El mate es la fuente de su vida", "Nose");
 
@@ -34,6 +34,19 @@ public class Culturarte {
 
         //prop.addColaboracion(c1);
 
+        DTOProponente dtoP = new DTOProponente();
+        dtoP.setNick("Andre");
+        dtoP.setNombre("Andres");
+        dtoP.setApellido("Ferreira");
+        dtoP.setCorreo("AndreFerreteria@gmail.com");
+        dtoP.setFechaNac(LocalDate.of(2004, 1, 12));
+        dtoP.setDirImagen("C:\\Users\\Chorizo-Cosmico\\Pictures\\KeeperOoh.png");
+        dtoP.setDireccion("Abajo de un puente");
+        dtoP.setBiografia("El mate es la fuente de su vida");
+        dtoP.setLink("Nose");
+
+        IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
+        controllerPro.altaProponente(dtoP);
 
         DTOPropuesta dto = new DTOPropuesta(); // este dto va a venir desde swing en futuro
         dto.titulo = "abc";

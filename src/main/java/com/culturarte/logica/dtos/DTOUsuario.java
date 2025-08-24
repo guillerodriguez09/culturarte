@@ -1,15 +1,9 @@
-package com.culturarte.logica.clases;
-
-import jakarta.persistence.*;
+package com.culturarte.logica.dtos;
 
 import java.time.LocalDate;
 
-@Entity
-@Table
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Usuario {
+public class DTOUsuario {
 
-    @Id
     String nickname;
     String nombre;
     String apellido;
@@ -18,9 +12,9 @@ public abstract class Usuario {
     String dirImagen;
 
 
-    public Usuario(){}
+    public DTOUsuario(){}
 
-    public Usuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String dirImagen) {
+    public DTOUsuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String dirImagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
