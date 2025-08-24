@@ -54,7 +54,3 @@ public class DTOPropuesta {
         public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
     }
 
-
-
-
-

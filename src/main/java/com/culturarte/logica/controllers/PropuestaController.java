@@ -6,6 +6,7 @@ import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
+
 import com.culturarte.persistencia.CategoriaDAO;
 import com.culturarte.persistencia.ProponenteDAO;
 import com.culturarte.persistencia.PropuestaDAO;
@@ -105,9 +106,6 @@ public class PropuestaController implements IPropuestaController {
 
         return dtos;
     }
-
-
-
 }
 
 
