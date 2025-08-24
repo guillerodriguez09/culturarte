@@ -4,14 +4,13 @@ import com.culturarte.logica.controllers.*;
 
 public class Fabrica {
 
-    // Singleton
     private static Fabrica instancia;
 
-    // Controllers
+    // controllers a usar
     private final IPropuestaController propuestaController;
 
     private Fabrica() {
-        // Instanciar controllers aca
+        // instanciar los controllers aca
         this.propuestaController = new PropuestaController();
     }
 
@@ -22,7 +21,7 @@ public class Fabrica {
         return instancia;
     }
 
-    // Getters de controllers
+    // getters de controllers
     public IPropuestaController getPropuestaController() {
         return propuestaController;
     }

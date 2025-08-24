@@ -1,15 +1,22 @@
 package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.ETipoRetorno;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Entity
 public class Colaboracion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id; //identificador para la colab
     private Integer monto;
     private ETipoRetorno retorno;
     private LocalDate fecha;
 
+    @ManyToOne
     private Propuesta propuesta;
+    @ManyToOne
     private Colaborador colaborador;
 
     // Constructor
@@ -22,6 +29,7 @@ public class Colaboracion {
         this.colaborador = colaborador;
     }
 
+    public Colaboracion() {};
 
     public Integer getMonto() { return monto; }
     public ETipoRetorno getRetorno() { return retorno; }
