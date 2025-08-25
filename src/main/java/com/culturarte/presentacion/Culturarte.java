@@ -58,6 +58,12 @@ public class Culturarte {
         IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
         controllerCol.altaColaborador(dtoC);
 
+        DTOCategoria dtoCat = new DTOCategoria();
+        dtoCat.setNombre("diversion");
+
+        ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
+        controllerCat.altaCategoria(dtoCat);
+
         DTOPropuesta dto = new DTOPropuesta(); // este dto va a venir desde swing en futuro
         dto.titulo = "abc";
         dto.descripcion = "Gjee";
@@ -66,7 +72,7 @@ public class Culturarte {
         dto.precioEntrada = 500;
         dto.montoAReunir = 1000;
         dto.imagen = null; //falta implementar tema imagenes
-        dto.categoriaNombre = cat.getNombre();
+        dto.categoriaNombre = dtoCat.getNombre();
         dto.proponenteNick = dtoP.getNick();
         dto.retornos = List.of(ETipoRetorno.ENTRADAS_GRATIS, ETipoRetorno.PORCENTAJE_GANANCIAS);
 

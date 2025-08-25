@@ -21,7 +21,7 @@ public class Categoria {
         this.catPadre = catPadre;
     }
 
-   //hay q ver el tema de que le ponga la categoria por defecto "categoria"
+   //hay q ver el tema de que le ponga la categoria por defecto "categoria".| Podriamos hacer que al crear una categoria tenga la variable catPadre ya definida como categoria y que si el usuario ingresa algo la sobreescriba
     public Categoria(String nombre) {
         this.nombre = nombre;
         this.catPadre = null;
