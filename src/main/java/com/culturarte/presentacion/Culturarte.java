@@ -17,15 +17,12 @@ public class Culturarte {
         Categoria cat = new Categoria("diversion");
 
         //Usuario u = new Usuario("Crepi", "Luca", "Crespi", "CrepsiPerrera@gmail.com", LocalDate.of(2004, 10, 28), "C:\\Users\\Chorizo-Cosmico\\Pictures\\Hellmo.jpg");
-
         //System.out.println(u.getNick() + " " + u.getNombre() + " " + u.getApellido() + " " + u.getCorreo() + " " + u.getFechaNac() + " " + u.getDirImagen());
 
-        Proponente p = new Proponente("Andre", "Andres", "Ferreira", "AndreFerreteria@gmail.com", LocalDate.of(2004, 1, 12), "C:\\Users\\Chorizo-Cosmico\\Pictures\\KeeperOoh.png", "Abajo de un puente", "El mate es la fuente de su vida", "Nose");
-
+        //Proponente p = new Proponente("Andre", "Andres", "Ferreira", "AndreFerreteria@gmail.com", LocalDate.of(2004, 1, 12), "C:\\Users\\Chorizo-Cosmico\\Pictures\\KeeperOoh.png", "Abajo de un puente", "El mate es la fuente de su vida", "Nose");
         // System.out.println(p.getNick() + " " + p.getNombre() + " " +  p.getApellido() + " " + p.getCorreo() + " " + p.getFechaNac() + " " + p.getDirImagen() + " " + p.getDireccion() + " " + p.getBiografia() + " " + p.getLink());
 
-        Colaborador c = new Colaborador("Fede", "Federico", "Valdez", "FedeBaldes@gmail.com", LocalDate.of(2003, 7, 10), "C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
-
+        //Colaborador c = new Colaborador("Fede", "Federico", "Valdez", "FedeBaldes@gmail.com", LocalDate.of(2003, 7, 10), "C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
         // System.out.println(c.getNick() + " " + c.getNombre() + " " +  c.getApellido() + " " + c.getCorreo() + " " + c.getFechaNac() + " " + c.getDirImagen());
 
 
@@ -34,6 +31,7 @@ public class Culturarte {
 
         //prop.addColaboracion(c1);
 
+        //Creo un proponente
         DTOProponente dtoP = new DTOProponente();
         dtoP.setNick("Andre");
         dtoP.setNombre("Andres");
@@ -48,6 +46,18 @@ public class Culturarte {
         IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
         controllerPro.altaProponente(dtoP);
 
+        //Creo un colaborador
+        DTOColaborador dtoC = new DTOColaborador();
+        dtoC.setNick("Fede");
+        dtoC.setNombre("Federico");
+        dtoC.setApellido("Valdez");
+        dtoC.setCorreo("FedeBaldes@gmail.com");
+        dtoC.setFechaNac(LocalDate.of(2003, 7, 10));
+        dtoC.setDirImagen("C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
+
+        IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
+        controllerCol.altaColaborador(dtoC);
+
         DTOPropuesta dto = new DTOPropuesta(); // este dto va a venir desde swing en futuro
         dto.titulo = "abc";
         dto.descripcion = "Gjee";
@@ -57,7 +67,7 @@ public class Culturarte {
         dto.montoAReunir = 1000;
         dto.imagen = null; //falta implementar tema imagenes
         dto.categoriaNombre = cat.getNombre();
-        dto.proponenteNick = p.getNick();
+        dto.proponenteNick = dtoP.getNick();
         dto.retornos = List.of(ETipoRetorno.ENTRADAS_GRATIS, ETipoRetorno.PORCENTAJE_GANANCIAS);
 
         IPropuestaController controllerP = Fabrica.getInstancia().getPropuestaController();//trae una interfaz del controlador de propuesta

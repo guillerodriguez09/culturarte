@@ -1,6 +1,5 @@
 package com.culturarte.logica.controllers;
 
-import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.dtos.DTOProponente;
