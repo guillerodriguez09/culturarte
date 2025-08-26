@@ -4,6 +4,8 @@ import com.culturarte.logica.clases.Colaborador;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.util.List;
+
 public class ColaboradorDAO {
 
     public void guardar(Colaborador c) {
@@ -31,6 +33,34 @@ public class ColaboradorDAO {
 
     public boolean existe(String nick) {
         return buscarPorNick(nick) != null;
+    }
+
+    public List<Colaborador> obtenerNomTodos() {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT col.nickname FROM Colaborador col", Colaborador.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Colaborador> obtenerTodos() {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT col FROM Colaborador col", Colaborador.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Object[]> obtenerTodColConPropu(String nick) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT col, c, p FROM Colaborador col INNER JOIN col.colaboraciones c INNER JOIN c.propuesta p WHERE col.nickname = :nick", Object[].class)
+                    .setParameter("nick", nick).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
 }

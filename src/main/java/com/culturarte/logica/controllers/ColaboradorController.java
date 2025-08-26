@@ -4,6 +4,8 @@ import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.persistencia.ColaboradorDAO;
 
+import java.util.List;
+
 public class ColaboradorController implements IColaboradorController {
 
     private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
@@ -48,6 +50,15 @@ public class ColaboradorController implements IColaboradorController {
 
         colaboradorDAO.guardar(col);
 
+
+    }
+
+    @Override
+    public List<Object[]> obtenerTodColConPropu(String nick) {
+
+        List<Object[]> Fruti = colaboradorDAO.obtenerTodColConPropu(nick);
+
+        return Fruti;
 
     }
 

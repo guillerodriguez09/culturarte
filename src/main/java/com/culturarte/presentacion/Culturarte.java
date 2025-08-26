@@ -100,7 +100,9 @@ public class Culturarte {
             }
         }
 
-        /* Como tal esto anda, tengo que hipermega refinarlo, se ve bien qlero. Historial de estados y Tipo de Retornos probablemente precisen sus propios fors para mostrar la información correctamente
+        /*
+        // Esta comentado para que no large el chorizo de información con cada ejecución
+        // Tengo que hipermega refinarlo, se ve bien qlero. Historial de estados y Tipo de Retornos probablemente precisen sus propios fors para mostrar la información correctamente
         List<Object[]> Tuti = controllerPro.obtenerTodPropConPropu("Andre");
         for(Object[] fila : Tuti){
             Proponente pro = (Proponente)fila[0];
@@ -113,6 +115,22 @@ public class Culturarte {
             + " " + "Fecha Publicacion: " + p.getFechaPublicacion() + " " + "Categoria: " + p.getCategoria() + " " + "Estado Actual: " + p.getEstadoActual()
             + " " + "Historia Estados: " +p.getHistorialEstados() + " " + "Proponente: " + p.getProponente() + " " + "Tipo de Retornos: " + p.getRetornos()
             );
+        }
+        */
+
+        /*
+        // Esta comentado para que no large el chorizo de información con cada ejecución
+        //Esta terminado, falta refinarlo
+        List<Object[]> Fruti = controllerCol.obtenerTodColConPropu("Fede");
+        for(Object[] fila : Fruti){
+            Colaborador col = (Colaborador)fila[0];
+            Colaboracion c = (Colaboracion)fila[1];
+            Propuesta p = (Propuesta)fila[2];
+
+            System.out.println("Nickname: " + col.getNick() + " " + "Nombre: " + col.getNombre() + " " + "Apellido: " + col.getApellido()
+                    + " " + "Correo: " + col.getCorreo() + " " + "Fecha de Nacimiento: " + col.getFechaNac() + " " + "Direccion Imagen: " + col.getDirImagen());
+            System.out.println("Id: " + c.getId() + " " + "Nickname Proponente a Cargo: " + p.getProponente() + " " + "Dinero Recaudado: " + c.getMonto()
+                    + " " + "Estado Actual: " + p.getEstadoActual());
         }
         */
 

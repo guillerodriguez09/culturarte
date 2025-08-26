@@ -31,6 +31,7 @@ public class Colaboracion {
 
     public Colaboracion() {};
 
+    public Integer getId() {return id; }
     public Integer getMonto() { return monto; }
     public ETipoRetorno getRetorno() { return retorno; }
     public LocalDate getFecha() { return fecha; }
