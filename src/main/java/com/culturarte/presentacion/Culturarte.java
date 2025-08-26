@@ -8,6 +8,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
 
+import java.net.StandardSocketOptions;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -98,6 +99,23 @@ public class Culturarte {
                 System.out.println("-----------------");
             }
         }
+
+        /* Como tal esto anda, tengo que hipermega refinarlo, se ve bien qlero. Historial de estados y Tipo de Retornos probablemente precisen sus propios fors para mostrar la información correctamente
+        List<Object[]> Tuti = controllerPro.obtenerTodPropConPropu("Andre");
+        for(Object[] fila : Tuti){
+            Proponente pro = (Proponente)fila[0];
+            Propuesta p = (Propuesta)fila[1];
+            System.out.println("Nickname: " + pro.getNick() + " " + "Nombre: " + pro.getNombre() + " " + "Apellido: " + pro.getApellido()
+            + " " + "Correo: " + pro.getCorreo() + " " + "Fecha de Nacimiento: " + pro.getFechaNac() + " " + "Direccion Imagen: " + pro.getDirImagen()
+            + " " + "Direccion: " + pro.getDireccion() + " " + "Biografia: " +  pro.getBiografia() + " " + "Link pagina personal: " + pro.getLink());
+            System.out.println("Titulo: " + p.getTitulo() + " " + "Descripcion: " + p.getDescripcion() + " " + "Direccion Imagen: " + p.getImagen()
+            + " " + "Lugar: " + p.getLugar() + " " + "Fecha: " + p.getFecha() + " " + "Precio Entrada: " + " " + p.getPrecioEntrada() + " " + "Monto a reunir: " + p.getMontoAReunir()
+            + " " + "Fecha Publicacion: " + p.getFechaPublicacion() + " " + "Categoria: " + p.getCategoria() + " " + "Estado Actual: " + p.getEstadoActual()
+            + " " + "Historia Estados: " +p.getHistorialEstados() + " " + "Proponente: " + p.getProponente() + " " + "Tipo de Retornos: " + p.getRetornos()
+            );
+        }
+        */
+
     }
 }
 

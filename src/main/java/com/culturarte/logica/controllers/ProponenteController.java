@@ -7,6 +7,7 @@ import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.persistencia.ProponenteDAO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ProponenteController implements IProponenteController {
 
@@ -62,6 +63,15 @@ public class ProponenteController implements IProponenteController {
         );
 
         proponenteDAO.guardar(pro);
+
+    }
+
+    @Override
+    public List<Object[]> obtenerTodPropConPropu (String nick){
+
+        List<Object[]> Tuti = proponenteDAO.obtenerTodPropConPropu(nick);
+
+        return Tuti;
 
     }
 
