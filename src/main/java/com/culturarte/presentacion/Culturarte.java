@@ -11,11 +11,12 @@ import com.culturarte.logica.enums.ETipoRetorno;
 import java.net.StandardSocketOptions;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.*;
 
 public class Culturarte {
     public static void main(String[] args) {
 
-        Categoria cat = new Categoria("diversion");
+        //Categoria cat = new Categoria("diversion");
 
         //Usuario u = new Usuario("Crepi", "Luca", "Crespi", "CrepsiPerrera@gmail.com", LocalDate.of(2004, 10, 28), "C:\\Users\\Chorizo-Cosmico\\Pictures\\Hellmo.jpg");
         //System.out.println(u.getNick() + " " + u.getNombre() + " " + u.getApellido() + " " + u.getCorreo() + " " + u.getFechaNac() + " " + u.getDirImagen());
@@ -101,6 +102,7 @@ public class Culturarte {
         }
 
         /*
+        // Consulta de perfil de Proponente
         // Esta comentado para que no large el chorizo de información con cada ejecución
         // Tengo que hipermega refinarlo, se ve bien qlero. Historial de estados y Tipo de Retornos probablemente precisen sus propios fors para mostrar la información correctamente
         List<Object[]> Tuti = controllerPro.obtenerTodPropConPropu("Andre");
@@ -119,6 +121,7 @@ public class Culturarte {
         */
 
         /*
+        // Consulta de Perfil de Colaborador
         // Esta comentado para que no large el chorizo de información con cada ejecución
         //Esta terminado, falta refinarlo
         List<Object[]> Fruti = controllerCol.obtenerTodColConPropu("Fede");
@@ -132,6 +135,18 @@ public class Culturarte {
             System.out.println("Id: " + c.getId() + " " + "Nickname Proponente a Cargo: " + p.getProponente() + " " + "Dinero Recaudado: " + c.getMonto()
                     + " " + "Estado Actual: " + p.getEstadoActual());
         }
+        */
+
+        /*
+        // Alta Usuario Interfaz Grafica
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Alta Usuario");
+            frame.setContentPane(new AltaUsuario().getMainPanel()); // Usa el panel generado
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack(); // Ajusta el tamaño al contenido
+            frame.setLocationRelativeTo(null); // Centra en la pantalla
+            frame.setVisible(true);
+        });
         */
 
     }
