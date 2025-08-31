@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "propuestas", uniqueConstraints = @UniqueConstraint(columnNames = "titulo"))
+@Table(name = "PROPUESTA", uniqueConstraints = @UniqueConstraint(columnNames = "titulo"))
 public class Propuesta {
 
     @Id
@@ -40,17 +40,21 @@ public class Propuesta {
 
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "propuesta_retornos", joinColumns = @JoinColumn(name = "propuesta_titulo"))
+    @CollectionTable(name = "PROPUESTA_RET", joinColumns = @JoinColumn(name = "propuesta_titulo"))
     @Enumerated(EnumType.STRING)//se crea una tabla prop retornos con un campo q apunta a la propuesta
     @Column(name = "retorno", nullable = false)
-    private List<ETipoRetorno> retornos = new ArrayList<>();
+    private List<ETipoRetorno> retornos;
+
+    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Colaboracion> colaboraciones;
+
 
     // constructor vacio para jpa
     protected Propuesta() {}
 
     // constructor con param
     public Propuesta(Categoria categoria, Proponente proponente, String titulo,
-                     String descripcion, String lugar, LocalDate fecha, Integer precioEntrada, Integer montoAReunir, LocalDate fechaPublicacion, List<ETipoRetorno> retornos) {
+                     String descripcion, String lugar, LocalDate fecha, Integer precioEntrada, Integer montoAReunir, LocalDate fechaPublicacion, List<ETipoRetorno> retornos, String imagen) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -62,6 +66,7 @@ public class Propuesta {
         this.proponente = proponente;
         this.retornos = retornos != null ? new ArrayList<>(retornos) : new ArrayList<>();
         this.historialEstados = new ArrayList<>();
+        this.imagen = imagen;
     }
 
     // Getters
@@ -78,6 +83,8 @@ public class Propuesta {
     public List<Estado> getHistorialEstados() { return historialEstados; }
     public Proponente getProponente() { return proponente; }
     public List<ETipoRetorno> getRetornos() { return retornos; }
+
+
 
     // Setters
     public void setImagen(String imagen) { this.imagen = imagen; }
@@ -96,6 +103,20 @@ public class Propuesta {
         this.estadoActual = nuevoEstado;
         this.historialEstados.add(nuevoEstado);
     }
+    public List<Colaboracion> getColaboraciones() {
+        return colaboraciones;
+    }
+
+    public void setColaboraciones(List<Colaboracion> colaboraciones) {
+        this.colaboraciones = colaboraciones;
+    }
+
+    public int getMontoRecaudado() {
+        return colaboraciones.stream()
+                .mapToInt(Colaboracion::getMonto)
+                .sum();
+    }
 }
+
 
 

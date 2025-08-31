@@ -4,6 +4,8 @@ import com.culturarte.logica.clases.Categoria;
 import com.culturarte.logica.dtos.DTOCategoria;
 import com.culturarte.persistencia.CategoriaDAO;
 
+import java.util.List;
+
 public class CategoriaController implements ICategoriaController {
 
     private final CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -30,4 +32,13 @@ public class CategoriaController implements ICategoriaController {
 
     }
 
+    @Override
+    public List<String> listarCategorias() {
+        return categoriaDAO.obtenerTodas()
+                .stream()
+                .map(Categoria::getNombre)
+                .toList();
+    }
 }
+
+

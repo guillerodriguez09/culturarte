@@ -67,7 +67,7 @@ public class PropuestaDAO {
     }
 
         //modificar para prox caso de uso
-    public void modificar(Propuesta propuesta) {
+    public void actualizar(Propuesta propuesta) {
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
