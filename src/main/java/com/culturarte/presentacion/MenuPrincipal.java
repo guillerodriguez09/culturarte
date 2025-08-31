@@ -37,6 +37,11 @@ public class MenuPrincipal extends JFrame {
         JMenuItem itemConsultaProponente = new JMenuItem("Consulta de Proponente");
         JMenuItem itemConsultarColaborador = new JMenuItem("Consulta de Colaborador");
 
+        itemAltaUsuario.addActionListener(e -> abrirAltaUsuario());
+        //itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
+        //itemConsultaColaborador.addActionListener(e -> abrirConsultaColaborador());
+
+
         menuUsuario.add(itemAltaUsuario);
         menuUsuario.add(itemConsultaProponente);
         menuUsuario.add(itemConsultarColaborador);
@@ -93,5 +98,47 @@ public class MenuPrincipal extends JFrame {
         }
     }
 
+    private void abrirAltaUsuario() {
+        AltaUsuario altaUsr = new AltaUsuario();
+        JInternalFrame frame = new JInternalFrame("Alta de Usuario", true, true, true, true);
+        frame.setContentPane(altaUsr.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+/*
+    private void abrirConsultaProponente() {
+        AltaUsuario consProp = new AltaUsuario();
+        JInternalFrame frame = new JInternalFrame("Alta de Usuario", true, true, true, true);
+        frame.setContentPane(consProp.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+*//*
+    private void abrirConsultaColaborador() {
+        AltaUsuario consCol = new AltaUsuario();
+        JInternalFrame frame = new JInternalFrame("Alta de Usuario", true, true, true, true);
+        frame.setContentPane(consCol.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+*/
 }
 

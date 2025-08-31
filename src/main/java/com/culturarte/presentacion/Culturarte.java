@@ -180,18 +180,6 @@ public class Culturarte {
         }
         */
 
-        /*
-        // Alta Usuario Interfaz Grafica
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Alta Usuario");
-            frame.setContentPane(new AltaUsuario().getMainPanel()); // Usa el panel generado
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack(); // Ajusta el tamaño al contenido
-            frame.setLocationRelativeTo(null); // Centra en la pantalla
-            frame.setVisible(true);
-        });
-        */
-
     }
 }
 

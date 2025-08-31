@@ -6,8 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import com.culturarte.logica.fabrica.Fabrica;
-import com.culturarte.presentacion.Culturarte;
-import com.culturarte.logica.dtos.DTOUsuario;
 import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.logica.controllers.IProponenteController;
@@ -38,6 +36,8 @@ public class AltaUsuario {
     private JTextField txtLink;
     private JLabel lblInformaDoor;
     private JPanel pnlInfoProp;
+    private JTextField txtImagen;
+    private JLabel lblImagen;
 
     public AltaUsuario(){
 
@@ -51,17 +51,15 @@ public class AltaUsuario {
             pnlInfoProp.setVisible(true);
             pnlInfoProp.revalidate();
             pnlInfoProp.repaint();
-            SwingUtilities.getWindowAncestor(mainPanel).pack();
-            System.out.println("Seleccionaste Proponente");
         });
 
         rbtnColaborador.addActionListener(e -> {
             pnlInfoProp.setVisible(false);
             pnlInfoProp.revalidate();
             pnlInfoProp.repaint();
-            SwingUtilities.getWindowAncestor(mainPanel).pack();
-            System.out.println("Seleccionaste Colaborador");
         });
+
+        btnSelImagen.addActionListener(e -> { seleccionarImagen(); });
 
         btnAceptar.addActionListener(e -> {
             String nick = txtNickname.getText();
@@ -69,20 +67,11 @@ public class AltaUsuario {
             String apellido = txtApellido.getText();
             String correo = txtCorreo.getText();
 
-            String fechaNacimiento = ftxtFechaNacimiento.getText();
-            LocalDate fecha = LocalDate.of(2001, 9, 11);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            try {
-                fecha = LocalDate.parse(fechaNacimiento, formatter);
-                JOptionPane.showMessageDialog(mainPanel, "Fecha ingresada: " + fecha);
-            } catch (DateTimeParseException ex) {
-                JOptionPane.showMessageDialog(mainPanel, "Formato inválido. Usa dd/MM/yyyy",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            String fechaNac = ftxtFechaNacimiento.getText();
 
             String tipoUsuario = rbtnProponente.isSelected() ? "Proponente" : "Colaborador";
 
-            if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNacimiento.isBlank()){
+            if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNac.isEmpty()){
                 JOptionPane.showMessageDialog(mainPanel,
                         "Por favor completa todos los campos",
                         "Faltan datos",
@@ -90,14 +79,16 @@ public class AltaUsuario {
                 return;
             }
 
+            LocalDate fechaNacimiento = null;
+            try {
+                fechaNacimiento = LocalDate.parse(fechaNac);
+            }catch(DateTimeParseException ex){
+                JOptionPane.showMessageDialog(mainPanel, "Formato inválido. Usa yyyy-mm-dd", "Fecha Incorrecta",  JOptionPane.ERROR_MESSAGE);
+            }
+
             String dir = "";
-            String bio = "";
-            String link = "";
             if(tipoUsuario.equals("Proponente")){
                 dir = txtDir.getText();
-                bio = txtBio.getText();
-                link = txtLink.getText();
-
                 if(dir.isBlank()){
                     JOptionPane.showMessageDialog(mainPanel,
                             "Por favor completa todos los campos",
@@ -114,11 +105,13 @@ public class AltaUsuario {
                 dtoC.setNombre(nombre);
                 dtoC.setApellido(apellido);
                 dtoC.setCorreo(correo);
-                dtoC.setFechaNac(fecha);
-                dtoC.setDirImagen("C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
+                dtoC.setFechaNac(fechaNacimiento);
+                dtoC.setDirImagen(txtImagen.getText());
 
                 IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
                 controllerCol.altaColaborador(dtoC);
+                JOptionPane.showMessageDialog(mainPanel, "Colaborador creado");
+                limpiarCampos();
 
             }else if(tipoUsuario.equals("Proponente")){
                 DTOProponente dtoP = new DTOProponente();
@@ -126,14 +119,16 @@ public class AltaUsuario {
                 dtoP.setNombre(nombre);
                 dtoP.setApellido(apellido);
                 dtoP.setCorreo(correo);
-                dtoP.setFechaNac(fecha);
-                dtoP.setDirImagen("C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.png");
-                dtoP.setDireccion(dir);
-                dtoP.setBiografia(bio);
-                dtoP.setLink(link);
+                dtoP.setFechaNac(fechaNacimiento); // el formato es yyyy-mm-dd
+                dtoP.setDirImagen(txtImagen.getText());
+                dtoP.setDireccion(txtDir.getText());
+                dtoP.setBiografia(txtBio.getText());
+                dtoP.setLink(txtLink.getText());
 
                 IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
                 controllerPro.altaProponente(dtoP);
+                JOptionPane.showMessageDialog(mainPanel, "Proponente creado");
+                limpiarCampos();
             }
 
         });
@@ -142,6 +137,52 @@ public class AltaUsuario {
             SwingUtilities.getWindowAncestor(mainPanel).dispose();
         });
 
+    }
+
+    private void limpiarCampos() {
+        txtNickname.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCorreo.setText("");
+        ftxtFechaNacimiento.setText("");
+        txtBio.setText("");
+        txtDir.setText("");
+        txtLink.setText("");
+        txtImagen.setText("");
+
+    }
+
+    private void seleccionarImagen() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes JPG y PNG", "jpg", "jpeg", "png"));
+
+        //agregue esto para q guarde en la carpeta imagenes
+        int resultado = chooser.showOpenDialog(mainPanel);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            java.io.File archivoOriginal = chooser.getSelectedFile();
+
+            java.io.File carpetaDestino = new java.io.File("imagenes");
+            if (!carpetaDestino.exists()) {
+                carpetaDestino.mkdirs();
+            }
+
+            // Crear archivo destino
+            java.io.File archivoDestino = new java.io.File(carpetaDestino, archivoOriginal.getName());
+
+            try {
+                java.nio.file.Files.copy(
+                        archivoOriginal.toPath(),
+                        archivoDestino.toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                );
+
+                // Guardar ruta en el campo imagen
+                txtImagen.setText(archivoDestino.getPath());
+
+            } catch (java.io.IOException e) {
+                JOptionPane.showMessageDialog(mainPanel, "Error al copiar la imagen " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public JPanel getMainPanel() { return mainPanel; }
