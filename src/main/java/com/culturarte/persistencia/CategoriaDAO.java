@@ -4,6 +4,8 @@ import com.culturarte.logica.clases.Categoria;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.util.List;
+
 public class CategoriaDAO {
 //fue para probar alta propuesta
     public Categoria buscarPorNombre(String nombre) {
@@ -33,4 +35,15 @@ public class CategoriaDAO {
     public boolean existe(String nombre) {
         return buscarPorNombre(nombre) != null;
     }
+
+    public List<Categoria> obtenerTodas() {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT c FROM Categoria c", Categoria.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

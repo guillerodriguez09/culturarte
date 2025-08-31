@@ -54,7 +54,7 @@ public class Propuesta {
 
     // constructor con param
     public Propuesta(Categoria categoria, Proponente proponente, String titulo,
-                     String descripcion, String lugar, LocalDate fecha, Integer precioEntrada, Integer montoAReunir, LocalDate fechaPublicacion, List<ETipoRetorno> retornos) {
+                     String descripcion, String lugar, LocalDate fecha, Integer precioEntrada, Integer montoAReunir, LocalDate fechaPublicacion, List<ETipoRetorno> retornos, String imagen) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -66,6 +66,7 @@ public class Propuesta {
         this.proponente = proponente;
         this.retornos = retornos != null ? new ArrayList<>(retornos) : new ArrayList<>();
         this.historialEstados = new ArrayList<>();
+        this.imagen = imagen;
     }
 
     // Getters
@@ -82,6 +83,8 @@ public class Propuesta {
     public List<Estado> getHistorialEstados() { return historialEstados; }
     public Proponente getProponente() { return proponente; }
     public List<ETipoRetorno> getRetornos() { return retornos; }
+
+
 
     // Setters
     public void setImagen(String imagen) { this.imagen = imagen; }

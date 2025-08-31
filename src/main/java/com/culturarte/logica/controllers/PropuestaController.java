@@ -69,7 +69,8 @@ public class PropuestaController implements IPropuestaController {
                 dto.precioEntrada,
                 dto.montoAReunir,
                 LocalDate.now(),
-                dto.retornos
+                dto.retornos,
+                dto.imagen
         );
 
         //setea el estado inicial a ingresada con la fecha de hoy

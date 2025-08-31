@@ -66,6 +66,12 @@ public class Culturarte {
         ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
         controllerCat.altaCategoria(dtoCat);
 
+    //menu principal con swing, esta medio pobreton pero anda despues lo mejorare jaja
+        SwingUtilities.invokeLater(() -> {
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
+        });
+/*
         DTOPropuesta dto = new DTOPropuesta(); // este dto va a venir desde swing en futuro
         dto.titulo = "abc";
         dto.descripcion = "Gjee";
@@ -187,5 +193,6 @@ public class Culturarte {
         */
 
     }
+}
 
 

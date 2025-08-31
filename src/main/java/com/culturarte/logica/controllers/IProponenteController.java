@@ -10,4 +10,5 @@ public interface IProponenteController {
 
     List<Object[]> obtenerTodPropConPropu (String nick);
 
+    List<String> listarProponentes();
 }

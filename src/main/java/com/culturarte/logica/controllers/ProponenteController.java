@@ -75,4 +75,12 @@ public class ProponenteController implements IProponenteController {
 
     }
 
+    @Override
+    public List<String> listarProponentes() {
+        return proponenteDAO.obtenerTodos()
+                .stream()
+                .map(Proponente::getNick)
+                .toList();
+    }
+
 }
