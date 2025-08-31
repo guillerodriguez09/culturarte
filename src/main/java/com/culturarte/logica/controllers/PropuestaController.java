@@ -1,9 +1,7 @@
 package com.culturarte.logica.controllers;
 
-import com.culturarte.logica.clases.Categoria;
-import com.culturarte.logica.clases.Estado;
-import com.culturarte.logica.clases.Proponente;
-import com.culturarte.logica.clases.Propuesta;
+import com.culturarte.logica.clases.*;
+import com.culturarte.logica.dtos.DTOConsultaPropuesta;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 
@@ -86,6 +84,103 @@ public class PropuestaController implements IPropuestaController {
     }
 
     @Override
+    public List<String> listarPropuestas() {
+        List<Propuesta> propuestas = propuestaDAO.obtenerTodas();
+        return propuestas.stream()
+                .map(Propuesta::getTitulo)
+                .toList();
+    }
+
+    @Override
+    public DTOConsultaPropuesta consultarPropuesta(String titulo) {
+            Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
+
+            if (propuesta == null) {
+                throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
+            }
+
+            // Armo el DTO con la info básica
+            DTOConsultaPropuesta dto = new DTOConsultaPropuesta();
+            dto.titulo = propuesta.getTitulo();
+            dto.descripcion = propuesta.getDescripcion();
+            dto.lugar = propuesta.getLugar();
+            dto.fecha = propuesta.getFecha();
+            dto.precioEntrada = propuesta.getPrecioEntrada();
+            dto.montoAReunir = propuesta.getMontoAReunir();
+            dto.imagen = propuesta.getImagen();
+            dto.categoriaNombre = propuesta.getCategoria().getNombre();
+            dto.proponenteNick = propuesta.getProponente().getNick();
+
+            // Estado actual
+            if (propuesta.getEstadoActual() != null) {
+                dto.estado = propuesta.getEstadoActual().getNombre().toString();
+            }
+
+            // Colaboradores (nicknames)
+            List<String> colaboradores = new ArrayList<>();
+            for (Colaboracion colab : propuesta.getColaboraciones()) {
+                if (colab.getColaborador() != null) {
+                    colaboradores.add(colab.getColaborador().getNick());
+                }
+            }
+            dto.colaboradores = colaboradores;
+
+            // Monto total recaudado
+            dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
+
+            return dto;
+        }
+
+        public void modificarPropuesta(DTOPropuesta dtoPropuesta) {
+
+        }
+
+    @Override
+    public void modificarPropuesta(String titulo, DTOPropuesta dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Datos de propuesta no provistos.");
+        }
+
+        // Validaciones básicas (reutilizadas de altaPropuesta, adaptadas)
+        if (dto.fecha == null) {
+            throw new IllegalArgumentException("La fecha prevista es obligatoria.");
+        }
+        if (dto.precioEntrada != null && dto.precioEntrada < 0) {
+            throw new IllegalArgumentException("El precio de la entrada no puede ser negativo.");
+        }
+        if (dto.montoAReunir == null || dto.montoAReunir <= 0) {
+            throw new IllegalArgumentException("El monto a reunir debe ser mayor que 0.");
+        }
+        if (dto.categoriaNombre == null || dto.categoriaNombre.isBlank()) {
+            throw new IllegalArgumentException("Debe indicarse una categoría.");
+        }
+
+        // Buscar la propuesta existente
+        Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
+        if (propuesta == null) {
+            throw new IllegalArgumentException("No existe una propuesta con el título '" + titulo + "'.");
+        }
+
+        // Buscar y setear nueva categoría
+        Categoria categoria = categoriaDAO.buscarPorNombre(dto.categoriaNombre);
+        if (categoria == null) {
+            throw new IllegalArgumentException("La categoría '" + dto.categoriaNombre + "' no existe.");
+        }
+
+        // Setear nuevos datos (no se modifica el título ni el proponente)
+        propuesta.setDescripcion(dto.descripcion);
+        propuesta.setLugar(dto.lugar);
+        propuesta.setFecha(dto.fecha);
+        propuesta.setPrecioEntrada(dto.precioEntrada);
+        propuesta.setMontoAReunir(dto.montoAReunir);
+        propuesta.setImagen(dto.imagen);
+        propuesta.setCategoria(categoria);
+
+        // Persistir cambios
+        propuestaDAO.actualizar(propuesta);
+    }
+
+    @Override
     public List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado) {
         List<Propuesta> propuestas = propuestaDAO.listarPorEstado(estado);
         List<DTOPropuesta> dtos = new ArrayList<>(); //la lista de dtos que van a la presentacion
@@ -107,5 +202,6 @@ public class PropuestaController implements IPropuestaController {
         return dtos;
     }
 }
+
 
 

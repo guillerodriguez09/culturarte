@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "propuestas", uniqueConstraints = @UniqueConstraint(columnNames = "titulo"))
+@Table(name = "PROPUESTA", uniqueConstraints = @UniqueConstraint(columnNames = "titulo"))
 public class Propuesta {
 
     @Id
@@ -40,10 +40,14 @@ public class Propuesta {
 
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "propuesta_retornos", joinColumns = @JoinColumn(name = "propuesta_titulo"))
+    @CollectionTable(name = "PROPUESTA_RET", joinColumns = @JoinColumn(name = "propuesta_titulo"))
     @Enumerated(EnumType.STRING)//se crea una tabla prop retornos con un campo q apunta a la propuesta
     @Column(name = "retorno", nullable = false)
-    private List<ETipoRetorno> retornos = new ArrayList<>();
+    private List<ETipoRetorno> retornos;
+
+    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Colaboracion> colaboraciones;
+
 
     // constructor vacio para jpa
     protected Propuesta() {}
@@ -96,6 +100,20 @@ public class Propuesta {
         this.estadoActual = nuevoEstado;
         this.historialEstados.add(nuevoEstado);
     }
+    public List<Colaboracion> getColaboraciones() {
+        return colaboraciones;
+    }
+
+    public void setColaboraciones(List<Colaboracion> colaboraciones) {
+        this.colaboraciones = colaboraciones;
+    }
+
+    public int getMontoRecaudado() {
+        return colaboraciones.stream()
+                .mapToInt(Colaboracion::getMonto)
+                .sum();
+    }
 }
+
 
 

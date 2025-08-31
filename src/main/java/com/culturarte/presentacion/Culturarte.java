@@ -101,6 +101,43 @@ public class Culturarte {
             }
         }
 
+        IPropuestaController controllerP2 = Fabrica.getInstancia().getPropuestaController();
+        List<String> titulos = controllerP2.listarPropuestas();
+        System.out.println("=== Propuestas disponibles ===");
+        titulos.forEach(System.out::println);
+
+        if (titulos.isEmpty()) {
+            System.out.println("No hay propuestas en la base. Cargá datos y volvé a ejecutar.");
+            return;
+        }
+
+        // Tomo la primera para consultar su detalle
+        String tituloSeleccionado = titulos.getFirst();
+        System.out.println("\n=== Consultando propuesta: " + tituloSeleccionado + " ===");
+        DTOConsultaPropuesta dtocp = controllerP2.consultarPropuesta(tituloSeleccionado);
+
+        System.out.println("\n=== Modificando propuesta: " + tituloSeleccionado + " ===");
+
+// Creo un nuevo DTO con los cambios (menos título y proponente, que no se modifican)
+        DTOPropuesta dtoModificada = new DTOPropuesta();
+        dtoModificada.descripcion = "Evento mejorado con invitados internacionales";
+        dtoModificada.lugar = "Teatro Solís";
+        dtoModificada.fecha = LocalDate.of(2025, 10, 20);
+        dtoModificada.precioEntrada = 800;
+        dtoModificada.montoAReunir = 2000;
+        dtoModificada.imagen = "solis.jpg";
+        dtoModificada.categoriaNombre = dtoCat.getNombre(); // reutilizamos "diversion"
+
+        try {
+            controllerP2.modificarPropuesta(tituloSeleccionado, dtoModificada);
+            System.out.println("Propuesta modificada");
+        } catch (Exception e) {
+            System.out.println("Error al modificar: " + e.getMessage());
+        }
+
+    }
+
+
         /*
         // Consulta de perfil de Proponente
         // Esta comentado para que no large el chorizo de información con cada ejecución
@@ -150,5 +187,5 @@ public class Culturarte {
         */
 
     }
-}
+
 
