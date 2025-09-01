@@ -43,4 +43,9 @@ public class Categoria {
     public void setCatPadre(Categoria catPadre) {
         this.catPadre = catPadre;
     }
+
+    @Override
+    public String toString() {
+        return this != null ? this.getNombre() : getNombre();
+    }
 }

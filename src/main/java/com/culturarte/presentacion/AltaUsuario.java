@@ -38,6 +38,12 @@ public class AltaUsuario {
     private JPanel pnlInfoProp;
     private JTextField txtImagen;
     private JLabel lblImagen;
+    private JLabel quetimporta;
+    private JLabel obligadoor;
+    private JLabel decididoor;
+    private JLabel comunicadoor;
+    private JLabel GOKUESGRANDE;
+    private JLabel cutillo;
 
     public AltaUsuario(){
 

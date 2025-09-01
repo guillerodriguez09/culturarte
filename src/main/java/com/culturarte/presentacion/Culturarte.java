@@ -60,11 +60,22 @@ public class Culturarte {
         IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
         controllerCol.altaColaborador(dtoC);
 
+        DTOCategoria dtoCat2 = new DTOCategoria();
+        dtoCat2.setNombre("Categoria");
+        dtoCat2.setCatPadre(null);
+
         DTOCategoria dtoCat = new DTOCategoria();
         dtoCat.setNombre("diversion");
+        dtoCat.setCatPadre(null);
+
+        DTOCategoria dtoCat3 = new DTOCategoria();
+        dtoCat3.setNombre("Cancer");
+        dtoCat3.setCatPadre(null);
 
         ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
         controllerCat.altaCategoria(dtoCat);
+        controllerCat.altaCategoria(dtoCat2);
+        controllerCat.altaCategoria(dtoCat3);
 
     //menu principal con swing, esta medio pobreton pero anda despues lo mejorare jaja
         SwingUtilities.invokeLater(() -> {
@@ -142,8 +153,6 @@ public class Culturarte {
         }
 
     }
-
-
         /*
         // Consulta de perfil de Proponente
         // Esta comentado para que no large el chorizo de información con cada ejecución

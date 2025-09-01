@@ -32,11 +32,7 @@ public class DTOCategoria {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public Categoria getCatPadre() {
-        return catPadre;
-    }
-    public void setCatPadre(Categoria catPadre) {
-        this.catPadre = catPadre;
-    }
+    public Categoria getCatPadre() {return catPadre;}
+    public void setCatPadre(Categoria catPadre) {this.catPadre = catPadre;}
 
 }

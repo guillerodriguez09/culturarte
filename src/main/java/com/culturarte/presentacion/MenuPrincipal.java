@@ -48,10 +48,15 @@ public class MenuPrincipal extends JFrame {
 
         //menu categorias
         JMenu menuCategoria = new JMenu("Categoria");
+        JMenuItem itemAltaCategoria = new JMenuItem("Alta de Categoria");
+
+        itemAltaCategoria.addActionListener(e -> abrirAltaCategoria());
+
+        menuCategoria.add(itemAltaCategoria);
 
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
-
+        menuBar.add(menuCategoria);
 
         setJMenuBar(menuBar);
     }
@@ -111,6 +116,20 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
+
+    private void abrirAltaCategoria() {
+        AltaCategoriaForm altaCat = new AltaCategoriaForm();
+        JInternalFrame frame = new JInternalFrame("Alta de Categoria", true, true, true, true);
+        frame.setContentPane(altaCat.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 /*
     private void abrirConsultaProponente() {
         AltaUsuario consProp = new AltaUsuario();
@@ -140,5 +159,6 @@ public class MenuPrincipal extends JFrame {
         }
     }
 */
+
 }
 

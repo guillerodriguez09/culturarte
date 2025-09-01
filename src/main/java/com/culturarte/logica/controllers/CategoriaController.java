@@ -39,6 +39,11 @@ public class CategoriaController implements ICategoriaController {
                 .map(Categoria::getNombre)
                 .toList();
     }
+
+    @Override
+    public List<Categoria> listarCategoriasC() {
+        return categoriaDAO.obtenerTodas();
+    }
 }
 
 

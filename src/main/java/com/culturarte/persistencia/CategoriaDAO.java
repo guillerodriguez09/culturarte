@@ -39,8 +39,7 @@ public class CategoriaDAO {
     public List<Categoria> obtenerTodas() {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT c FROM Categoria c", Categoria.class)
-                    .getResultList();
+            return em.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
         } finally {
             em.close();
         }
