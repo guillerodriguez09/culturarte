@@ -1,8 +1,8 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.controllers.IPropuestaController;
-import com.culturarte.logica.dtos.DTOConsultaPropuesta;
 import com.culturarte.logica.dtos.DTOPropuesta;
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
 import com.culturarte.logica.fabrica.Fabrica;
 
@@ -38,6 +38,7 @@ public class ModificarPropuestaForm {
     private JButton seleccionarButton;
     private JList <ETipoRetorno> listaRet;
     private JTextField titulo;
+    private JComboBox<EEstadoPropuesta> comboEstados;
 
     private final IPropuestaController controller = Fabrica.getInstancia().getPropuestaController();
 
@@ -51,16 +52,17 @@ public class ModificarPropuestaForm {
 
 
     // Carga combos de cat y prop
-        comboCategoria.addItem("-- Seleccione una categoria --");
         List<String> categorias = Fabrica.getInstancia().getCategoriaController().listarCategorias();
         for (String cat : categorias) comboCategoria.addItem(cat);
-        comboCategoria.setSelectedIndex(0);
+        comboCategoria.setSelectedIndex(-1);
 
 
-        comboProponente.addItem("-- Seleccione una proponente --");
         List<String> proponentes = Fabrica.getInstancia().getProponenteController().listarProponentes();
         for (String prop : proponentes) comboProponente.addItem(prop);
-        comboProponente.setSelectedIndex(0);
+        comboProponente.setSelectedIndex(-1);
+
+        comboEstados.setModel(new DefaultComboBoxModel<>(EEstadoPropuesta.values()));
+        comboEstados.setSelectedIndex(-1);
 
 
         //para arreglar
@@ -69,9 +71,11 @@ public class ModificarPropuestaForm {
 
 
         cargarButton.addActionListener(e -> cargarDatos());
+
         aceptarButton.addActionListener(e -> guardarCambios());
 
-        //para arreglar
+
+
         cancelarButton.addActionListener(e -> {
             JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
             if (internal != null) {
@@ -92,8 +96,7 @@ public class ModificarPropuestaForm {
     private void cargarDatos() {
         try {
             String tituloSeleccionado = (String) comboPropuestas.getSelectedItem();
-            DTOConsultaPropuesta dto = controller.consultarPropuesta(tituloSeleccionado);
-
+            DTOPropuesta dto = controller.consultarPropuesta(tituloSeleccionado);
 
             titulo.setText(dto.titulo);
             titulo.setEditable(false);
@@ -103,10 +106,27 @@ public class ModificarPropuestaForm {
             montoE.setValue(dto.precioEntrada);
             montoR.setValue(dto.montoAReunir);
             imagendir.setText(dto.imagen);
-            estadoActual.setText(dto.estado);
+            comboEstados.setSelectedItem(EEstadoPropuesta.valueOf(dto.estadoActual));
             comboCategoria.setSelectedItem(dto.categoriaNombre);
             comboProponente.setSelectedItem(dto.proponenteNick);
-            //ver tema de retornos como puedo dejar marcado
+            List<ETipoRetorno> retornos = dto.retornos;
+            if (retornos != null && !retornos.isEmpty()) {
+                int[] indices = new int[retornos.size()];
+                ListModel<ETipoRetorno> model = listaRet.getModel();
+
+                for (int i = 0; i < retornos.size(); i++) {
+                    for (int j = 0; j < model.getSize(); j++) {
+                        if (model.getElementAt(j).equals(retornos.get(i))) {
+                            indices[i] = j;
+                            break;
+                        }
+                    }
+                }
+
+                listaRet.setSelectedIndices(indices);
+            } else {
+                listaRet.clearSelection(); // si no tiene retornos
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(mainPanel, "Error al cargar datos: " + ex.getMessage());
         }
@@ -115,7 +135,6 @@ public class ModificarPropuestaForm {
     private void guardarCambios() {
         try {
             DTOPropuesta dto = new DTOPropuesta();
-            dto.titulo = titulo.getText();
             dto.descripcion = descripcion.getText();
             dto.lugar = lugar.getText();
             dto.fecha = LocalDate.parse(fecha.getText());

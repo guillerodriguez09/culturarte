@@ -1,7 +1,6 @@
 package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.clases.*;
-import com.culturarte.logica.dtos.DTOConsultaPropuesta;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 
@@ -31,8 +30,11 @@ public class PropuestaController implements IPropuestaController {
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
-        if (dto.precioEntrada < 0) {
-            throw new IllegalArgumentException("El precio de la entrada no puede ser negativo.");
+        if(dto.fecha.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha prevista no puede ser anterior a la fecha actual.");
+        }
+        if (dto.precioEntrada <= 0) {
+            throw new IllegalArgumentException("El precio de la entrada no puede ser cero ni negativa.");
         }
         if (dto.montoAReunir == null || dto.montoAReunir <= 0) {
             throw new IllegalArgumentException("El monto a reunir debe ser mayor que 0.");
@@ -93,7 +95,7 @@ public class PropuestaController implements IPropuestaController {
     }
 
     @Override
-    public DTOConsultaPropuesta consultarPropuesta(String titulo) {
+    public DTOPropuesta consultarPropuesta(String titulo) {
             Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
 
             if (propuesta == null) {
@@ -101,7 +103,7 @@ public class PropuestaController implements IPropuestaController {
             }
 
             // Armo el DTO con la info básica
-            DTOConsultaPropuesta dto = new DTOConsultaPropuesta();
+            DTOPropuesta dto = new DTOPropuesta();
             dto.titulo = propuesta.getTitulo();
             dto.descripcion = propuesta.getDescripcion();
             dto.lugar = propuesta.getLugar();
@@ -111,10 +113,12 @@ public class PropuestaController implements IPropuestaController {
             dto.imagen = propuesta.getImagen();
             dto.categoriaNombre = propuesta.getCategoria().getNombre();
             dto.proponenteNick = propuesta.getProponente().getNick();
+            dto.fechaPublicacion = propuesta.getFechaPublicacion();
+            dto.retornos = propuesta.getRetornos();
 
             // Estado actual
             if (propuesta.getEstadoActual() != null) {
-                dto.estado = propuesta.getEstadoActual().getNombre().toString();
+                dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
             }
 
             // Colaboradores (nicknames)
@@ -132,21 +136,20 @@ public class PropuestaController implements IPropuestaController {
             return dto;
         }
 
-        public void modificarPropuesta(DTOPropuesta dtoPropuesta) {
-
-        }
-
     @Override
     public void modificarPropuesta(String titulo, DTOPropuesta dto) {
         if (dto == null) {
             throw new IllegalArgumentException("Datos de propuesta no provistos.");
         }
 
-        // Validaciones básicas (reutilizadas de altaPropuesta, adaptadas)
+        // validaciones básicas (reutilizadas de altaPropuesta)
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
-        if (dto.precioEntrada != null && dto.precioEntrada < 0) {
+        if(dto.fecha.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha no puede ser anterior a la fecha actual.");
+        }
+        if (dto.precioEntrada <= 0) {
             throw new IllegalArgumentException("El precio de la entrada no puede ser negativo.");
         }
         if (dto.montoAReunir == null || dto.montoAReunir <= 0) {
@@ -176,6 +179,7 @@ public class PropuestaController implements IPropuestaController {
         propuesta.setMontoAReunir(dto.montoAReunir);
         propuesta.setImagen(dto.imagen);
         propuesta.setCategoria(categoria);
+        propuesta.setRetornos(dto.retornos);
 
         // Persistir cambios
         propuestaDAO.actualizar(propuesta);
