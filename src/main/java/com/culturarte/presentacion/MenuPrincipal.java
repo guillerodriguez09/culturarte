@@ -39,7 +39,7 @@ public class MenuPrincipal extends JFrame {
 
         itemAltaUsuario.addActionListener(e -> abrirAltaUsuario());
         //itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
-        //itemConsultaColaborador.addActionListener(e -> abrirConsultaColaborador());
+        itemConsultarColaborador.addActionListener(e -> abrirConsultaColaborador());
 
 
         menuUsuario.add(itemAltaUsuario);
@@ -144,9 +144,9 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
-*//*
+*/
     private void abrirConsultaColaborador() {
-        AltaUsuario consCol = new AltaUsuario();
+        ConsultaColaboradorFrom consCol = new ConsultaColaboradorFrom();
         JInternalFrame frame = new JInternalFrame("Alta de Usuario", true, true, true, true);
         frame.setContentPane(consCol.getMainPanel());
         frame.pack();
@@ -158,7 +158,6 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
-*/
 
 }
 

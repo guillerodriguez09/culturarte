@@ -23,9 +23,11 @@ public class AltaCategoriaForm {
     private JLabel luis;
     private JComboBox<Categoria> cbxCategorias;
 
+    private final ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
+
     public AltaCategoriaForm(){
 
-        List<Categoria> categorias = Fabrica.getInstancia().getCategoriaController().listarCategoriasC();
+        List<Categoria> categorias = controllerCat.listarCategoriasC();
         for (Categoria cat : categorias) cbxCategorias.addItem(cat);
 
         btnAceptar.addActionListener(e ->{
@@ -49,7 +51,6 @@ public class AltaCategoriaForm {
 
             DTOCategoria dtoCat = new DTOCategoria();
 
-
             if (catPadre.isEmpty() || catPadre.equals("Categoria")){
                 Categoria cat = new Categoria();
                 cat.setNombre("Categoria");
@@ -62,7 +63,6 @@ public class AltaCategoriaForm {
                 dtoCat.setCatPadre((Categoria) cbxCategorias.getSelectedItem());
             }
 
-            ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
             controllerCat.altaCategoria(dtoCat);
             JOptionPane.showMessageDialog(mainPanel, "Categoria creada");
 

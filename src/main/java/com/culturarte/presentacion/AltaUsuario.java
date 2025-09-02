@@ -45,6 +45,9 @@ public class AltaUsuario {
     private JLabel GOKUESGRANDE;
     private JLabel cutillo;
 
+    private final IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
+    private final IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
+
     public AltaUsuario(){
 
         ButtonGroup grupo = new ButtonGroup();
@@ -52,17 +55,25 @@ public class AltaUsuario {
         grupo.add(rbtnColaborador);
 
         pnlInfoProp.setVisible(false);
+        GOKUESGRANDE.setVisible(false);
+
 
         rbtnProponente.addActionListener(e -> {
             pnlInfoProp.setVisible(true);
             pnlInfoProp.revalidate();
             pnlInfoProp.repaint();
+            GOKUESGRANDE.setVisible(true);
+            //mainPanel.revalidate();
+            //mainPanel.repaint();
         });
 
         rbtnColaborador.addActionListener(e -> {
             pnlInfoProp.setVisible(false);
             pnlInfoProp.revalidate();
             pnlInfoProp.repaint();
+            GOKUESGRANDE.setVisible(false);
+            //mainPanel.revalidate();
+            //mainPanel.repaint();
         });
 
         btnSelImagen.addActionListener(e -> { seleccionarImagen(); });
@@ -105,36 +116,38 @@ public class AltaUsuario {
 
             }
 
-            if(tipoUsuario.equals("Colaborador")){
-                DTOColaborador dtoC = new DTOColaborador();
-                dtoC.setNick(nick);
-                dtoC.setNombre(nombre);
-                dtoC.setApellido(apellido);
-                dtoC.setCorreo(correo);
-                dtoC.setFechaNac(fechaNacimiento);
-                dtoC.setDirImagen(txtImagen.getText());
+            try {
+                if (tipoUsuario.equals("Colaborador")) {
+                    DTOColaborador dtoC = new DTOColaborador();
+                    dtoC.setNick(nick);
+                    dtoC.setNombre(nombre);
+                    dtoC.setApellido(apellido);
+                    dtoC.setCorreo(correo);
+                    dtoC.setFechaNac(fechaNacimiento);
+                    dtoC.setDirImagen(txtImagen.getText());
 
-                IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
-                controllerCol.altaColaborador(dtoC);
-                JOptionPane.showMessageDialog(mainPanel, "Colaborador creado");
-                limpiarCampos();
+                    controllerCol.altaColaborador(dtoC);
+                    JOptionPane.showMessageDialog(mainPanel, "Colaborador creado");
+                    limpiarCampos();
 
-            }else if(tipoUsuario.equals("Proponente")){
-                DTOProponente dtoP = new DTOProponente();
-                dtoP.setNick(nick);
-                dtoP.setNombre(nombre);
-                dtoP.setApellido(apellido);
-                dtoP.setCorreo(correo);
-                dtoP.setFechaNac(fechaNacimiento); // el formato es yyyy-mm-dd
-                dtoP.setDirImagen(txtImagen.getText());
-                dtoP.setDireccion(txtDir.getText());
-                dtoP.setBiografia(txtBio.getText());
-                dtoP.setLink(txtLink.getText());
+                } else if (tipoUsuario.equals("Proponente")) {
+                    DTOProponente dtoP = new DTOProponente();
+                    dtoP.setNick(nick);
+                    dtoP.setNombre(nombre);
+                    dtoP.setApellido(apellido);
+                    dtoP.setCorreo(correo);
+                    dtoP.setFechaNac(fechaNacimiento); // el formato es yyyy-mm-dd
+                    dtoP.setDirImagen(txtImagen.getText());
+                    dtoP.setDireccion(txtDir.getText());
+                    dtoP.setBiografia(txtBio.getText());
+                    dtoP.setLink(txtLink.getText());
 
-                IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
-                controllerPro.altaProponente(dtoP);
-                JOptionPane.showMessageDialog(mainPanel, "Proponente creado");
-                limpiarCampos();
+                    controllerPro.altaProponente(dtoP);
+                    JOptionPane.showMessageDialog(mainPanel, "Proponente creado");
+                    limpiarCampos();
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(mainPanel, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         });

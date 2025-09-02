@@ -68,14 +68,14 @@ public class Culturarte {
         dtoCat.setNombre("diversion");
         dtoCat.setCatPadre(null);
 
-        DTOCategoria dtoCat3 = new DTOCategoria();
-        dtoCat3.setNombre("Cancer");
-        dtoCat3.setCatPadre(null);
+        //DTOCategoria dtoCat3 = new DTOCategoria();
+        //dtoCat3.setNombre("Cancer");
+        //dtoCat3.setCatPadre(null);
 
         ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
         controllerCat.altaCategoria(dtoCat);
         controllerCat.altaCategoria(dtoCat2);
-        controllerCat.altaCategoria(dtoCat3);
+        //controllerCat.altaCategoria(dtoCat3);
 
     //menu principal con swing, esta medio pobreton pero anda despues lo mejorare jaja
         SwingUtilities.invokeLater(() -> {
