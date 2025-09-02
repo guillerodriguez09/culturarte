@@ -18,6 +18,8 @@ public class DTOPropuesta {
 
     public String proponenteNick;
     public String categoriaNombre;
+    public List<String> colaboradores;
+    public Double montoRecaudado;
 
     public List<ETipoRetorno> retornos;
 
