@@ -71,6 +71,7 @@ public class MenuPrincipal extends JFrame {
         frame.setContentPane(form.traerPanel());
         frame.pack();
         frame.setVisible(true);
+        frame.setSize(Math.max(frame.getWidth(), 600), Math.max(frame.getHeight(), 600));
         desktopPane.add(frame);
         try {
             frame.setSelected(true);

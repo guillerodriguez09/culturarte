@@ -40,6 +40,8 @@ public class AltaPropuestaForm {
         List<String> categorias = Fabrica.getInstancia().getCategoriaController().listarCategorias();
         for (String cat : categorias) comboCategoria.addItem(cat);
 
+        //LAS CATEGORIAS DEBEN SER CON JTREE
+
         // Llena combo de proponentes
         List<String> proponentes = Fabrica.getInstancia().getProponenteController().listarProponentes();
         for (String prop : proponentes) comboProponente.addItem(prop);

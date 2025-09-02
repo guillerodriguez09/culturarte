@@ -2,7 +2,8 @@ package com.culturarte.presentacion;
 
 import javax.swing.*;
 import com.culturarte.logica.controllers.IPropuestaController;
-import com.culturarte.logica.dtos.DTOConsultaPropuesta;
+import com.culturarte.logica.dtos.DTOPropuesta;
+import com.culturarte.logica.enums.ETipoRetorno;
 import com.culturarte.logica.fabrica.Fabrica;
 
 import java.awt.*;
@@ -26,6 +27,8 @@ public class ConsultarPropuestaForm {
     private JLabel imagendir;
     private JButton cancelarButton;
     private JButton aceptarButton;
+    private JTextField fPubli;
+    private JTextField retornos;
 
     private final IPropuestaController controller = Fabrica.getInstancia().getPropuestaController();
 
@@ -33,17 +36,28 @@ public class ConsultarPropuestaForm {
         //llenar combo con propuestas q existen
         List<String> propuestas = controller.listarPropuestas();
         for (String titulo : propuestas) comboPropuestas.addItem(titulo);
-        //al seleccionar una muestra los datos
-        // Botón Aceptar → carga datos
+        // Botón Aceptar carga datos
         aceptarButton.addActionListener(e -> mostrarDatosPropuesta());
-        cancelarButton.addActionListener(e -> SwingUtilities.getWindowAncestor(mainPanel).dispose());
+        //comboPropuestas.addActionListener(e -> limpiarCampos());
+        cancelarButton.addActionListener(e -> {
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
+        });
     }
 
     private void mostrarDatosPropuesta() {
         String seleccionado = (String) comboPropuestas.getSelectedItem();
         if (seleccionado == null) return;
 
-        DTOConsultaPropuesta dto = controller.consultarPropuesta(seleccionado);
+        DTOPropuesta dto = controller.consultarPropuesta(seleccionado);
 
         titulo.setText(dto.titulo);
         descripcion.setText(dto.descripcion);
@@ -51,8 +65,21 @@ public class ConsultarPropuestaForm {
         fecha.setText(dto.fecha.toString());
         montoE.setText(dto.precioEntrada.toString());
         montoR.setText(dto.montoAReunir.toString());
-        estadoActual.setText(dto.estado);
+        estadoActual.setText(dto.estadoActual);
         montoRecaudado.setText(dto.montoRecaudado.toString());
+        fPubli.setText(dto.fechaPublicacion.toString());
+
+        if (dto.retornos != null && !dto.retornos.isEmpty()) {
+            String retornosTexto = dto.retornos.stream()
+                    .map(ETipoRetorno::name)
+                    .reduce((r1, r2) -> r1 + ", " + r2)
+                    .orElse("");
+            retornos.setText(retornosTexto);
+        } else {
+            retornos.setText("Sin retornos definidos");
+        }
+
+
 
         colaboradores.setListData(dto.colaboradores.toArray(new String[0]));
 
@@ -68,5 +95,20 @@ public class ConsultarPropuestaForm {
     public JPanel traerPanel() {
         return mainPanel;
     }
+
+    private void limpiarCampos() {
+        titulo.setText("");
+        descripcion.setText("");
+        lugar.setText("");
+        fecha.setText("");
+        montoE.setText("");
+        montoR.setText("");
+        estadoActual.setText("");
+        montoRecaudado.setText("");
+        colaboradores.setListData(new String[0]);
+        imagendir.setIcon(null);
+        fPubli.setText("");
+    }
+
 
 }
