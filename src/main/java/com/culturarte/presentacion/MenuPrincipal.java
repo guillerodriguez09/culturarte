@@ -38,7 +38,7 @@ public class MenuPrincipal extends JFrame {
         JMenuItem itemConsultarColaborador = new JMenuItem("Consulta de Colaborador");
 
         itemAltaUsuario.addActionListener(e -> abrirAltaUsuario());
-        //itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
+        itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
         itemConsultarColaborador.addActionListener(e -> abrirConsultaColaborador());
 
 
@@ -131,10 +131,10 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
-/*
+
     private void abrirConsultaProponente() {
-        AltaUsuario consProp = new AltaUsuario();
-        JInternalFrame frame = new JInternalFrame("Alta de Usuario", true, true, true, true);
+        ConsultaProponenteForm consProp = new ConsultaProponenteForm();
+        JInternalFrame frame = new JInternalFrame("Consulta de Proponente", true, true, true, true);
         frame.setContentPane(consProp.getMainPanel());
         frame.pack();
         frame.setVisible(true);
@@ -145,10 +145,10 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
-*/
+
     private void abrirConsultaColaborador() {
         ConsultaColaboradorFrom consCol = new ConsultaColaboradorFrom();
-        JInternalFrame frame = new JInternalFrame("Alta de Usuario", true, true, true, true);
+        JInternalFrame frame = new JInternalFrame("Consulta de Colaborador", true, true, true, true);
         frame.setContentPane(consCol.getMainPanel());
         frame.pack();
         frame.setVisible(true);

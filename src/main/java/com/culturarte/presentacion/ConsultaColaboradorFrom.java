@@ -1,21 +1,18 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.controllers.IColaboradorController;
-import com.culturarte.logica.controllers.IPropuestaController;
 import com.culturarte.logica.dtos.DTOColaborador;
-import com.culturarte.logica.dtos.DTOConsultaPropuesta;
+import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class ConsultaColaboradorFrom {
-    private JComboBox cbxColEleg;
+    private JComboBox <String> cbxColEleg;
     private JPanel mainPanel;
-    private JLabel txtColEleg;
+    private JLabel lblColEleg;
     private JLabel lblNickname;
     private JLabel lblNombre;
     private JLabel lblApellido;
@@ -34,8 +31,6 @@ public class ConsultaColaboradorFrom {
     private JTextField txtFechaNacimiento;
 
     private final IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
-    private final IPropuestaController controllerColProp = Fabrica.getInstancia().getPropuestaController();
-
 
 
     public ConsultaColaboradorFrom(){
@@ -78,16 +73,12 @@ public class ConsultaColaboradorFrom {
         }
 
         for(Object[] fila : colConProp) {
-            DTOColaborador dtoCol = (DTOColaborador) fila[0];
-            DTOConsultaPropuesta dtoCP = (DTOConsultaPropuesta) fila[1];
+            //DTOColaborador dtoCol = (DTOColaborador) fila[0];
+            DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
 
             listColaboraciones.setListData(dtoCP.colaboradores.toArray(new String[0]));
 
         }
-
-        DTOColaborador dtoColaborador;
-        //DTOConsultaPropuesta dto = controllerColProp.consultarPropuesta();
-
 
     }
 

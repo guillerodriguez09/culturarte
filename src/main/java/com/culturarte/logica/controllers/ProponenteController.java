@@ -1,12 +1,15 @@
 package com.culturarte.logica.controllers;
 
+import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.dtos.DTOProponente;
 
+import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.persistencia.ProponenteDAO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProponenteController implements IProponenteController {
@@ -67,20 +70,69 @@ public class ProponenteController implements IProponenteController {
     }
 
     @Override
-    public List<Object[]> obtenerTodPropConPropu (String nick){
-
-        List<Object[]> Tuti = proponenteDAO.obtenerTodPropConPropu(nick);
-
-        return Tuti;
-
-    }
-
-    @Override
     public List<String> listarProponentes() {
         return proponenteDAO.obtenerTodos()
                 .stream()
                 .map(Proponente::getNick)
                 .toList();
+    }
+
+    @Override
+    public DTOProponente obtenerProponente(String nick){
+
+        Proponente prop = proponenteDAO.buscarPorNick(nick);
+
+        DTOProponente dtoProp = new DTOProponente();
+
+        dtoProp.setNick(prop.getNick());
+        dtoProp.setNombre(prop.getNombre());
+        dtoProp.setApellido(prop.getApellido());
+        dtoProp.setCorreo(prop.getCorreo());
+        dtoProp.setFechaNac(prop.getFechaNac());
+        dtoProp.setDirImagen(prop.getDirImagen());
+        dtoProp.setBiografia(prop.getBiografia());
+        dtoProp.setDireccion(prop.getDireccion());
+        dtoProp.setLink(prop.getLink());
+
+        return dtoProp;
+
+    }
+
+    @Override
+    public List<Object[]> obtenerTodPropConPropu (String nick){
+        List<Object[]> Marco = proponenteDAO.obtenerTodPropConPropu(nick);
+        List<Object[]> Polo = new ArrayList<>();
+        for(Object[] fila : Marco) {
+
+            Proponente prop = (Proponente) fila[0];
+            Propuesta p = (Propuesta) fila[1];
+
+            DTOProponente dtoProp = new DTOProponente();
+            DTOPropuesta dtoPropu = new DTOPropuesta();
+
+            dtoProp.setNick(prop.getNick());
+            dtoProp.setNombre(prop.getNombre());
+            dtoProp.setApellido(prop.getApellido());
+            dtoProp.setCorreo(prop.getCorreo());
+            dtoProp.setFechaNac(prop.getFechaNac());
+            dtoProp.setDirImagen(prop.getDirImagen());
+            dtoProp.setDireccion(prop.getDireccion());
+            dtoProp.setBiografia(prop.getBiografia());
+            dtoProp.setLink(prop.getLink());
+
+            dtoPropu.titulo = p.getTitulo();
+            if (p.getEstadoActual() != null) {
+                dtoPropu.estadoActual = p.getEstadoActual().getNombre().toString();
+            }
+            dtoPropu.montoRecaudado = (double) p.getMontoRecaudado();
+
+            Object[] filaJuan = new Object[] {dtoProp, dtoPropu};
+            Polo.add(filaJuan);
+
+        }
+
+        return Polo;
+
     }
 
 }

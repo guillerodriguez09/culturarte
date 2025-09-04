@@ -3,7 +3,6 @@ package com.culturarte.logica.controllers;
 import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColaborador;
-import com.culturarte.logica.dtos.DTOConsultaPropuesta;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.persistencia.ColaboradorDAO;
 
@@ -75,7 +74,7 @@ public class ColaboradorController implements IColaboradorController {
             Propuesta p = (Propuesta) fila[2];
 
             DTOColaborador dtoCol = new DTOColaborador();
-            DTOConsultaPropuesta dtoCP = new DTOConsultaPropuesta();
+            DTOPropuesta dtoCP = new DTOPropuesta();
 
             dtoCol.setNick(col.getNick());
             dtoCol.setNombre(col.getNombre());
@@ -87,7 +86,7 @@ public class ColaboradorController implements IColaboradorController {
             dtoCP.titulo = p.getTitulo();
             dtoCP.proponenteNick = p.getProponente().getNick();
             if (p.getEstadoActual() != null) {
-                dtoCP.estado = p.getEstadoActual().getNombre().toString();
+                dtoCP.estadoActual = p.getEstadoActual().getNombre().toString();
             }
             dtoCP.montoRecaudado = (double) p.getMontoRecaudado();
 
