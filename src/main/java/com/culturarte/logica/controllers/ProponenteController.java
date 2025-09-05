@@ -1,11 +1,13 @@
 package com.culturarte.logica.controllers;
 
+import com.culturarte.logica.clases.Colaboracion;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.dtos.DTOProponente;
 
 import com.culturarte.logica.dtos.DTOPropuesta;
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ProponenteDAO;
 
 import java.time.LocalDate;
@@ -132,6 +134,51 @@ public class ProponenteController implements IProponenteController {
         }
 
         return Polo;
+
+    }
+
+    @Override
+    public List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick){
+        List<Object[]> MeteCuchillo = proponenteDAO.obtenerPropConPropuYEstado(estado, nick);
+        List<Object[]> SacaTripa = new ArrayList<>();
+        for(Object[] fila : MeteCuchillo) {
+
+            Proponente prop = (Proponente) fila[0];
+            Propuesta p = (Propuesta) fila[1];
+
+            DTOProponente dtoProp = new DTOProponente();
+            DTOPropuesta dtoPropu = new DTOPropuesta();
+
+            dtoProp.setNick(prop.getNick());
+            dtoProp.setNombre(prop.getNombre());
+            dtoProp.setApellido(prop.getApellido());
+            dtoProp.setCorreo(prop.getCorreo());
+            dtoProp.setFechaNac(prop.getFechaNac());
+            dtoProp.setDirImagen(prop.getDirImagen());
+            dtoProp.setDireccion(prop.getDireccion());
+            dtoProp.setBiografia(prop.getBiografia());
+            dtoProp.setLink(prop.getLink());
+
+            dtoPropu.titulo = p.getTitulo();
+            if (p.getEstadoActual() != null) {
+                dtoPropu.estadoActual = p.getEstadoActual().getNombre().toString();
+            }
+            dtoPropu.montoRecaudado = (double) p.getMontoRecaudado();
+
+            List<String> colaboradores = new ArrayList<>();
+            for (Colaboracion colab : p.getColaboraciones()) {
+                if (colab.getColaborador() != null) {
+                    colaboradores.add(colab.getColaborador().getNick());
+                }
+            }
+            dtoPropu.colaboradores = colaboradores;
+
+            Object[] filaJuan = new Object[] {dtoProp, dtoPropu};
+            SacaTripa.add(filaJuan);
+
+        }
+
+        return SacaTripa;
 
     }
 

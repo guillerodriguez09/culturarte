@@ -2,6 +2,8 @@ package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.dtos.DTOProponente;
+import com.culturarte.logica.enums.EEstadoPropuesta;
+
 import java.util.List;
 
 public interface IProponenteController {
@@ -14,5 +16,6 @@ public interface IProponenteController {
 
     DTOProponente obtenerProponente(String nick);
 
+    List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
 
 }

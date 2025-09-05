@@ -2,10 +2,13 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.controllers.IProponenteController;
 import com.culturarte.logica.dtos.DTOProponente;
+import com.culturarte.logica.dtos.DTOPropuesta;
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsultaProponenteForm {
@@ -30,6 +33,8 @@ public class ConsultaProponenteForm {
     private JLabel lblLink;
     private JTextField txtBio;
     private JTextField txtLink;
+    private JComboBox <EEstadoPropuesta> cbxEstado;
+    private JList listPropuXEstado;
 
     private final IProponenteController controllerProp = Fabrica.getInstancia().getProponenteController();
 
@@ -38,17 +43,31 @@ public class ConsultaProponenteForm {
         List<String> proponentes = controllerProp.listarProponentes();
         for (String nick : proponentes) cbxPropEleg.addItem(nick);
 
+        cbxEstado.addItem(EEstadoPropuesta.INGRESADA);
+        cbxEstado.addItem(EEstadoPropuesta.PUBLICADA);
+        cbxEstado.addItem(EEstadoPropuesta.EN_FINANCIACION);
+        cbxEstado.addItem(EEstadoPropuesta.FINANCIADA);
+        cbxEstado.addItem(EEstadoPropuesta.NO_FINANCIADA);
+        cbxEstado.addItem(EEstadoPropuesta.CANCELADA);
+
         btnAceptar.addActionListener(e ->{
             mostrarDatosProponente();
+            EEstadoPropuesta estado = (EEstadoPropuesta)cbxEstado.getSelectedItem();
+            String prop = (String)cbxPropEleg.getSelectedItem();
+            llamarPropuEstados(estado, prop);
         });
 
         btnCancelar.addActionListener(e ->{
             SwingUtilities.getWindowAncestor(mainPanel).dispose();
         });
 
+        cbxEstado.addActionListener(e ->{
+
+        });
+
     }
 
-    private void  mostrarDatosProponente(){
+    private void mostrarDatosProponente(){
 
         String prop = (String) cbxPropEleg.getSelectedItem();
         if (prop == null){
@@ -83,4 +102,22 @@ public class ConsultaProponenteForm {
 
     }
 
+    private void llamarPropuEstados(EEstadoPropuesta estado, String prop){
+
+        List<Object[]> colConPopuYEstado = controllerProp.obtenerPropConPropuYEstado(estado, prop);
+
+        List<String> elem = new ArrayList<>();
+
+        for(Object[] fila : colConPopuYEstado) {
+            DTOProponente dtoCol = (DTOProponente) fila[0];
+            DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
+
+            String colaboradores = String.join(", ", dtoCP.colaboradores);
+            String linea = colaboradores + " - Monto: " + dtoCP.montoRecaudado;
+            elem.add(linea);
+
+            listPropuXEstado.setListData(elem.toArray(new String[0]));
+        }
+
+    }
 }

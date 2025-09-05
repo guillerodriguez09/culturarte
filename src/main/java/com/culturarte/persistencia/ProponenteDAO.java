@@ -2,6 +2,7 @@ package com.culturarte.persistencia;
 
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.clases.Propuesta;
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -59,6 +60,16 @@ public class ProponenteDAO {
         try {
             return em.createQuery("SELECT pro, p FROM Proponente pro INNER JOIN pro.propuestas p WHERE pro.nickname = :nick", Object[].class)
                     .setParameter("nick", nick).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Object[]> obtenerPropConPropuYEstado(EEstadoPropuesta extado, String nick) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT pro, p FROM Proponente pro INNER JOIN pro.propuestas p WHERE pro.nickname = :nick AND p.estadoActual.nombre = :estado", Object[].class)
+                    .setParameter("nick", nick).setParameter("estado", extado).getResultList();
         } finally {
             em.close();
         }
