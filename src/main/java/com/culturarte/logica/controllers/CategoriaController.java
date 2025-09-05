@@ -5,6 +5,8 @@ import com.culturarte.logica.dtos.DTOCategoria;
 import com.culturarte.persistencia.CategoriaDAO;
 
 import java.util.List;
+import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.*;
 
 public class CategoriaController implements ICategoriaController {
 
@@ -22,10 +24,18 @@ public class CategoriaController implements ICategoriaController {
         if (categoriaDAO.existe(dtoCat.getNombre())) {
             throw new IllegalArgumentException("Ya existe una categoria con ese nombre.");
         }
+        Categoria padre = dtoCat.getCatPadre();
+        if (padre == null) {
+            padre = categoriaDAO.buscarPorNombre("Categoría");
+            if (padre == null) {
+                padre = new Categoria("Categoría", null); //creamos la cat raiz "categoria"
+                categoriaDAO.guardar(padre);
+            }
+        }
 
         Categoria cat = new Categoria(
                 dtoCat.getNombre(),
-                dtoCat.getCatPadre()
+                padre
         );
 
         categoriaDAO.guardar(cat);
@@ -44,6 +54,38 @@ public class CategoriaController implements ICategoriaController {
     public List<Categoria> listarCategoriasC() {
         return categoriaDAO.obtenerTodas();
     }
+
+
+    public DefaultMutableTreeNode construirArbolCategorias() {
+        List<Categoria> categorias = categoriaDAO.obtenerTodas();
+
+        Map<String, DefaultMutableTreeNode> nodos = new HashMap<>();
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categoría");
+        nodos.put("Categoría", raiz); //pone a categoria en la raiz del arbol
+
+        // Crear nodos sin agregarlos al árbol aún
+        for (Categoria cat : categorias) {
+            nodos.putIfAbsent(cat.getNombre(), new DefaultMutableTreeNode(cat.getNombre()));
+        }
+
+        // Enlazar nodos padre-hijo
+        for (Categoria cat : categorias) {
+            String nombre = cat.getNombre();
+            String padreNombre = (cat.getCatPadre() != null) ? cat.getCatPadre().getNombre() : "Categoría";
+
+            DefaultMutableTreeNode hijo = nodos.get(nombre);
+            DefaultMutableTreeNode padre = nodos.getOrDefault(padreNombre, raiz);
+
+            // esto hace que no entre en un ciclo, me estaba dando error antes
+            if (padre != null && hijo != null && !hijo.isNodeAncestor(padre)) {
+                padre.add(hijo);
+            }
+        }
+
+        return raiz;
+    }
+
+
 }
 
 

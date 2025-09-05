@@ -16,18 +16,6 @@ import javax.swing.*;
 public class Culturarte {
     public static void main(String[] args) {
 
-        //Categoria cat = new Categoria("diversion");
-
-        //Usuario u = new Usuario("Crepi", "Luca", "Crespi", "CrepsiPerrera@gmail.com", LocalDate.of(2004, 10, 28), "C:\\Users\\Chorizo-Cosmico\\Pictures\\Hellmo.jpg");
-        //System.out.println(u.getNick() + " " + u.getNombre() + " " + u.getApellido() + " " + u.getCorreo() + " " + u.getFechaNac() + " " + u.getDirImagen());
-
-        //Proponente p = new Proponente("Andre", "Andres", "Ferreira", "AndreFerreteria@gmail.com", LocalDate.of(2004, 1, 12), "C:\\Users\\Chorizo-Cosmico\\Pictures\\KeeperOoh.png", "Abajo de un puente", "El mate es la fuente de su vida", "Nose");
-        // System.out.println(p.getNick() + " " + p.getNombre() + " " +  p.getApellido() + " " + p.getCorreo() + " " + p.getFechaNac() + " " + p.getDirImagen() + " " + p.getDireccion() + " " + p.getBiografia() + " " + p.getLink());
-
-        //Colaborador c = new Colaborador("Fede", "Federico", "Valdez", "FedeBaldes@gmail.com", LocalDate.of(2003, 7, 10), "C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
-        // System.out.println(c.getNick() + " " + c.getNombre() + " " +  c.getApellido() + " " + c.getCorreo() + " " + c.getFechaNac() + " " + c.getDirImagen());
-
-
         Colaborador juan = new Colaborador("juan", "Juan", "Pérez", "juan@mail.com", LocalDate.of(2000, 5, 12), "C:\\Users\\blabla\\Pictures\\sesi.jpg");
         //Colaboracion c1 = new Colaboracion(2000, ETipoRetorno.ENTRADAS_GRATIS, LocalDate.now(), prop, juan);
 
@@ -60,99 +48,11 @@ public class Culturarte {
         IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
         controllerCol.altaColaborador(dtoC);
 
-        DTOCategoria dtoCat2 = new DTOCategoria();
-        dtoCat2.setNombre("Categoria");
-        dtoCat2.setCatPadre(null);
-
-        DTOCategoria dtoCat = new DTOCategoria();
-        dtoCat.setNombre("diversion");
-        dtoCat.setCatPadre(null);
-
-        //DTOCategoria dtoCat3 = new DTOCategoria();
-        //dtoCat3.setNombre("Cancer");
-        //dtoCat3.setCatPadre(null);
-
-        ICategoriaController controllerCat = Fabrica.getInstancia().getCategoriaController();
-        controllerCat.altaCategoria(dtoCat);
-        controllerCat.altaCategoria(dtoCat2);
-        //controllerCat.altaCategoria(dtoCat3);
-
-    //menu principal con swing, esta medio pobreton pero anda despues lo mejorare jaja
         SwingUtilities.invokeLater(() -> {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
         });
-/*
-        DTOPropuesta dto = new DTOPropuesta(); // este dto va a venir desde swing en futuro
-        dto.titulo = "abc";
-        dto.descripcion = "Gjee";
-        dto.lugar = "Montevideo";
-        dto.fecha = LocalDate.of(2025, 9, 10);
-        dto.precioEntrada = 500;
-        dto.montoAReunir = 1000;
-        dto.imagen = null; //falta implementar tema imagenes
-        dto.categoriaNombre = dtoCat.getNombre();
-        dto.proponenteNick = dtoP.getNick();
-        dto.retornos = List.of(ETipoRetorno.ENTRADAS_GRATIS, ETipoRetorno.PORCENTAJE_GANANCIAS);
 
-        IPropuestaController controllerP = Fabrica.getInstancia().getPropuestaController();//trae una interfaz del controlador de propuesta
-        controllerP.altaPropuesta(dto); //llama al caso de uso
-
-        System.out.println("Propuesta dada de alta correctamente.");
-
-        // lista propuestas con estado ingresada
-        EEstadoPropuesta estadoBuscado = EEstadoPropuesta.INGRESADA;
-        List<DTOPropuesta> propuestas = controllerP.listarPorEstado(estadoBuscado);
-
-        System.out.println("Propuestas con estado: " + estadoBuscado);
-
-        if (propuestas.isEmpty()) {
-            System.out.println("no hay propuestas en ese estado " + estadoBuscado);
-        } else {
-            for (DTOPropuesta pr : propuestas) {
-                System.out.println("Título: " + pr.getTitulo());
-                System.out.println("Lugar: " + pr.getLugar());
-                System.out.println("Fecha: " + pr.getFecha());
-                System.out.println("Categoría: " + pr.getCategoria());
-                System.out.println("-----------------");
-            }
-        }
-
-        IPropuestaController controllerP2 = Fabrica.getInstancia().getPropuestaController();
-        List<String> titulos = controllerP2.listarPropuestas();
-        System.out.println("=== Propuestas disponibles ===");
-        titulos.forEach(System.out::println);
-
-        if (titulos.isEmpty()) {
-            System.out.println("No hay propuestas en la base. Cargá datos y volvé a ejecutar.");
-            return;
-        }
-
-        // Tomo la primera para consultar su detalle
-        String tituloSeleccionado = titulos.getFirst();
-        System.out.println("\n=== Consultando propuesta: " + tituloSeleccionado + " ===");
-        DTOConsultaPropuesta dtocp = controllerP2.consultarPropuesta(tituloSeleccionado);
-
-        System.out.println("\n=== Modificando propuesta: " + tituloSeleccionado + " ===");
-
-// Creo un nuevo DTO con los cambios (menos título y proponente, que no se modifican)
-        DTOPropuesta dtoModificada = new DTOPropuesta();
-        dtoModificada.descripcion = "Evento mejorado con invitados internacionales";
-        dtoModificada.lugar = "Teatro Solís";
-        dtoModificada.fecha = LocalDate.of(2025, 10, 20);
-        dtoModificada.precioEntrada = 800;
-        dtoModificada.montoAReunir = 2000;
-        dtoModificada.imagen = "solis.jpg";
-        dtoModificada.categoriaNombre = dtoCat.getNombre(); // reutilizamos "diversion"
-
-        try {
-            controllerP2.modificarPropuesta(tituloSeleccionado, dtoModificada);
-            System.out.println("Propuesta modificada");
-        } catch (Exception e) {
-            System.out.println("Error al modificar: " + e.getMessage());
-        }
-
-    }
         /*
         // Consulta de perfil de Proponente
         // Esta comentado para que no large el chorizo de información con cada ejecución
