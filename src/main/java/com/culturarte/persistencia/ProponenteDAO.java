@@ -8,7 +8,7 @@ import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
 public class ProponenteDAO {
-//fue para probar altapropuesta
+
     public void guardar(Proponente p) {
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();

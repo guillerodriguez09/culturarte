@@ -8,6 +8,9 @@ import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +33,6 @@ public class ModificarPropuestaForm {
     private JButton cargarButton;
     private JButton cancelarButton;
     private JButton aceptarButton;
-    private JComboBox <String> comboCategoria;
     private JComboBox <String> comboProponente;
     private JSpinner montoE;
     private JSpinner montoR;
@@ -39,6 +41,8 @@ public class ModificarPropuestaForm {
     private JList <ETipoRetorno> listaRet;
     private JTextField titulo;
     private JComboBox<EEstadoPropuesta> comboEstados;
+    private JTree arbolCats;
+    private JScrollPane scrollCats;
 
     private final IPropuestaController controller = Fabrica.getInstancia().getPropuestaController();
 
@@ -50,11 +54,13 @@ public class ModificarPropuestaForm {
         for (String p : propuestas) comboPropuestas.addItem(p);
         comboPropuestas.setSelectedIndex(0);
 
+        // Llenar árbol de categorías
+        DefaultMutableTreeNode raiz = Fabrica.getInstancia()
+                .getCategoriaController()
+                .construirArbolCategorias();
 
-    // Carga combos de cat y prop
-        List<String> categorias = Fabrica.getInstancia().getCategoriaController().listarCategorias();
-        for (String cat : categorias) comboCategoria.addItem(cat);
-        comboCategoria.setSelectedIndex(-1);
+        arbolCats.setModel(new javax.swing.tree.DefaultTreeModel(raiz));
+        scrollCats.setPreferredSize(new Dimension(200, 150));
 
 
         List<String> proponentes = Fabrica.getInstancia().getProponenteController().listarProponentes();
@@ -64,8 +70,6 @@ public class ModificarPropuestaForm {
         comboEstados.setModel(new DefaultComboBoxModel<>(EEstadoPropuesta.values()));
         comboEstados.setSelectedIndex(-1);
 
-
-        //para arreglar
         listaRet.setListData(ETipoRetorno.values());
         listaRet.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -107,7 +111,7 @@ public class ModificarPropuestaForm {
             montoR.setValue(dto.montoAReunir);
             imagendir.setText(dto.imagen);
             comboEstados.setSelectedItem(EEstadoPropuesta.valueOf(dto.estadoActual));
-            comboCategoria.setSelectedItem(dto.categoriaNombre);
+            seleccionarCategoriaEnArbol(dto.categoriaNombre);
             comboProponente.setSelectedItem(dto.proponenteNick);
             List<ETipoRetorno> retornos = dto.retornos;
             if (retornos != null && !retornos.isEmpty()) {
@@ -141,7 +145,8 @@ public class ModificarPropuestaForm {
             dto.precioEntrada = (Integer) montoE.getValue();
             dto.montoAReunir = (Integer) montoR.getValue();
             dto.imagen = imagendir.getText();
-            dto.categoriaNombre = (String) comboCategoria.getSelectedItem();
+            Object nodoSeleccionado = arbolCats.getLastSelectedPathComponent();
+            dto.categoriaNombre = nodoSeleccionado.toString();
             dto.proponenteNick = (String) comboProponente.getSelectedItem();
             dto.retornos = listaRet.getSelectedValuesList();
 
@@ -191,6 +196,31 @@ public class ModificarPropuestaForm {
     public JPanel traerPanel() {
         return mainPanel;
     }
+
+    private void seleccionarCategoriaEnArbol(String nombreCategoria) {
+        TreeModel modelo = arbolCats.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+
+        TreePath path = buscarNodo(raiz, nombreCategoria, new TreePath(raiz));
+        if (path != null) {
+            arbolCats.setSelectionPath(path);
+            arbolCats.scrollPathToVisible(path);
+        }
+    }
+
+    // Busca recursivamente el nodo con ese nombre
+    private TreePath buscarNodo(DefaultMutableTreeNode nodo, String nombre, TreePath path) {
+        if (nodo.getUserObject().toString().equals(nombre)) {
+            return path;
+        }
+        for (int i = 0; i < nodo.getChildCount(); i++) {
+            DefaultMutableTreeNode hijo = (DefaultMutableTreeNode) nodo.getChildAt(i);
+            TreePath resultado = buscarNodo(hijo, nombre, path.pathByAddingChild(hijo));
+            if (resultado != null) return resultado;
+        }
+        return null;
+    }
+
 
 
 }

@@ -5,14 +5,10 @@ import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
 import com.culturarte.logica.fabrica.Fabrica;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,7 +16,6 @@ public class AltaPropuestaForm {
 
     private JPanel panel1;
     private JComboBox<String> comboProponente;
-    private JComboBox<String> comboCategoria;
     private JTextField titulo;
     private JTextField descripcion;
     private JTextField lugar;
@@ -32,15 +27,20 @@ public class AltaPropuestaForm {
     private JSpinner spinEntrada;
     private JSpinner spinMonto;
     private JList<ETipoRetorno> listaRetornos;
+    private JTree arbolCats;
+    private JScrollPane scrollCats;
 
     private final IPropuestaController controller = Fabrica.getInstancia().getPropuestaController();
 
     public AltaPropuestaForm() {
-        // Llena combo de categorías
-        List<String> categorias = Fabrica.getInstancia().getCategoriaController().listarCategorias();
-        for (String cat : categorias) comboCategoria.addItem(cat);
+        // Llenar árbol de categorías
+        DefaultMutableTreeNode raiz = Fabrica.getInstancia()
+                .getCategoriaController()
+                .construirArbolCategorias();
 
-        //LAS CATEGORIAS DEBEN SER CON JTREE
+        arbolCats.setModel(new javax.swing.tree.DefaultTreeModel(raiz));
+        scrollCats.setPreferredSize(new Dimension(200, 150));
+
 
         // Llena combo de proponentes
         List<String> proponentes = Fabrica.getInstancia().getProponenteController().listarProponentes();
@@ -67,7 +67,13 @@ public class AltaPropuestaForm {
             dto.precioEntrada = (Integer) spinEntrada.getValue();
             dto.montoAReunir = (Integer) spinMonto.getValue();
             dto.imagen = imagen.getText();
-            dto.categoriaNombre = (String) comboCategoria.getSelectedItem();
+
+            Object nodoSeleccionado = arbolCats.getLastSelectedPathComponent();
+            if (nodoSeleccionado == null) {
+                throw new IllegalArgumentException("Debe seleccionar una categoría.");
+            }
+            dto.categoriaNombre = nodoSeleccionado.toString();
+
             dto.proponenteNick = (String) comboProponente.getSelectedItem();
             dto.retornos = listaRetornos.getSelectedValuesList();
 
@@ -79,6 +85,8 @@ public class AltaPropuestaForm {
             JOptionPane.showMessageDialog(panel1, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    //esta funcion se repite varias veces, deberia agruparla en una sola y reutilizarla
     private void seleccionarImagen() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes JPG y PNG", "jpg", "jpeg", "png"));
@@ -121,7 +129,7 @@ public class AltaPropuestaForm {
         spinMonto.setValue(0);
         imagen.setText("");
         listaRetornos.clearSelection();
-        comboCategoria.setSelectedIndex(0);
+        arbolCats.clearSelection();
         comboProponente.setSelectedIndex(0);
     }
 
