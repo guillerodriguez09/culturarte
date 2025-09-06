@@ -18,7 +18,7 @@ public class DTOPropuesta {
 
     public String proponenteNick;
     public String categoriaNombre;
-    public List<String> colaboradores;
+    public List<String> colaboradores; // lo uso para mostrar en consulta, en propuesta hay colaboraciones no colaboradores
     public Double montoRecaudado;
 
     public List<ETipoRetorno> retornos;
@@ -41,7 +41,8 @@ public class DTOPropuesta {
         public LocalDate getFechaPublicacion() { return fechaPublicacion; }
         public String getEstadoActual() { return estadoActual; }
 
-        // setters
+
+    // setters
         public void setTitulo(String titulo) { this.titulo = titulo; }
         public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
         public void setLugar(String lugar) { this.lugar = lugar; }

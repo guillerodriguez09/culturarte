@@ -4,6 +4,7 @@ import com.culturarte.logica.enums.ETipoRetorno;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Colaboracion {
@@ -11,8 +12,10 @@ public class Colaboracion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; //identificador para la colab
     private Integer monto;
+    @Enumerated(EnumType.STRING)
     private ETipoRetorno retorno;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
+
 
     @ManyToOne
     private Propuesta propuesta;
@@ -20,7 +23,7 @@ public class Colaboracion {
     private Colaborador colaborador;
 
     // Constructor
-    public Colaboracion(Integer monto, ETipoRetorno retorno, LocalDate fecha,
+    public Colaboracion(Integer monto, ETipoRetorno retorno, LocalDateTime fecha,
                         Propuesta propuesta, Colaborador colaborador) {
         this.monto = monto;
         this.retorno = retorno;
@@ -34,14 +37,14 @@ public class Colaboracion {
     public Integer getId() {return id; }
     public Integer getMonto() { return monto; }
     public ETipoRetorno getRetorno() { return retorno; }
-    public LocalDate getFecha() { return fecha; }
+    public LocalDateTime getFecha() { return fecha; }
     public Propuesta getPropuesta() { return propuesta; }
     public Colaborador getColaborador() { return colaborador; }
 
 
     public void setMonto(Integer monto) { this.monto = monto; }
     public void setRetorno(ETipoRetorno retorno) { this.retorno = retorno; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
     public void setPropuesta(Propuesta propuesta) { this.propuesta = propuesta; }
     public void setColaborador(Colaborador colaborador) { this.colaborador = colaborador; }
 

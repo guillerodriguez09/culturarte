@@ -121,7 +121,7 @@ public class PropuestaController implements IPropuestaController {
                 dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
             }
 
-            // Colaboradores (nicknames)
+            // Colaboradores nicks
             List<String> colaboradores = new ArrayList<>();
             for (Colaboracion colab : propuesta.getColaboraciones()) {
                 if (colab.getColaborador() != null) {
@@ -130,7 +130,7 @@ public class PropuestaController implements IPropuestaController {
             }
             dto.colaboradores = colaboradores;
 
-            // Monto total recaudado
+            // total recaudado
             dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
 
             return dto;
@@ -142,7 +142,6 @@ public class PropuestaController implements IPropuestaController {
             throw new IllegalArgumentException("Datos de propuesta no provistos.");
         }
 
-        // validaciones básicas (reutilizadas de altaPropuesta)
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
