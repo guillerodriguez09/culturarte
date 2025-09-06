@@ -54,5 +54,7 @@ public class DTOPropuesta {
         public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
         public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
         public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
+        public void setColaboradores(List<String> colaboradores) { this.colaboradores = colaboradores; }
+        public void setMontoRecaudado(Double montoRecaudado) { this.montoRecaudado = montoRecaudado; }
     }
 

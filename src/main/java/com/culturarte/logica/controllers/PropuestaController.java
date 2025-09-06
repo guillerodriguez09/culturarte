@@ -188,19 +188,37 @@ public class PropuestaController implements IPropuestaController {
     @Override
     public List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado) {
         List<Propuesta> propuestas = propuestaDAO.listarPorEstado(estado);
-        List<DTOPropuesta> dtos = new ArrayList<>(); //la lista de dtos que van a la presentacion
+        List<DTOPropuesta> dtos = new ArrayList<>();
 
         for (Propuesta p : propuestas) {
             DTOPropuesta dto = new DTOPropuesta();
-            dto.titulo = p.getTitulo();
-            dto.descripcion = p.getDescripcion();
-            dto.lugar = p.getLugar();
-            dto.fecha = p.getFecha();
-            dto.precioEntrada = p.getPrecioEntrada();
-            dto.montoAReunir = p.getMontoAReunir();
-            dto.categoriaNombre = p.getCategoria().getNombre();
-            dto.proponenteNick = p.getProponente().getNick();
-            dto.retornos = p.getRetornos();
+
+            dto.setTitulo(p.getTitulo());
+            dto.setDescripcion(p.getDescripcion());
+            dto.setLugar(p.getLugar());
+            dto.setFecha(p.getFecha());
+            dto.setPrecioEntrada(p.getPrecioEntrada());
+            dto.setMontoAReunir(p.getMontoAReunir());
+            dto.setImagen(p.getImagen());
+            dto.setCategoriaNombre(p.getCategoria().getNombre());
+            dto.setProponenteNick(p.getProponente().getNick());
+            dto.setRetornos(p.getRetornos());
+            dto.setFechaPublicacion(p.getFechaPublicacion());
+
+            if (p.getEstadoActual() != null) {
+                dto.setEstadoActual(p.getEstadoActual().getNombre().toString());
+            }
+
+            List<String> colaboradores = new ArrayList<>();
+            for (Colaboracion colab : p.getColaboraciones()) {
+                if (colab.getColaborador() != null) {
+                    colaboradores.add(colab.getColaborador().getNick());
+                }
+            }
+            dto.setColaboradores(colaboradores);
+
+            dto.setMontoRecaudado((double) p.getMontoRecaudado());
+
             dtos.add(dto);
         }
 
