@@ -10,6 +10,7 @@ public class DTOColaboracion {
     private double monto;
     private ETipoRetorno tipoRetorno;
     private LocalDate fecha;
+    private String propuestaTitulo;
 
     public DTOColaboracion() {}
 
@@ -24,4 +25,7 @@ public class DTOColaboracion {
 
     public LocalDate getFecha() { return fecha; }
     public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+
+    public String getPropuestaTitulo() { return propuestaTitulo; }
+    public void setPropuestaTitulo(String propuestaTitulo) { this.propuestaTitulo = propuestaTitulo; }
 }
