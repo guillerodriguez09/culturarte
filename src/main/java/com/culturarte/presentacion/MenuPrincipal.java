@@ -54,9 +54,23 @@ public class MenuPrincipal extends JFrame {
 
         menuCategoria.add(itemAltaCategoria);
 
+        //menu colaboraciones
+        JMenu menuColab = new JMenu("Colaboraciones");
+        JMenuItem itemRegistrarColaboradocion = new JMenuItem("Registrar Colaboracion");
+        JMenuItem itemConsultarColaboracion = new JMenuItem("Consultar Colaboracion");
+        JMenuItem  itemCancelarColaboracion = new JMenuItem("Cancelar Colaboracion");
+
+        menuColab.add(itemRegistrarColaboradocion);
+        menuColab.add(itemCancelarColaboracion);
+        menuColab.add(itemConsultarColaboracion);
+
+        itemCancelarColaboracion.addActionListener(e -> abrirCancelarColaboracion());
+
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
         menuBar.add(menuCategoria);
+        menuBar.add(menuColab);
+
 
         setJMenuBar(menuBar);
     }
@@ -150,6 +164,20 @@ public class MenuPrincipal extends JFrame {
         ConsultaColaboradorFrom consCol = new ConsultaColaboradorFrom();
         JInternalFrame frame = new JInternalFrame("Consulta de Colaborador", true, true, true, true);
         frame.setContentPane(consCol.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirCancelarColaboracion() {
+        CancelarColaboración canceColab = new CancelarColaboración();
+        JInternalFrame frame = new JInternalFrame("Cancelar Colaboracion", true, true, true, true);
+        frame.setContentPane(canceColab.traerPanel());
         frame.pack();
         frame.setVisible(true);
         desktopPane.add(frame);

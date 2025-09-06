@@ -1,6 +1,7 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.controllers.IProponenteController;
+import com.culturarte.logica.controllers.IPropuestaController;
 import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
@@ -37,6 +38,7 @@ public class ConsultaProponenteForm {
     private JList listPropuXEstado;
 
     private final IProponenteController controllerProp = Fabrica.getInstancia().getProponenteController();
+    private final IPropuestaController controllerPropuesta = Fabrica.getInstancia().getPropuestaController();
 
     public ConsultaProponenteForm(){
 
@@ -112,12 +114,16 @@ public class ConsultaProponenteForm {
             DTOProponente dtoCol = (DTOProponente) fila[0];
             DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
 
-            String colaboradores = String.join(", ", dtoCP.colaboradores);
-            String linea = colaboradores + " - Monto: " + dtoCP.montoRecaudado;
+            // Llama consultarPropuesta para traer el DTO completo, porque en el dtocp no trae directo la lista de colaboradores
+            DTOPropuesta dtoCompleto = controllerPropuesta.consultarPropuesta(dtoCP.titulo);
+
+            String colaboradores = String.join(", ", dtoCompleto.colaboradores);
+            String linea = dtoCompleto.titulo + " - " + colaboradores + " - Monto: " + dtoCompleto.montoRecaudado;
             elem.add(linea);
+        }
 
             listPropuXEstado.setListData(elem.toArray(new String[0]));
         }
 
     }
-}
+
