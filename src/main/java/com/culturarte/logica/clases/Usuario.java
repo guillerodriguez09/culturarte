@@ -3,6 +3,8 @@ package com.culturarte.logica.clases;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -17,6 +19,8 @@ public abstract class Usuario {
     LocalDate fechaNac;
     String dirImagen;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seguimiento> usuariosSeguidos = new ArrayList<>();
 
     public Usuario(){}
 
