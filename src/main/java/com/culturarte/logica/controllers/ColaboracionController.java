@@ -72,7 +72,7 @@ public class ColaboracionController implements IColaboracionController {
             throw new IllegalArgumentException("El colaborador no tiene colaboraciones.");
         }
         return colabs.stream()
-                .filter(c -> propuestaTitulo.equals(c.getPropuestaTitulo())) // ⚠️ requiere que DTOColaboracion tenga título de propuesta
+                .filter(c -> propuestaTitulo.equals(c.getPropuestaTitulo()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró colaboración para esa propuesta."));
     }
