@@ -187,7 +187,7 @@ public class PropuestaController implements IPropuestaController {
     @Override
     public List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado) {
         List<Propuesta> propuestas = propuestaDAO.listarPorEstado(estado);
-        List<DTOPropuesta> dtos = new ArrayList<>(); //la lista de dtos que van a la presentacion
+        List<DTOPropuesta> dtos = new ArrayList<>();
 
         for (Propuesta p : propuestas) {
             DTOPropuesta dto = new DTOPropuesta();
@@ -200,9 +200,10 @@ public class PropuestaController implements IPropuestaController {
             dto.categoriaNombre = p.getCategoria().getNombre();
             dto.proponenteNick = p.getProponente().getNick();
             dto.retornos = p.getRetornos();
+            dto.estadoActual = p.getEstadoActual().getNombre().toString();
+            dto.montoRecaudado = (double)p.getMontoRecaudado();
             dtos.add(dto);
         }
-
         return dtos;
     }
 }
