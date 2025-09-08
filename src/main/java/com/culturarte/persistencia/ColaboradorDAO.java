@@ -62,5 +62,17 @@ public class ColaboradorDAO {
             em.close();
         }
     }
+    //agregue este metodo para poder actualizar la lista de colaboraciones
+    public void actualizar(Colaborador colaborador) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(colaborador);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
 
 }

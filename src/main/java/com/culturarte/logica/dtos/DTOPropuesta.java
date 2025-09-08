@@ -18,43 +18,41 @@ public class DTOPropuesta {
 
     public String proponenteNick;
     public String categoriaNombre;
-    public List<String> colaboradores;
+    public List<String> colaboradores; // lo uso para mostrar en consulta, en propuesta hay colaboraciones no colaboradores
     public Double montoRecaudado;
 
     public List<ETipoRetorno> retornos;
 
     public String estadoActual;
 
-        public DTOPropuesta() {}
+    public DTOPropuesta() {}
 
-        // getters
-        public String getTitulo() { return titulo; }
-        public String getDescripcion() { return descripcion; }
-        public String getLugar() { return lugar; }
-        public LocalDate getFecha() { return fecha; }
-        public Integer getPrecioEntrada() { return precioEntrada; }
-        public Integer getMontoAReunir() { return montoAReunir; }
-        public String getImagen() { return imagen; }
-        public String getProponenteNick() { return proponenteNick; }
-        public String getCategoria() { return categoriaNombre; }
-        public List<ETipoRetorno> getRetornos() { return retornos; }
-        public LocalDate getFechaPublicacion() { return fechaPublicacion; }
-        public String getEstadoActual() { return estadoActual; }
+    // getters
+    public String getTitulo() { return titulo; }
+    public String getDescripcion() { return descripcion; }
+    public String getLugar() { return lugar; }
+    public LocalDate getFecha() { return fecha; }
+    public Integer getPrecioEntrada() { return precioEntrada; }
+    public Integer getMontoAReunir() { return montoAReunir; }
+    public String getImagen() { return imagen; }
+    public String getProponenteNick() { return proponenteNick; }
+    public String getCategoria() { return categoriaNombre; }
+    public List<ETipoRetorno> getRetornos() { return retornos; }
+    public LocalDate getFechaPublicacion() { return fechaPublicacion; }
+    public String getEstadoActual() { return estadoActual; }
 
-        // setters
-        public void setTitulo(String titulo) { this.titulo = titulo; }
-        public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-        public void setLugar(String lugar) { this.lugar = lugar; }
-        public void setFecha(LocalDate fecha) { this.fecha = fecha; }
-        public void setPrecioEntrada(Integer precioEntrada) { this.precioEntrada = precioEntrada; }
-        public void setMontoAReunir(Integer montoAReunir) { this.montoAReunir = montoAReunir; }
-        public void setImagen(String imagen) { this.imagen = imagen; }
-        public void setProponenteNick(String proponenteNick) { this.proponenteNick = proponenteNick; }
-        public void setCategoriaNombre(String categoriaNombre) { this.categoriaNombre = categoriaNombre; }
-        public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
-        public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
-        public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
-        public void setColaboradores(List<String> colaboradores) { this.colaboradores = colaboradores; }
-        public void setMontoRecaudado(Double montoRecaudado) { this.montoRecaudado = montoRecaudado; }
-    }
 
+    // setters
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setLugar(String lugar) { this.lugar = lugar; }
+    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public void setPrecioEntrada(Integer precioEntrada) { this.precioEntrada = precioEntrada; }
+    public void setMontoAReunir(Integer montoAReunir) { this.montoAReunir = montoAReunir; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
+    public void setProponenteNick(String proponenteNick) { this.proponenteNick = proponenteNick; }
+    public void setCategoriaNombre(String categoriaNombre) { this.categoriaNombre = categoriaNombre; }
+    public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
+    public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
+    public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
+}

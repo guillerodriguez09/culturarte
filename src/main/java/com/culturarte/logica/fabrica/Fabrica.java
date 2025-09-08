@@ -7,19 +7,19 @@ public class Fabrica {
     private static Fabrica instancia;
 
     // controllers a usar
+    private final IColaboracionController colaboracionController;
     private final IPropuestaController propuestaController;
     private final IProponenteController proponenteController;
     private final IColaboradorController colaboradorController;
     private final ICategoriaController categoriaController;
-    private final IColaboracionController colaboracionController;
 
     private Fabrica() {
         // instanciar los controllers aca
+        this.colaboracionController = new ColaboracionController();
         this.propuestaController = new PropuestaController();
         this.proponenteController = new ProponenteController();
         this.colaboradorController = new ColaboradorController();
         this.categoriaController = new CategoriaController();
-        this.colaboracionController = new ColaboracionController(propuestaController, colaboradorController);
     }
 
     public static Fabrica getInstancia() {
@@ -30,6 +30,9 @@ public class Fabrica {
     }
 
     // getters de controllers
+
+    public IColaboracionController getColaboracionController() { return colaboracionController; };
+
     public IPropuestaController getPropuestaController() {
         return propuestaController;
     }
@@ -39,7 +42,4 @@ public class Fabrica {
     public IColaboradorController getColaboradorController() { return colaboradorController;}
 
     public ICategoriaController getCategoriaController() { return categoriaController;}
-
-    public IColaboracionController getColaboracionController() { return colaboracionController;}
 }
-

@@ -23,10 +23,10 @@ public class Propuesta {
     private Integer montoAReunir;
     private LocalDate fechaPublicacion;
 
-  //una prop va a 1 cat
-  @ManyToOne(optional = false)
-  @JoinColumn(name = "CATEGORIA_NOMBRE", nullable = false)
-  private Categoria categoria;
+    //una prop va a 1 cat
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CATEGORIA_NOMBRE", nullable = false)
+    private Categoria categoria;
 
     @OneToOne
     private Estado estadoActual;
@@ -45,7 +45,7 @@ public class Propuesta {
     @Column(name = "retorno", nullable = false)
     private List<ETipoRetorno> retornos;
 
-    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.EAGER)
     private List<Colaboracion> colaboraciones;
 
 
@@ -85,7 +85,6 @@ public class Propuesta {
     public List<ETipoRetorno> getRetornos() { return retornos; }
 
 
-
     // Setters
     public void setImagen(String imagen) { this.imagen = imagen; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
@@ -107,9 +106,14 @@ public class Propuesta {
         return colaboraciones;
     }
 
-    public void setColaboraciones(List<Colaboracion> colaboraciones) {
-        this.colaboraciones = colaboraciones;
+    public void addColaboracion(Colaboracion c) {
+        if (colaboraciones == null) {
+            colaboraciones = new ArrayList<>();
+        }
+        colaboraciones.add(c);
+        c.setPropuesta(this);
     }
+
 
     public int getMontoRecaudado() {
         return colaboraciones.stream()
@@ -117,6 +121,3 @@ public class Propuesta {
                 .sum();
     }
 }
-
-
-

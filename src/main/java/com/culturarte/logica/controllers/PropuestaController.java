@@ -96,45 +96,45 @@ public class PropuestaController implements IPropuestaController {
 
     @Override
     public DTOPropuesta consultarPropuesta(String titulo) {
-            Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
+        Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
 
-            if (propuesta == null) {
-                throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
-            }
-
-            // Armo el DTO con la info básica
-            DTOPropuesta dto = new DTOPropuesta();
-            dto.titulo = propuesta.getTitulo();
-            dto.descripcion = propuesta.getDescripcion();
-            dto.lugar = propuesta.getLugar();
-            dto.fecha = propuesta.getFecha();
-            dto.precioEntrada = propuesta.getPrecioEntrada();
-            dto.montoAReunir = propuesta.getMontoAReunir();
-            dto.imagen = propuesta.getImagen();
-            dto.categoriaNombre = propuesta.getCategoria().getNombre();
-            dto.proponenteNick = propuesta.getProponente().getNick();
-            dto.fechaPublicacion = propuesta.getFechaPublicacion();
-            dto.retornos = propuesta.getRetornos();
-
-            // Estado actual
-            if (propuesta.getEstadoActual() != null) {
-                dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
-            }
-
-            // Colaboradores (nicknames)
-            List<String> colaboradores = new ArrayList<>();
-            for (Colaboracion colab : propuesta.getColaboraciones()) {
-                if (colab.getColaborador() != null) {
-                    colaboradores.add(colab.getColaborador().getNick());
-                }
-            }
-            dto.colaboradores = colaboradores;
-
-            // Monto total recaudado
-            dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
-
-            return dto;
+        if (propuesta == null) {
+            throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
         }
+
+        // Armo el DTO con la info básica
+        DTOPropuesta dto = new DTOPropuesta();
+        dto.titulo = propuesta.getTitulo();
+        dto.descripcion = propuesta.getDescripcion();
+        dto.lugar = propuesta.getLugar();
+        dto.fecha = propuesta.getFecha();
+        dto.precioEntrada = propuesta.getPrecioEntrada();
+        dto.montoAReunir = propuesta.getMontoAReunir();
+        dto.imagen = propuesta.getImagen();
+        dto.categoriaNombre = propuesta.getCategoria().getNombre();
+        dto.proponenteNick = propuesta.getProponente().getNick();
+        dto.fechaPublicacion = propuesta.getFechaPublicacion();
+        dto.retornos = propuesta.getRetornos();
+
+        // Estado actual
+        if (propuesta.getEstadoActual() != null) {
+            dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
+        }
+
+        // Colaboradores nicks
+        List<String> colaboradores = new ArrayList<>();
+        for (Colaboracion colab : propuesta.getColaboraciones()) {
+            if (colab.getColaborador() != null) {
+                colaboradores.add(colab.getColaborador().getNick());
+            }
+        }
+        dto.colaboradores = colaboradores;
+
+        // total recaudado
+        dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
+
+        return dto;
+    }
 
     @Override
     public void modificarPropuesta(String titulo, DTOPropuesta dto) {
@@ -142,7 +142,6 @@ public class PropuestaController implements IPropuestaController {
             throw new IllegalArgumentException("Datos de propuesta no provistos.");
         }
 
-        // validaciones básicas (reutilizadas de altaPropuesta)
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
@@ -188,43 +187,22 @@ public class PropuestaController implements IPropuestaController {
     @Override
     public List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado) {
         List<Propuesta> propuestas = propuestaDAO.listarPorEstado(estado);
-        List<DTOPropuesta> dtos = new ArrayList<>();
+        List<DTOPropuesta> dtos = new ArrayList<>(); //la lista de dtos que van a la presentacion
 
         for (Propuesta p : propuestas) {
             DTOPropuesta dto = new DTOPropuesta();
-
-            dto.setTitulo(p.getTitulo());
-            dto.setDescripcion(p.getDescripcion());
-            dto.setLugar(p.getLugar());
-            dto.setFecha(p.getFecha());
-            dto.setPrecioEntrada(p.getPrecioEntrada());
-            dto.setMontoAReunir(p.getMontoAReunir());
-            dto.setImagen(p.getImagen());
-            dto.setCategoriaNombre(p.getCategoria().getNombre());
-            dto.setProponenteNick(p.getProponente().getNick());
-            dto.setRetornos(p.getRetornos());
-            dto.setFechaPublicacion(p.getFechaPublicacion());
-
-            if (p.getEstadoActual() != null) {
-                dto.setEstadoActual(p.getEstadoActual().getNombre().toString());
-            }
-
-            List<String> colaboradores = new ArrayList<>();
-            for (Colaboracion colab : p.getColaboraciones()) {
-                if (colab.getColaborador() != null) {
-                    colaboradores.add(colab.getColaborador().getNick());
-                }
-            }
-            dto.setColaboradores(colaboradores);
-
-            dto.setMontoRecaudado((double) p.getMontoRecaudado());
-
+            dto.titulo = p.getTitulo();
+            dto.descripcion = p.getDescripcion();
+            dto.lugar = p.getLugar();
+            dto.fecha = p.getFecha();
+            dto.precioEntrada = p.getPrecioEntrada();
+            dto.montoAReunir = p.getMontoAReunir();
+            dto.categoriaNombre = p.getCategoria().getNombre();
+            dto.proponenteNick = p.getProponente().getNick();
+            dto.retornos = p.getRetornos();
             dtos.add(dto);
         }
 
         return dtos;
     }
 }
-
-
-

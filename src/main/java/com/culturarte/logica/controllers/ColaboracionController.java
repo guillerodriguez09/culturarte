@@ -1,79 +1,106 @@
 package com.culturarte.logica.controllers;
 
-import com.culturarte.logica.dtos.DTOColaboracion;
-import com.culturarte.logica.dtos.DTOColaborador;
-import com.culturarte.logica.dtos.DTOPropuesta;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Colaboracion;
+import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Propuesta;
-import java.time.LocalDate;
+import com.culturarte.logica.dtos.DTOColabConsulta;
+import com.culturarte.logica.dtos.DTOColaboracion;
+import com.culturarte.persistencia.ColaboracionDAO;
+import com.culturarte.persistencia.ColaboradorDAO;
+import com.culturarte.persistencia.PropuestaDAO;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ColaboracionController implements IColaboracionController {
 
-    private final IPropuestaController propuestaController;
-    private final IColaboradorController colaboradorController;
+    private final ColaboracionDAO colaboracionDAO = new ColaboracionDAO();
+    private final PropuestaDAO propuestaDAO = new PropuestaDAO();
+    private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
 
-    private final Map<String, List<DTOColaboracion>> colaboraciones = new HashMap<>();
+    public void registrarColaboracion(DTOColaboracion dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Datos de colaboración no provistos.");
+        }
 
-    public ColaboracionController(IPropuestaController propCtrl, IColaboradorController colCtrl) {
-        this.propuestaController = propCtrl;
-        this.colaboradorController = colCtrl;
-    }
+        if (dto.monto == null || dto.monto <= 0) {
+            throw new IllegalArgumentException("El monto debe ser mayor a cero.");
+        }
 
-    @Override
-    public void registrarColaboracion(String tituloPropuesta, DTOColaboracion dto) {
+        if (dto.retorno == null) {
+            throw new IllegalArgumentException("Debe seleccionarse un tipo de retorno.");
+        }
 
-        DTOPropuesta propuesta = propuestaController.consultarPropuesta(tituloPropuesta);
-        DTOColaborador colaborador = colaboradorController.obtenerColaborador(dto.getColaboradorNick());
-
+        // Busca propuesta
+        Propuesta propuesta = propuestaDAO.buscarPorTitulo(dto.propuestaTitulo);
         if (propuesta == null) {
-            throw new IllegalArgumentException("La propuesta no existe.");
+            throw new IllegalArgumentException("Propuesta no encontrada.");
         }
+
+        // Busca colaborador
+        Colaborador colaborador = colaboradorDAO.buscarPorNick(dto.colaboradorNick);
         if (colaborador == null) {
-            throw new IllegalArgumentException("El colaborador no existe.");
-        }
-        if (dto.getMonto() <= 0) {
-            throw new IllegalArgumentException("El monto de la colaboración debe ser mayor que 0.");
-        }
-        if (dto.getTipoRetorno() == null) {
-            throw new IllegalArgumentException("Debe indicarse un tipo de retorno.");
+            throw new IllegalArgumentException("Colaborador no encontrado.");
         }
 
-        dto.setFecha(LocalDate.now());
+        // Crear y persiste la colab
+        Colaboracion nueva = new Colaboracion(
+                dto.monto,
+                dto.retorno,
+                LocalDateTime.now(),
+                propuesta,
+                colaborador
+        );
 
-        System.out.println("Colaboración registrada:");
-        System.out.println("- Propuesta: " + propuesta.getTitulo());
-        System.out.println("- Colaborador: " + colaborador.getNick());
-        System.out.println("- Monto: " + dto.getMonto());
-        System.out.println("- Tipo retorno: " + dto.getTipoRetorno());
-        System.out.println("- Fecha: " + dto.getFecha());
-    }
-    @Override
-    public List<String> listarColaboradoresConColaboraciones() {
-        return new ArrayList<>(colaboraciones.keySet());
-    }
+        propuesta.addColaboracion(nueva);
+        colaborador.addColaboracion(nueva);
+        colaboracionDAO.guardar(nueva);
+        propuestaDAO.actualizar(propuesta); //para q guarde el colaborador sino no se ve al consultar propuesta
 
-    @Override
-    public List<DTOColaboracion> listarColaboracionesDeColaborador(String colaboradorNick) {
-        return colaboraciones.getOrDefault(colaboradorNick, new ArrayList<>());
     }
 
-    @Override
-    public DTOColaboracion consultarColaboracion(String colaboradorNick, String propuestaTitulo) {
-        List<DTOColaboracion> colabs = colaboraciones.get(colaboradorNick);
-        if (colabs == null) {
-            throw new IllegalArgumentException("El colaborador no tiene colaboraciones.");
+    public List<DTOColabConsulta> listarColaboraciones() {
+        List<Colaboracion> colabs = colaboracionDAO.obtenerTodas();
+        List<DTOColabConsulta> dtos = new ArrayList<>();
+
+        for (Colaboracion c : colabs) {
+            DTOColabConsulta dto = new DTOColabConsulta(
+                    c.getId(),
+                    c.getColaborador().getNick(),
+                    c.getMonto(),
+                    c.getRetorno(),
+                    c.getFecha()
+            );
+            dtos.add(dto);
         }
-        return colabs.stream()
-                .filter(c -> propuestaTitulo.equals(c.getPropuestaTitulo()))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró colaboración para esa propuesta."));
+
+        return dtos;
     }
+
+    public void cancelarColaboracion(int id) {
+        // Busca la colab por el id
+        Colaboracion colab = colaboracionDAO.buscarPorId(id);
+        if (colab == null) {
+            throw new IllegalArgumentException("No existe una colaboración con ID " + id);
+        }
+
+        // Eliminarla de la lista de la propuesta
+        Propuesta propuesta = colab.getPropuesta();
+        if (propuesta != null) {
+            propuesta.getColaboraciones().remove(colab);
+            propuestaDAO.actualizar(propuesta); // importante para mostrar bien los colaboradores
+        }
+
+        // Eliminarla de la lista del colaborador
+        Colaborador colaborador = colab.getColaborador();
+        if (colaborador != null && colaborador.getColaboraciones() != null) {
+            colaborador.getColaboraciones().remove(colab);
+            colaboradorDAO.actualizar(colaborador);
+        }
+
+        // Eliminar de la bd
+        colaboracionDAO.eliminar(colab);
+    }
+
 }

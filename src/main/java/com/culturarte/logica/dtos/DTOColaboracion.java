@@ -1,31 +1,33 @@
 package com.culturarte.logica.dtos;
-
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DTOColaboracion {
+    public String propuestaTitulo;
+    public String colaboradorNick;
+    public Integer monto;
+    public ETipoRetorno retorno;
+    public LocalDateTime fecha;
 
-    private String colaboradorNick;
-    private double monto;
-    private ETipoRetorno tipoRetorno;
-    private LocalDate fecha;
-    private String propuestaTitulo;
+    public DTOColaboracion() {
+    }
 
-    public DTOColaboracion() {}
+    public void setColaboradorNick(String colaboradorNick) {
+        this.colaboradorNick = colaboradorNick;
+    }
+    public void setMonto(Integer monto) {
+        this.monto = monto;
+    }
+    public void setRetorno(ETipoRetorno retorno) {
+        this.retorno = retorno;
+    }
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+    public void setPropuestaTitulo(String propuestaTitulo) {
+        this.propuestaTitulo = propuestaTitulo;
+    }
 
-    public String getColaboradorNick() { return colaboradorNick; }
-    public void setColaboradorNick(String colaboradorNick) { this.colaboradorNick = colaboradorNick; }
-
-    public double getMonto() { return monto; }
-    public void setMonto(double monto) { this.monto = monto; }
-
-    public ETipoRetorno getTipoRetorno() { return tipoRetorno; }
-    public void setTipoRetorno(ETipoRetorno tipoRetorno) { this.tipoRetorno = tipoRetorno; }
-
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
-
-    public String getPropuestaTitulo() { return propuestaTitulo; }
-    public void setPropuestaTitulo(String propuestaTitulo) { this.propuestaTitulo = propuestaTitulo; }
 }
