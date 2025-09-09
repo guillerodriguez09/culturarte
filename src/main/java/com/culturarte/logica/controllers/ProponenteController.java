@@ -1,9 +1,6 @@
 package com.culturarte.logica.controllers;
 
-import com.culturarte.logica.clases.Colaboracion;
-import com.culturarte.logica.clases.Propuesta;
-import com.culturarte.logica.clases.Usuario;
-import com.culturarte.logica.clases.Proponente;
+import com.culturarte.logica.clases.*;
 import com.culturarte.logica.dtos.DTOProponente;
 
 import com.culturarte.logica.dtos.DTOPropuesta;
@@ -83,6 +80,8 @@ public class ProponenteController implements IProponenteController {
     public DTOProponente obtenerProponente(String nick){
 
         Proponente prop = proponenteDAO.buscarPorNick(nick);
+
+        if(prop == null){return null;}
 
         DTOProponente dtoProp = new DTOProponente();
 

@@ -16,6 +16,7 @@ public class DTOSeguimiento {
         this.usuarioSeguido = usuarioSeguido;
     }
 
+    public int getId(){return Id;}
     public Usuario getUsuarioSeguidor(){return usuarioSeguidor;}
     public String getUsuarioSeguido(){return usuarioSeguido;}
 

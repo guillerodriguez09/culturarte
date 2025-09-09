@@ -16,6 +16,7 @@
         <class>com.culturarte.logica.clases.Colaboracion</class>
         <class>com.culturarte.logica.clases.Categoria</class>
         <class>com.culturarte.logica.clases.Estado</class>
+        <class>com.culturarte.logica.clases.Seguimiento</class>
 
         <properties>
             <!-- Conexión MySQL XAMPP -->

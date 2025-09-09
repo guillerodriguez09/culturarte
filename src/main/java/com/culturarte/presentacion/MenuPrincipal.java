@@ -36,15 +36,18 @@ public class MenuPrincipal extends JFrame {
         JMenuItem itemAltaUsuario = new JMenuItem("Alta de Usuario");
         JMenuItem itemConsultaProponente = new JMenuItem("Consulta de Proponente");
         JMenuItem itemConsultarColaborador = new JMenuItem("Consulta de Colaborador");
+        JMenuItem itemSeguimientoUsuario = new JMenuItem("Seguimiento de Usuarios");
 
         itemAltaUsuario.addActionListener(e -> abrirAltaUsuario());
         itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
         itemConsultarColaborador.addActionListener(e -> abrirConsultaColaborador());
+        itemSeguimientoUsuario.addActionListener(e -> abrirSeguimientoUsuario());
 
 
         menuUsuario.add(itemAltaUsuario);
         menuUsuario.add(itemConsultaProponente);
         menuUsuario.add(itemConsultarColaborador);
+        menuUsuario.add(itemSeguimientoUsuario);
 
         //menu categorias
         JMenu menuCategoria = new JMenu("Categoria");
@@ -178,6 +181,20 @@ public class MenuPrincipal extends JFrame {
         CancelarColaboración canceColab = new CancelarColaboración();
         JInternalFrame frame = new JInternalFrame("Cancelar Colaboracion", true, true, true, true);
         frame.setContentPane(canceColab.traerPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirSeguimientoUsuario() {
+        SeguimientoUsuario seguiUsr = new SeguimientoUsuario();
+        JInternalFrame frame = new JInternalFrame("Seguimiento Usuario", true, true, true, true);
+        frame.setContentPane(seguiUsr.getMainPanel());
         frame.pack();
         frame.setVisible(true);
         desktopPane.add(frame);

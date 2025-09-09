@@ -9,8 +9,9 @@ import java.util.List;
 public interface ISeguimientoController {
 
     void registrarSeguimiento(DTOSeguimiento dtoSegui);
+    int conseguirId(String nick, String nicky);
     void cancelarSeguimiento(int idSeguimiento);
-    public List<DTOSeguimiento> listarSeguimientos();
+    List<DTOSeguimiento> listarSeguimientos();
 
 
 }

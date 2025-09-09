@@ -1,13 +1,14 @@
 package com.culturarte.logica.clases;
 
 import jakarta.persistence.*;
+import com.culturarte.logica.clases.Seguimiento;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table (name = "USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "nickname"))
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Usuario {
 
@@ -19,7 +20,7 @@ public abstract class Usuario {
     LocalDate fechaNac;
     String dirImagen;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguimiento> usuariosSeguidos = new ArrayList<>();
 
     public Usuario(){}
@@ -69,6 +70,11 @@ public abstract class Usuario {
     }
     public void setDirImagen(String dirImagen){
         this.dirImagen = dirImagen;
+    }
+
+    @Override
+    public String toString() {
+        return this != null ? this.getNick() : getNick();
     }
 
 }

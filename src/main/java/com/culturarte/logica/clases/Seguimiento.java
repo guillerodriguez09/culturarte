@@ -3,7 +3,7 @@ package com.culturarte.logica.clases;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table (name = "SEGUIMIENTO", uniqueConstraints = @UniqueConstraint(columnNames = "Id"))
 public class Seguimiento {
 
     @Id
@@ -11,7 +11,6 @@ public class Seguimiento {
     int Id;
 
     @ManyToOne
-    @JoinColumn(name = "USUARIO_NICKNAME")  // fk
     private Usuario usuarioSeguidor;
 
     private String usuarioSeguido;

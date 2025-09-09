@@ -2,6 +2,8 @@ package com.culturarte.persistencia;
 
 import com.culturarte.logica.clases.Seguimiento;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 
 import java.util.List;
 
@@ -57,11 +59,25 @@ public class SeguimientoDAO {
         EntityManager em = JpaUtil.getEntityManager();
         try {
             return em.createQuery("SELECT s FROM Seguimiento s WHERE s.usuarioSeguidor.nickname = :nick AND s.usuarioSeguido = :nicky", Seguimiento.class)
-                    .setParameter("nick", nick).setParameter("nicky", nicky).getResultList().get(0);
-        } finally {
+                    .setParameter("nick", nick).setParameter("nicky", nicky).getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }finally {
             em.close();
         }
 
+    }
+
+    public int conseguirId(String nick, String nicky){
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT s.Id FROM Seguimiento s WHERE s.usuarioSeguidor.nickname = :nick AND s.usuarioSeguido = :nicky", Integer.class)
+                    .setParameter("nick", nick).setParameter("nicky", nicky).getSingleResult();
+        }catch(NoResultException e){
+            return 0;
+        }finally {
+            em.close();
+        }
     }
 
     public boolean existe(String nick, String nicky) {

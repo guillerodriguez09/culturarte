@@ -86,7 +86,13 @@ public class AltaUsuario {
 
             String fechaNac = ftxtFechaNacimiento.getText();
 
-            String tipoUsuario = rbtnProponente.isSelected() ? "Proponente" : "Colaborador";
+            String tipoUsuario = "chivito"; //= rbtnProponente.isSelected() ? "Proponente" : "Colaborador";
+
+            if(rbtnProponente.isSelected()){
+                tipoUsuario = "Proponente";
+            }else if(rbtnColaborador.isSelected()){
+                tipoUsuario = "Colaborador";
+            }
 
             if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNac.isEmpty()){
                 JOptionPane.showMessageDialog(mainPanel,

@@ -18,4 +18,5 @@ public interface IProponenteController {
 
     List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
 
+
 }

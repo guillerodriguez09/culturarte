@@ -103,6 +103,8 @@ public class ColaboradorController implements IColaboradorController {
 
         Colaborador col = colaboradorDAO.buscarPorNick(nick);
 
+        if(col == null){return null;}
+
         DTOColaborador dtoCol = new DTOColaborador();
 
         dtoCol.setNick(col.getNick());

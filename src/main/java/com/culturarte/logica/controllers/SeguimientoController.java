@@ -1,8 +1,14 @@
 package com.culturarte.logica.controllers;
 
+import com.culturarte.logica.clases.Colaborador;
+import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.clases.Seguimiento;
+import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.dtos.DTOSeguimiento;
+
 import com.culturarte.persistencia.SeguimientoDAO;
+import com.culturarte.persistencia.ColaboradorDAO;
+import com.culturarte.persistencia.ProponenteDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +16,10 @@ import java.util.List;
 public class SeguimientoController implements ISeguimientoController{
 
     private final SeguimientoDAO seguimientoDAO = new SeguimientoDAO();
+    private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
+    private final ProponenteDAO proponenteDAO = new ProponenteDAO();
+
+
 
     @Override
     public void registrarSeguimiento(DTOSeguimiento dtoSegui){
@@ -27,18 +37,41 @@ public class SeguimientoController implements ISeguimientoController{
         }
 
         if (seguimientoDAO.existe(dtoSegui.getUsuarioSeguidor().getNick(), dtoSegui.getUsuarioSeguido())) {
-            throw new IllegalArgumentException("El usuario " + dtoSegui.getUsuarioSeguidor().getNick() + " ya sigue a " + dtoSegui.getUsuarioSeguido());
+            throw new IllegalArgumentException("El usuario " + dtoSegui.getUsuarioSeguidor() + " ya sigue a " + dtoSegui.getUsuarioSeguido());
         }
 
         //Tendria que poner la funcion existe en Usuario en vez de en Proponente/Colaborador
+        Usuario juliano;
+        Colaborador colaborador = colaboradorDAO.buscarPorNick(dtoSegui.getUsuarioSeguidor().getNick());
+        Proponente proponente = proponenteDAO.buscarPorNick(dtoSegui.getUsuarioSeguidor().getNick());
+
+        if(colaborador != null){
+            juliano = colaborador;
+        }else if(proponente != null){
+            juliano = proponente;
+        }else{
+            throw new IllegalArgumentException("El usuario no existe");
+        }
 
         Seguimiento segui = new Seguimiento(
-                dtoSegui.getUsuarioSeguidor(),
+                juliano,
                 dtoSegui.getUsuarioSeguido()
         );
 
         seguimientoDAO.guardar(segui);
 
+    }
+
+    @Override
+    public int conseguirId(String nick, String nicky){
+
+        int existeId = seguimientoDAO.conseguirId(nick, nicky);
+
+        if(existeId != 0){
+            return existeId;
+        }else{
+            throw new IllegalArgumentException("Este seguimiento no existe");
+        }
     }
 
     @Override
