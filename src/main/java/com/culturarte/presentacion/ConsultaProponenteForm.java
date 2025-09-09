@@ -36,6 +36,7 @@ public class ConsultaProponenteForm {
     private JTextField txtLink;
     private JComboBox <EEstadoPropuesta> cbxEstado;
     private JList listPropuXEstado;
+    private JLabel Franchesco;
 
     private final IProponenteController controllerProp = Fabrica.getInstancia().getProponenteController();
     private final IPropuestaController controllerPropuesta = Fabrica.getInstancia().getPropuestaController();
@@ -60,7 +61,16 @@ public class ConsultaProponenteForm {
         });
 
         btnCancelar.addActionListener(e ->{
-            SwingUtilities.getWindowAncestor(mainPanel).dispose();
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
         });
 
         cbxEstado.addActionListener(e ->{

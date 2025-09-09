@@ -2,7 +2,6 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Proponente;
-import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.controllers.IColaboradorController;
 import com.culturarte.logica.controllers.IProponenteController;
 import com.culturarte.logica.controllers.ISeguimientoController;
@@ -12,9 +11,10 @@ import com.culturarte.logica.dtos.DTOSeguimiento;
 import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
-public class SeguimientoUsuario {
+public class SeguimientoUsuarioForm {
     private JRadioButton rbtnSeguir;
     private JPanel mainPanel;
     private JRadioButton rbtnDejarSeguir;
@@ -31,7 +31,7 @@ public class SeguimientoUsuario {
     private final IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
     private final IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
 
-    public SeguimientoUsuario() {
+    public SeguimientoUsuarioForm() {
 
         ButtonGroup grupo = new ButtonGroup();
         grupo.add(rbtnSeguir);
@@ -51,7 +51,16 @@ public class SeguimientoUsuario {
         });
 
         btnCancelar.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor(mainPanel).dispose();
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
         });
 
     }

@@ -192,7 +192,7 @@ public class MenuPrincipal extends JFrame {
     }
 
     private void abrirSeguimientoUsuario() {
-        SeguimientoUsuario seguiUsr = new SeguimientoUsuario();
+        SeguimientoUsuarioForm seguiUsr = new SeguimientoUsuarioForm();
         JInternalFrame frame = new JInternalFrame("Seguimiento Usuario", true, true, true, true);
         frame.setContentPane(seguiUsr.getMainPanel());
         frame.pack();
