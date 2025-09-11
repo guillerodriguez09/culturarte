@@ -36,3 +36,4 @@ public class DTOColabConsulta {
     public void setRetorno(ETipoRetorno retorno) { this.retorno = retorno; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 }
+

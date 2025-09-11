@@ -10,6 +10,7 @@ import com.culturarte.logica.enums.ETipoRetorno;
 
 import java.net.StandardSocketOptions;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.*;
 
@@ -36,6 +37,11 @@ public class Culturarte {
         IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
         controllerPro.altaProponente(dtoP);
 
+        ICategoriaController controllerCategoria = Fabrica.getInstancia().getCategoriaController();
+        DTOCategoria categoria = new DTOCategoria();
+        categoria.setNombre("Musica");
+        controllerCategoria.altaCategoria(categoria);
+
         //Creo un colaborador
         DTOColaborador dtoC = new DTOColaborador();
         dtoC.setNick("Fede");
@@ -45,8 +51,43 @@ public class Culturarte {
         dtoC.setFechaNac(LocalDate.of(2003, 7, 10));
         dtoC.setDirImagen("C:\\Users\\Chorizo-Cosmico\\Pictures\\sesi.jpg");
 
+        DTOPropuesta dtoProp = new DTOPropuesta();
+        dtoProp.setTitulo("Festival de Música");
+        dtoProp.setDescripcion("Evento anual con artistas internacionales.");
+        dtoProp.setLugar("Teatro Solís");
+        dtoProp.setFecha(LocalDate.of(2025, 10, 15));
+        dtoProp.setPrecioEntrada(500);
+        dtoProp.setMontoAReunir(10000);
+        dtoProp.setImagen("imagenes/festival.png");
+        dtoProp.setProponenteNick("Andre");
+        dtoProp.setCategoriaNombre("Música");
+        dtoProp.setRetornos(List.of(ETipoRetorno.ENTRADAS_GRATIS, ETipoRetorno.PORCENTAJE_GANANCIAS));
+        dtoProp.setFechaPublicacion(LocalDate.now());
+
+        Fabrica.getInstancia().getPropuestaController().altaPropuesta(dtoProp);
+
+
         IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
         controllerCol.altaColaborador(dtoC);
+
+        IColaboracionController controllerColab = Fabrica.getInstancia().getColaboracionController();
+        DTOColaboracion dto = new DTOColaboracion();
+        dto.setPropuestaTitulo("Festival de Música");
+        dto.setColaboradorNick("Fede");
+        dto.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
+        dto.setMonto(1200);
+        dto.setFecha(LocalDateTime.now());
+
+        DTOColaboracion dto1 = new DTOColaboracion();
+        dto1.setPropuestaTitulo("Festival de Música");
+        dto1.setColaboradorNick("Fede");
+        dto1.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
+        dto1.setMonto(120);
+        dto1.setFecha(LocalDateTime.now());
+
+       controllerColab.registrarColaboracion(dto1);
+       controllerColab.registrarColaboracion(dto);
+
 
         SwingUtilities.invokeLater(() -> {
             MenuPrincipal menu = new MenuPrincipal();

@@ -1,6 +1,7 @@
 package com.culturarte.presentacion;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -86,7 +87,13 @@ public class AltaUsuario {
 
             String fechaNac = ftxtFechaNacimiento.getText();
 
-            String tipoUsuario = rbtnProponente.isSelected() ? "Proponente" : "Colaborador";
+            String tipoUsuario = "chivito"; //= rbtnProponente.isSelected() ? "Proponente" : "Colaborador";
+
+            if(rbtnProponente.isSelected()){
+                tipoUsuario = "Proponente";
+            }else if(rbtnColaborador.isSelected()){
+                tipoUsuario = "Colaborador";
+            }
 
             if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNac.isEmpty()){
                 JOptionPane.showMessageDialog(mainPanel,
@@ -153,7 +160,16 @@ public class AltaUsuario {
         });
 
         btnCancelar.addActionListener(e ->{
-            SwingUtilities.getWindowAncestor(mainPanel).dispose();
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
         });
 
     }

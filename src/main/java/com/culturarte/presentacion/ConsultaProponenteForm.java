@@ -1,6 +1,7 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.controllers.IProponenteController;
+import com.culturarte.logica.controllers.IPropuestaController;
 import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
@@ -35,8 +36,10 @@ public class ConsultaProponenteForm {
     private JTextField txtLink;
     private JComboBox <EEstadoPropuesta> cbxEstado;
     private JList listPropuXEstado;
+    private JLabel Franchesco;
 
     private final IProponenteController controllerProp = Fabrica.getInstancia().getProponenteController();
+    private final IPropuestaController controllerPropuesta = Fabrica.getInstancia().getPropuestaController();
 
     public ConsultaProponenteForm(){
 
@@ -58,7 +61,16 @@ public class ConsultaProponenteForm {
         });
 
         btnCancelar.addActionListener(e ->{
-            SwingUtilities.getWindowAncestor(mainPanel).dispose();
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
         });
 
         cbxEstado.addActionListener(e ->{
@@ -112,12 +124,16 @@ public class ConsultaProponenteForm {
             DTOProponente dtoCol = (DTOProponente) fila[0];
             DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
 
-            String colaboradores = String.join(", ", dtoCP.colaboradores);
-            String linea = colaboradores + " - Monto: " + dtoCP.montoRecaudado;
+            // Llama consultarPropuesta para traer el DTO completo, porque en el dtocp no trae directo la lista de colaboradores
+            DTOPropuesta dtoCompleto = controllerPropuesta.consultarPropuesta(dtoCP.titulo);
+
+            String colaboradores = String.join(", ", dtoCompleto.colaboradores);
+            String linea = dtoCompleto.titulo + " - " + colaboradores + " - Monto: " + dtoCompleto.montoRecaudado;
             elem.add(linea);
+        }
 
             listPropuXEstado.setListData(elem.toArray(new String[0]));
         }
 
     }
-}
+

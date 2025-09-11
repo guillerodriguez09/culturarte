@@ -36,15 +36,18 @@ public class MenuPrincipal extends JFrame {
         JMenuItem itemAltaUsuario = new JMenuItem("Alta de Usuario");
         JMenuItem itemConsultaProponente = new JMenuItem("Consulta de Proponente");
         JMenuItem itemConsultarColaborador = new JMenuItem("Consulta de Colaborador");
+        JMenuItem itemSeguimientoUsuario = new JMenuItem("Seguimiento de Usuarios");
 
         itemAltaUsuario.addActionListener(e -> abrirAltaUsuario());
         itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
         itemConsultarColaborador.addActionListener(e -> abrirConsultaColaborador());
+        itemSeguimientoUsuario.addActionListener(e -> abrirSeguimientoUsuario());
 
 
         menuUsuario.add(itemAltaUsuario);
         menuUsuario.add(itemConsultaProponente);
         menuUsuario.add(itemConsultarColaborador);
+        menuUsuario.add(itemSeguimientoUsuario);
 
         //menu categorias
         JMenu menuCategoria = new JMenu("Categoria");
@@ -54,9 +57,23 @@ public class MenuPrincipal extends JFrame {
 
         menuCategoria.add(itemAltaCategoria);
 
+        //menu colaboraciones
+        JMenu menuColab = new JMenu("Colaboraciones");
+        JMenuItem itemRegistrarColaboradocion = new JMenuItem("Registrar Colaboracion");
+        JMenuItem itemConsultarColaboracion = new JMenuItem("Consultar Colaboracion");
+        JMenuItem  itemCancelarColaboracion = new JMenuItem("Cancelar Colaboracion");
+
+        menuColab.add(itemRegistrarColaboradocion);
+        menuColab.add(itemCancelarColaboracion);
+        menuColab.add(itemConsultarColaboracion);
+
+        itemCancelarColaboracion.addActionListener(e -> abrirCancelarColaboracion());
+
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
         menuBar.add(menuCategoria);
+        menuBar.add(menuColab);
+
 
         setJMenuBar(menuBar);
     }
@@ -150,6 +167,34 @@ public class MenuPrincipal extends JFrame {
         ConsultaColaboradorFrom consCol = new ConsultaColaboradorFrom();
         JInternalFrame frame = new JInternalFrame("Consulta de Colaborador", true, true, true, true);
         frame.setContentPane(consCol.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirCancelarColaboracion() {
+        CancelarColaboración canceColab = new CancelarColaboración();
+        JInternalFrame frame = new JInternalFrame("Cancelar Colaboracion", true, true, true, true);
+        frame.setContentPane(canceColab.traerPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirSeguimientoUsuario() {
+        SeguimientoUsuarioForm seguiUsr = new SeguimientoUsuarioForm();
+        JInternalFrame frame = new JInternalFrame("Seguimiento Usuario", true, true, true, true);
+        frame.setContentPane(seguiUsr.getMainPanel());
         frame.pack();
         frame.setVisible(true);
         desktopPane.add(frame);

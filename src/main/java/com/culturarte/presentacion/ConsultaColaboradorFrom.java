@@ -1,5 +1,6 @@
 package com.culturarte.presentacion;
 
+import com.culturarte.logica.clases.Colaboracion;
 import com.culturarte.logica.controllers.IColaboradorController;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.logica.dtos.DTOPropuesta;
@@ -7,6 +8,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsultaColaboradorFrom {
@@ -43,7 +45,16 @@ public class ConsultaColaboradorFrom {
         });
 
         btnCancelar.addActionListener(e ->{
-            SwingUtilities.getWindowAncestor(mainPanel).dispose();
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
         });
 
     }
@@ -76,7 +87,7 @@ public class ConsultaColaboradorFrom {
             //DTOColaborador dtoCol = (DTOColaborador) fila[0];
             DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
 
-            listColaboraciones.setListData(dtoCP.colaboradores.toArray(new String[0]));
+            listColaboraciones.setListData(dtoCP.colaboradores.toArray(new String[0])); //esto no esta funcionando bien
 
         }
 

@@ -30,4 +30,7 @@ public class DTOColaboracion {
         this.propuestaTitulo = propuestaTitulo;
     }
 
+
+
 }
+
