@@ -47,4 +47,3 @@ public class Fabrica {
 
     public ISeguimientoController getSeguimientoController(){return seguimientoController;}
 }
-

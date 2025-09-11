@@ -96,45 +96,45 @@ public class PropuestaController implements IPropuestaController {
 
     @Override
     public DTOPropuesta consultarPropuesta(String titulo) {
-            Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
+        Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
 
-            if (propuesta == null) {
-                throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
-            }
-
-            // Armo el DTO con la info básica
-            DTOPropuesta dto = new DTOPropuesta();
-            dto.titulo = propuesta.getTitulo();
-            dto.descripcion = propuesta.getDescripcion();
-            dto.lugar = propuesta.getLugar();
-            dto.fecha = propuesta.getFecha();
-            dto.precioEntrada = propuesta.getPrecioEntrada();
-            dto.montoAReunir = propuesta.getMontoAReunir();
-            dto.imagen = propuesta.getImagen();
-            dto.categoriaNombre = propuesta.getCategoria().getNombre();
-            dto.proponenteNick = propuesta.getProponente().getNick();
-            dto.fechaPublicacion = propuesta.getFechaPublicacion();
-            dto.retornos = propuesta.getRetornos();
-
-            // Estado actual
-            if (propuesta.getEstadoActual() != null) {
-                dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
-            }
-
-            // Colaboradores nicks
-            List<String> colaboradores = new ArrayList<>();
-            for (Colaboracion colab : propuesta.getColaboraciones()) {
-                if (colab.getColaborador() != null) {
-                    colaboradores.add(colab.getColaborador().getNick());
-                }
-            }
-            dto.colaboradores = colaboradores;
-
-            // total recaudado
-            dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
-
-            return dto;
+        if (propuesta == null) {
+            throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
         }
+
+        // Armo el DTO con la info básica
+        DTOPropuesta dto = new DTOPropuesta();
+        dto.titulo = propuesta.getTitulo();
+        dto.descripcion = propuesta.getDescripcion();
+        dto.lugar = propuesta.getLugar();
+        dto.fecha = propuesta.getFecha();
+        dto.precioEntrada = propuesta.getPrecioEntrada();
+        dto.montoAReunir = propuesta.getMontoAReunir();
+        dto.imagen = propuesta.getImagen();
+        dto.categoriaNombre = propuesta.getCategoria().getNombre();
+        dto.proponenteNick = propuesta.getProponente().getNick();
+        dto.fechaPublicacion = propuesta.getFechaPublicacion();
+        dto.retornos = propuesta.getRetornos();
+
+        // Estado actual
+        if (propuesta.getEstadoActual() != null) {
+            dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
+        }
+
+        // Colaboradores nicks
+        List<String> colaboradores = new ArrayList<>();
+        for (Colaboracion colab : propuesta.getColaboraciones()) {
+            if (colab.getColaborador() != null) {
+                colaboradores.add(colab.getColaborador().getNick());
+            }
+        }
+        dto.colaboradores = colaboradores;
+
+        // total recaudado
+        dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
+
+        return dto;
+    }
 
     @Override
     public void modificarPropuesta(String titulo, DTOPropuesta dto) {
@@ -187,7 +187,7 @@ public class PropuestaController implements IPropuestaController {
     @Override
     public List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado) {
         List<Propuesta> propuestas = propuestaDAO.listarPorEstado(estado);
-        List<DTOPropuesta> dtos = new ArrayList<>(); //la lista de dtos que van a la presentacion
+        List<DTOPropuesta> dtos = new ArrayList<>();
 
         for (Propuesta p : propuestas) {
             DTOPropuesta dto = new DTOPropuesta();
@@ -200,12 +200,10 @@ public class PropuestaController implements IPropuestaController {
             dto.categoriaNombre = p.getCategoria().getNombre();
             dto.proponenteNick = p.getProponente().getNick();
             dto.retornos = p.getRetornos();
+            dto.estadoActual = p.getEstadoActual().getNombre().toString();
+            dto.montoRecaudado = (double)p.getMontoRecaudado();
             dtos.add(dto);
         }
-
         return dtos;
     }
 }
-
-
-
