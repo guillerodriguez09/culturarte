@@ -9,5 +9,4 @@ public interface IColaboracionController {
     public void registrarColaboracion (DTOColaboracion dtoColaboracion);
     public void cancelarColaboracion(int idColaboracion);
     public List<DTOColabConsulta> listarColaboraciones();
-
 }

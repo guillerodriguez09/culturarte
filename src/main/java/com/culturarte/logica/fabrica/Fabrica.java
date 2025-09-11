@@ -43,4 +43,3 @@ public class Fabrica {
 
     public ICategoriaController getCategoriaController() { return categoriaController;}
 }
-

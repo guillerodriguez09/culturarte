@@ -23,10 +23,10 @@ public class Propuesta {
     private Integer montoAReunir;
     private LocalDate fechaPublicacion;
 
-  //una prop va a 1 cat
-  @ManyToOne(optional = false)
-  @JoinColumn(name = "CATEGORIA_NOMBRE", nullable = false)
-  private Categoria categoria;
+    //una prop va a 1 cat
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CATEGORIA_NOMBRE", nullable = false)
+    private Categoria categoria;
 
     @OneToOne
     private Estado estadoActual;
@@ -121,6 +121,3 @@ public class Propuesta {
                 .sum();
     }
 }
-
-
-
