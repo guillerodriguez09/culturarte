@@ -2,6 +2,7 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.clases.*;
 import com.culturarte.logica.controllers.*;
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.fabrica.Fabrica;
 import com.culturarte.logica.dtos.*;
 import com.culturarte.logica.enums.ETipoRetorno;
@@ -594,31 +595,61 @@ public class DatosDePrueba {
         //SEGUIMIENTOS
         //
 
-        //
-        //CATEGORIAS
-        /*
-        DTOCategoria dto = new DTOCategoria();
-        dto.setNombre("Teatro");
 
-        // Busca categoría padre en bd (o null si es la raíz)
-        Categoria padre = Fabrica.getInstancia().getCategoriaController()
-                .listarCategoriasC()
-                .stream()
-                .filter(c -> c.getNombre().equals(padreNombre))
-                .findFirst()
-                .orElse(null);
+// cats "raíces"
+        controllerCat.altaCategoria(new DTOCategoria("Teatro", null));
+        controllerCat.altaCategoria(new DTOCategoria("Literatura", null));
+        controllerCat.altaCategoria(new DTOCategoria("Música", null));
+        controllerCat.altaCategoria(new DTOCategoria("Cine", null));
+        controllerCat.altaCategoria(new DTOCategoria("Danza", null));
+        controllerCat.altaCategoria(new DTOCategoria("Carnaval", null));
 
-        dto.setCatPadre(padre);
-        */
-        //CATEGORIAS
+// Recuperar cats
+        List<Categoria> categoriasExistentes = controllerCat.listarCategoriasC();
+
+        Categoria teatro = buscarCategoriaPorNombre(categoriasExistentes, "Teatro");
+        Categoria musica = buscarCategoriaPorNombre(categoriasExistentes, "Música");
+        Categoria cine = buscarCategoriaPorNombre(categoriasExistentes, "Cine");
+        Categoria danza = buscarCategoriaPorNombre(categoriasExistentes, "Danza");
+        Categoria carnaval = buscarCategoriaPorNombre(categoriasExistentes, "Carnaval");
+        Categoria comedia = buscarCategoriaPorNombre(categoriasExistentes, "Comedia");
+
+// Hijas de Teatro
+        controllerCat.altaCategoria(new DTOCategoria("Teatro Dramático", teatro));
+        controllerCat.altaCategoria(new DTOCategoria("Teatro Musical", teatro));
+        controllerCat.altaCategoria(new DTOCategoria("Comedia", teatro));
+
+// Hija de Comedia
+        controllerCat.altaCategoria(new DTOCategoria("Stand-up", comedia));
+
+// Hijas de Música
+        controllerCat.altaCategoria(new DTOCategoria("Festival", musica));
+        controllerCat.altaCategoria(new DTOCategoria("Concierto", musica));
+
+// Hijas de Cine
+        controllerCat.altaCategoria(new DTOCategoria("Cine al Aire Libre", cine));
+        controllerCat.altaCategoria(new DTOCategoria("Cine a Pedal", cine));
+
+// Hijas de Danza
+        controllerCat.altaCategoria(new DTOCategoria("Ballet", danza));
+        controllerCat.altaCategoria(new DTOCategoria("Flamenco", danza));
+
+// Hijas de Carnaval
+        controllerCat.altaCategoria(new DTOCategoria("Murga", carnaval));
+        controllerCat.altaCategoria(new DTOCategoria("Humoristas", carnaval));
+        controllerCat.altaCategoria(new DTOCategoria("Parodistas", carnaval));
+        controllerCat.altaCategoria(new DTOCategoria("Lubolos", carnaval));
+        controllerCat.altaCategoria(new DTOCategoria("Revista", carnaval));
+
         //
 
         // UNA VEZ SE AGREGUEN LAS CATEGORIAS CORREGUIR CATEGORIAS EN PROPUESTAS
         //PROPUESTAS
+
         DTOPropuesta dtoProp = new DTOPropuesta();
         dtoProp.setProponenteNick(dtoP7.getNick());
         dtoProp.setTitulo("Cine en el Botánico");
-        dtoProp.setCategoriaNombre("Música");
+        dtoProp.setCategoriaNombre("Cine al Aire Libre");
         dtoProp.setFecha(LocalDate.of(2017, 9, 16));
         dtoProp.setLugar("Jardín Botánico");
         dtoProp.setPrecioEntrada(200);
@@ -634,7 +665,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp2 = new DTOPropuesta();
         dtoProp2.setProponenteNick(dtoP.getNick());
         dtoProp2.setTitulo("Religiosamente");
-        dtoProp2.setCategoriaNombre("Música");
+        dtoProp2.setCategoriaNombre("Parodistas");
         dtoProp2.setFecha(LocalDate.of(2017, 10, 07));
         dtoProp2.setLugar("Teatro de Verano");
         dtoProp2.setPrecioEntrada(300);
@@ -651,7 +682,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp3 = new DTOPropuesta();
         dtoProp3.setProponenteNick(dtoP2.getNick());
         dtoProp3.setTitulo("El Pimiento Indomable");
-        dtoProp3.setCategoriaNombre("Música");
+        dtoProp3.setCategoriaNombre("Concierto");
         dtoProp3.setFecha(LocalDate.of(2017, 10, 19));
         dtoProp3.setLugar("Teatro Solís");
         dtoProp3.setPrecioEntrada(400);
@@ -668,7 +699,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp4 = new DTOPropuesta();
         dtoProp4.setProponenteNick(dtoP8.getNick());
         dtoProp4.setTitulo("Pilsen Rock");
-        dtoProp4.setCategoriaNombre("Música");
+        dtoProp4.setCategoriaNombre("Festival");
         dtoProp4.setFecha(LocalDate.of(2017, 10, 21));
         dtoProp4.setLugar("Rural de Prado");
         dtoProp4.setPrecioEntrada(1000);
@@ -684,7 +715,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp5 = new DTOPropuesta();
         dtoProp5.setProponenteNick(dtoP6.getNick());
         dtoProp5.setTitulo("Romeo y Julieta");
-        dtoProp5.setCategoriaNombre("Música");
+        dtoProp5.setCategoriaNombre("Ballet");
         dtoProp5.setFecha(LocalDate.of(2017, 11, 05));
         dtoProp5.setLugar("Rural de Prado");
         dtoProp5.setPrecioEntrada(800);
@@ -701,7 +732,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp6 = new DTOPropuesta();
         dtoProp6.setProponenteNick(dtoP4.getNick());
         dtoProp6.setTitulo("Un día de Julio");
-        dtoProp6.setCategoriaNombre("Música");
+        dtoProp6.setCategoriaNombre("Murga");
         dtoProp6.setFecha(LocalDate.of(2017, 11, 16));
         dtoProp6.setLugar("Landia");
         dtoProp6.setPrecioEntrada(650);
@@ -717,7 +748,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp7 = new DTOPropuesta();
         dtoProp7.setProponenteNick(dtoP3.getNick());
         dtoProp7.setTitulo("El Lazarillo de Tormes");
-        dtoProp7.setCategoriaNombre("Música");
+        dtoProp7.setCategoriaNombre("Teatro Dramático");
         dtoProp7.setFecha(LocalDate.of(2017, 12, 03));
         dtoProp7.setLugar("Teatro el Galpón");
         dtoProp7.setPrecioEntrada(350);
@@ -734,7 +765,7 @@ public class DatosDePrueba {
         DTOPropuesta dtoProp8 = new DTOPropuesta();
         dtoProp8.setProponenteNick(dtoP9.getNick());
         dtoProp8.setTitulo("Bardo en la FING");
-        dtoProp8.setCategoriaNombre("Música");
+        dtoProp8.setCategoriaNombre("Stand-up");
         dtoProp8.setFecha(LocalDate.of(2017, 12, 10));
         dtoProp8.setLugar("Anfiteatro Edificio “José Luis Massera”");
         dtoProp8.setPrecioEntrada(200);
@@ -890,5 +921,48 @@ public class DatosDePrueba {
         //COLABORACIONES
         //
 
+        //ESTADOS DE LAS PROP
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 5, 15, 15, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50).toLocalDate());
+
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 6, 18, 4, 28).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45).toLocalDate());
+
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 1, 7, 40).toLocalDate());
+
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 30, 15, 40).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50).toLocalDate());
+
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 4, 12, 20).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 13, 4, 58).toLocalDate());
+
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 6, 2, 0).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 15, 4, 48).toLocalDate());
+
+        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40).toLocalDate());
+        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58).toLocalDate());
+
+        controllerP.asignarEstado("Bardo en la FING", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12).toLocalDate());
+
+
     }
+    //si no hago esto no me funciona porque al pasarle una categoria con el string no basta je
+    private Categoria buscarCategoriaPorNombre(List<Categoria> lista, String nombre) {
+        return lista.stream()
+                .filter(c -> c.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
+    }
+
+
 }

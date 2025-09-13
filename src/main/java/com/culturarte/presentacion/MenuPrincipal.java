@@ -59,11 +59,11 @@ public class MenuPrincipal extends JFrame {
 
         //menu colaboraciones
         JMenu menuColab = new JMenu("Colaboraciones");
-        JMenuItem itemRegistrarColaboradocion = new JMenuItem("Registrar Colaboracion");
+        JMenuItem itemRegistrarColaboracion = new JMenuItem("Registrar Colaboracion");
         JMenuItem itemConsultarColaboracion = new JMenuItem("Consultar Colaboracion");
         JMenuItem  itemCancelarColaboracion = new JMenuItem("Cancelar Colaboracion");
 
-        menuColab.add(itemRegistrarColaboradocion);
+        menuColab.add(itemRegistrarColaboracion);
         menuColab.add(itemCancelarColaboracion);
         menuColab.add(itemConsultarColaboracion);
 
@@ -183,6 +183,20 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
+    /*
+    private void abrirRegistrarColaboracion() {
+       RegistrarColaboracion regColab = new RegistrarColaboracion();
+        JInternalFrame frame = new JInternalFrame("Registrar Colaboracion", true, true, true, true);
+        frame.setContentPane(regColab.traerPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
     private void abrirCancelarColaboracion() {
         CancelarColaboración canceColab = new CancelarColaboración();
