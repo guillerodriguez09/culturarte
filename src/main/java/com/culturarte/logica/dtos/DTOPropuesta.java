@@ -40,7 +40,7 @@ public class DTOPropuesta {
     public List<ETipoRetorno> getRetornos() { return retornos; }
     public LocalDate getFechaPublicacion() { return fechaPublicacion; }
     public String getEstadoActual() { return estadoActual; }
-
+    public Double getMontoRecaudado() { return montoRecaudado;}
 
     // setters
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -55,4 +55,5 @@ public class DTOPropuesta {
     public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
     public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
     public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
+    public void setMontoRecaudado(Double montoRecaudado) { this.montoRecaudado = montoRecaudado; }
 }

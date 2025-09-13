@@ -206,4 +206,19 @@ public class PropuestaController implements IPropuestaController {
         }
         return dtos;
     }
+
+    @Override
+    public List<DTOPropuesta> listarPropuestasConProponente() {
+        List<Propuesta> propuestas = propuestaDAO.obtenerTodas();
+        List<DTOPropuesta> dtos = new ArrayList<>();
+
+        for (Propuesta p : propuestas) {
+            DTOPropuesta dto = new DTOPropuesta();
+            dto.titulo = p.getTitulo();
+            dto.proponenteNick = p.getProponente().getNick(); // solo lo necesario
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
 }

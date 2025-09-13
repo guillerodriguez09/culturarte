@@ -22,13 +22,16 @@ public class MenuPrincipal extends JFrame {
         JMenu menuPropuesta = new JMenu("Propuesta");
         JMenuItem itemAltaPropuesta = new JMenuItem("Alta de Propuesta");
         JMenuItem itemConsultaPropuesta = new JMenuItem("Consulta de Propuestas");
+        JMenuItem itemConsultaPropuestasEstado = new JMenuItem("Consulta Propuestas por Estado");
         JMenuItem itemModificarPropuesta = new JMenuItem("Modificar Propuesta");
 
         menuPropuesta.add(itemAltaPropuesta);
         menuPropuesta.add(itemConsultaPropuesta);
+        menuPropuesta.add(itemConsultaPropuestasEstado);
         menuPropuesta.add(itemModificarPropuesta);
         itemAltaPropuesta.addActionListener(e -> abrirAltaPropuesta());
         itemConsultaPropuesta.addActionListener(e -> abrirConsultaPropuesta());
+        itemConsultaPropuestasEstado.addActionListener(e -> abrirConsultaPropuestasEstado());
         itemModificarPropuesta.addActionListener(e -> abrirModificarPropuesta());
 
         //Menu de usuarios
@@ -59,14 +62,16 @@ public class MenuPrincipal extends JFrame {
 
         //menu colaboraciones
         JMenu menuColab = new JMenu("Colaboraciones");
-        JMenuItem itemRegistrarColaboradocion = new JMenuItem("Registrar Colaboracion");
+        JMenuItem itemRegistrarColaboracion = new JMenuItem("Registrar Colaboracion");
         JMenuItem itemConsultarColaboracion = new JMenuItem("Consultar Colaboracion");
         JMenuItem  itemCancelarColaboracion = new JMenuItem("Cancelar Colaboracion");
 
-        menuColab.add(itemRegistrarColaboradocion);
+        menuColab.add(itemRegistrarColaboracion);
         menuColab.add(itemCancelarColaboracion);
         menuColab.add(itemConsultarColaboracion);
 
+        itemRegistrarColaboracion.addActionListener(e -> abrirRegistrarColaboracion());
+        itemConsultarColaboracion.addActionListener(e -> abrirConsultaColaboracionPropuesta());
         itemCancelarColaboracion.addActionListener(e -> abrirCancelarColaboracion());
 
         menuBar.add(menuPropuesta);
@@ -204,6 +209,46 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
+    private void abrirRegistrarColaboracion() {
+        RegistrarColaboracion form = new RegistrarColaboracion();
+        JInternalFrame frame = new JInternalFrame("Registrar Colaboración", true, true, true, true);
+        frame.setContentPane(form.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void abrirConsultaColaboracionPropuesta() {
+        ConsultaColaboracionPropuesta form = new ConsultaColaboracionPropuesta();
+        JInternalFrame frame = new JInternalFrame("Consulta de Colaboraciones", true, true, true, true);
+        frame.setContentPane(form.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirConsultaPropuestasEstado() {
+        ConsultaPropuestasEstado form = new ConsultaPropuestasEstado();
+        JInternalFrame frame = new JInternalFrame("Consulta de Propuestas por Estado", true, true, true, true);
+        frame.setContentPane(form.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 

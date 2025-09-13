@@ -16,7 +16,7 @@ import javax.swing.*;
 
 public class Culturarte {
     public static void main(String[] args) {
-
+ /*
         Colaborador juan = new Colaborador("juan", "Juan", "Pérez", "juan@mail.com", LocalDate.of(2000, 5, 12), "C:\\Users\\blabla\\Pictures\\sesi.jpg");
         //Colaboracion c1 = new Colaboracion(2000, ETipoRetorno.ENTRADAS_GRATIS, LocalDate.now(), prop, juan);
 
@@ -87,7 +87,7 @@ public class Culturarte {
 
        controllerColab.registrarColaboracion(dto1);
        controllerColab.registrarColaboracion(dto);
-
+*/
 
         SwingUtilities.invokeLater(() -> {
             MenuPrincipal menu = new MenuPrincipal();
