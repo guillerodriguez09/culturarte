@@ -22,7 +22,7 @@ public class Estado {
         this.nombre = nombre;
         this.fecha = fecha;
     }
-    protected Estado() {
+    public Estado() {
     };
 
     public EEstadoPropuesta getNombre() {

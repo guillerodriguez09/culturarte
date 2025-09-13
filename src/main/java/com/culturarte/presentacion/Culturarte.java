@@ -38,11 +38,7 @@ public class Culturarte {
         IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
         controllerPro.altaProponente(dtoP);
     */
-        ICategoriaController controllerCategoria = Fabrica.getInstancia().getCategoriaController();
-        DTOCategoria categoria = new DTOCategoria();
-        categoria.setNombre("Musica");
-        controllerCategoria.altaCategoria(categoria);
-    /*
+     /*
         //Creo un colaborador
         DTOColaborador dtoC = new DTOColaborador();
         dtoC.setNick("Fede");
