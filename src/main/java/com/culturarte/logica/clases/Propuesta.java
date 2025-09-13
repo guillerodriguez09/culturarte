@@ -15,6 +15,7 @@ public class Propuesta {
     @Id
     private String titulo;
 
+    @Lob
     private String descripcion;
     private String imagen; // opc
     private String lugar;

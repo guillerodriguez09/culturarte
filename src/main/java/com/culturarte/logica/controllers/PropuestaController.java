@@ -30,9 +30,9 @@ public class PropuestaController implements IPropuestaController {
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
-        if(dto.fecha.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha prevista no puede ser anterior a la fecha actual.");
-        }
+        //if(dto.fecha.isBefore(LocalDate.now())) {
+        //    throw new IllegalArgumentException("La fecha prevista no puede ser anterior a la fecha actual.");
+        //}
         if (dto.precioEntrada <= 0) {
             throw new IllegalArgumentException("El precio de la entrada no puede ser cero ni negativa.");
         }

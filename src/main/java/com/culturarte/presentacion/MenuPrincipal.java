@@ -69,11 +69,18 @@ public class MenuPrincipal extends JFrame {
 
         itemCancelarColaboracion.addActionListener(e -> abrirCancelarColaboracion());
 
+        JMenu menuDDP = new JMenu("Datos de Prueba");
+        JMenuItem itemCargarDatosDePrueba = new JMenuItem("Cargar Datos de Prueba");
+
+        menuDDP.add(itemCargarDatosDePrueba);
+
+        itemCargarDatosDePrueba.addActionListener(e -> cargarDatosDePrueba());
+
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
         menuBar.add(menuCategoria);
         menuBar.add(menuColab);
-
+        menuBar.add(menuDDP);
 
         setJMenuBar(menuBar);
     }
@@ -200,6 +207,15 @@ public class MenuPrincipal extends JFrame {
         desktopPane.add(frame);
         try {
             frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarDatosDePrueba() {
+        DatosDePrueba DDP = new DatosDePrueba();
+        try {
+            DDP.crearDatosPrueba();
         } catch (Exception e) {
             e.printStackTrace();
         }
