@@ -150,14 +150,6 @@
               <text value="Biografia"/>
             </properties>
           </component>
-          <component id="7f94e" class="javax.swing.JTextField" binding="txtBio">
-            <constraints>
-              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
           <component id="39b03" class="javax.swing.JLabel" binding="lblLink">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -195,6 +187,14 @@
             <properties>
               <text value="Estado Propuesta:"/>
             </properties>
+          </component>
+          <component id="7f1e6" class="javax.swing.JTextPane" binding="txtBio">
+            <constraints>
+              <grid row="1" column="4" row-span="4" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>

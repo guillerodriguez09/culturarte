@@ -32,7 +32,7 @@ public class ConsultaProponenteForm {
     private JTextField txtFechaNacimiento;
     private JLabel lblBio;
     private JLabel lblLink;
-    private JTextField txtBio;
+    private JTextPane txtBio;
     private JTextField txtLink;
     private JComboBox <EEstadoPropuesta> cbxEstado;
     private JList listPropuXEstado;

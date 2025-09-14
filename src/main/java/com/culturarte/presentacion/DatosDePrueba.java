@@ -63,7 +63,7 @@ public class DatosDePrueba {
         dtoP3.setNombre("Héctor");
         dtoP3.setApellido("Guido");
         dtoP3.setFechaNac(LocalDate.of(1954, 01, 07));
-        dtoP3.setDirImagen("imagenes\\sesi.jpg");
+        dtoP3.setDirImagen("imagenes\\404.png");
         dtoP3.setDireccion("Gral. Flores 5645");
         dtoP3.setLink("");
         dtoP3.setBiografia("En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y " +
@@ -82,7 +82,7 @@ public class DatosDePrueba {
         dtoP4.setNombre("Tabaré");
         dtoP4.setApellido("Cardozo");
         dtoP4.setFechaNac(LocalDate.of(1971, 07, 24));
-        dtoP4.setDirImagen("imagenes\\sesi.jpg");
+        dtoP4.setDirImagen("imagenes\\404.png");
         dtoP4.setDireccion("Santiago Rivas 1212");
         dtoP4.setLink("https://www.facebook.com/Tabar%C3%A9-Cardozo-55179094281/?ref=br_rs");
         dtoP4.setBiografia("Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por " +
@@ -96,7 +96,7 @@ public class DatosDePrueba {
         dtoP5.setNombre("Waldemar “Cachila”");
         dtoP5.setApellido("Silva");
         dtoP5.setFechaNac(LocalDate.of(1947, 01, 01));
-        dtoP5.setDirImagen("imagenes\\sesi.jpg");
+        dtoP5.setDirImagen("imagenes\\404.png");
         dtoP5.setDireccion("Br. Artigas 4567");
         dtoP5.setLink("https://www.facebook.com/C1080?ref=br_rs");
         dtoP5.setBiografia("Nace en el año 1947 en el conventillo “Medio Mundo” ubicado en pleno Barrio Sur. Es heredero parcialmente- " +
@@ -135,7 +135,7 @@ public class DatosDePrueba {
         dtoP8.setNombre("Kairo");
         dtoP8.setApellido("Herrera");
         dtoP8.setFechaNac(LocalDate.of(1840, 04, 25));
-        dtoP8.setDirImagen("imagenes\\sesi.jpg");
+        dtoP8.setDirImagen("imagenes\\404.png");
         dtoP8.setDireccion("Paraguay 1423");
         dtoP8.setLink("");
         dtoP8.setBiografia("");
@@ -175,7 +175,7 @@ public class DatosDePrueba {
         dtoC2.setNombre("Marcelo");
         dtoC2.setApellido("Tinelli");
         dtoC2.setFechaNac(LocalDate.of(1960, 04, 01));
-        dtoC2.setDirImagen("imagenes\\sesi.jpg");
+        dtoC2.setDirImagen("imagenes\\404.png");
         controllerCol.altaColaborador(dtoC2);
 
         DTOColaborador dtoC3 = new DTOColaborador();
@@ -184,7 +184,7 @@ public class DatosDePrueba {
         dtoC3.setNombre("Edgardo");
         dtoC3.setApellido("Novick");
         dtoC3.setFechaNac(LocalDate.of(1952, 07, 17));
-        dtoC3.setDirImagen("imagenes\\sesi.jpg");
+        dtoC3.setDirImagen("imagenes\\404.png");
         controllerCol.altaColaborador(dtoC3);
 
         DTOColaborador dtoC4 = new DTOColaborador();
@@ -675,7 +675,7 @@ public class DatosDePrueba {
                 "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema " +
                 "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde " +
                 "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.");
-        dtoProp2.setImagen("imagenes\\sesi.jpg");
+        dtoProp2.setImagen("imagenes\\404.png");
         dtoProp2.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp2);
 
@@ -725,7 +725,7 @@ public class DatosDePrueba {
                 "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, " +
                 "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó " +
                 "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.");
-        dtoProp5.setImagen("imagenes\\sesi.jpg");
+        dtoProp5.setImagen("imagenes\\404.png");
         dtoProp5.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp5);
 
