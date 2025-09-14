@@ -83,13 +83,40 @@ public class ConsultaColaboradorFrom {
             lblImagenShow.setIcon(null);
         }
 
+        /*
         for(Object[] fila : colConProp) {
             //DTOColaborador dtoCol = (DTOColaborador) fila[0];
             DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
-
-            listColaboraciones.setListData(dtoCP.colaboradores.toArray(new String[0])); //esto no esta funcionando bien
+            dtoCP.getTitulo();
+            dtoCP.getProponenteNick();
+            dtoCP.montoRecaudado;
+            dtoCP.getEstadoActual();
+            listColaboraciones.setListData(dtoCP.getTitulo().toArray(new String[0])); //esto no esta funcionando bien
 
         }
+        */
+
+        List<String> datos = new ArrayList<>();
+
+        for (Object[] fila : colConProp) {
+            // DTOColaborador dtoCol = (DTOColaborador) fila[0];
+            DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
+
+            String titulo = dtoCP.getTitulo();
+            String nickProponente = dtoCP.getProponenteNick();
+            double monto = dtoCP.montoRecaudado;
+            String estado = dtoCP.getEstadoActual().toString();
+
+            // Armo el texto a mostrar en la lista
+            String item = "Título: " + titulo +
+                    " | Proponente: " + nickProponente +
+                    " | Monto: " + monto +
+                    " | Estado: " + estado;
+
+            datos.add(item);
+        }
+
+        listColaboraciones.setListData(datos.toArray(new String[0]));
 
     }
 
