@@ -13,6 +13,7 @@ public class MenuPrincipal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+
         add(desktopPane, BorderLayout.CENTER);
 
         //barrita menu
@@ -83,6 +84,7 @@ public class MenuPrincipal extends JFrame {
         menuBar.add(menuDDP);
 
         setJMenuBar(menuBar);
+
     }
 
     private void abrirAltaPropuesta() {
