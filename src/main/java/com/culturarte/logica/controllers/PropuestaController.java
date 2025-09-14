@@ -30,9 +30,6 @@ public class PropuestaController implements IPropuestaController {
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
-        if(dto.fecha.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha prevista no puede ser anterior a la fecha actual.");
-        }
         if (dto.precioEntrada <= 0) {
             throw new IllegalArgumentException("El precio de la entrada no puede ser cero ni negativa.");
         }
@@ -145,9 +142,6 @@ public class PropuestaController implements IPropuestaController {
         if (dto.fecha == null) {
             throw new IllegalArgumentException("La fecha prevista es obligatoria.");
         }
-        if(dto.fecha.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha no puede ser anterior a la fecha actual.");
-        }
         if (dto.precioEntrada <= 0) {
             throw new IllegalArgumentException("El precio de la entrada no puede ser negativo.");
         }
@@ -202,6 +196,8 @@ public class PropuestaController implements IPropuestaController {
             dto.retornos = p.getRetornos();
             dto.estadoActual = p.getEstadoActual().getNombre().toString();
             dto.montoRecaudado = (double)p.getMontoRecaudado();
+            dto.estadoActual = p.getEstadoActual().getNombre().toString();
+            dto.montoRecaudado = (double)p.getMontoRecaudado();
             dtos.add(dto);
         }
         return dtos;
@@ -218,7 +214,26 @@ public class PropuestaController implements IPropuestaController {
             dto.proponenteNick = p.getProponente().getNick(); // solo lo necesario
             dtos.add(dto);
         }
-
         return dtos;
     }
+
+    @Override
+    public void asignarEstado(String tituloPropuesta, EEstadoPropuesta estado, LocalDate fecha) {
+        Propuesta prop = propuestaDAO.buscarPorTitulo(tituloPropuesta);
+        if (prop == null) {
+            throw new IllegalArgumentException("Propuesta no encontrada: " + tituloPropuesta);
+        }
+
+        Estado nuevoEstado = new Estado();
+        nuevoEstado.setFecha(fecha);
+        nuevoEstado.setNombre(estado);
+        nuevoEstado.setPropuesta(prop);
+
+        prop.setEstadoActual(nuevoEstado);
+        prop.getHistorialEstados().add(nuevoEstado);
+
+        propuestaDAO.actualizar(prop);
+    }
+
+}
 }

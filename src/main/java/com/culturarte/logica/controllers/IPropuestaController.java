@@ -4,6 +4,7 @@ import com.culturarte.logica.dtos.DTOPropuesta;
 
 import com.culturarte.logica.enums.EEstadoPropuesta;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IPropuestaController {
@@ -14,4 +15,7 @@ public interface IPropuestaController {
     List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado); //luego sera un DTO el estado si no entiendo mal
     void modificarPropuesta(String titulo, DTOPropuesta dtoPropuesta);
     public List<DTOPropuesta> listarPropuestasConProponente();
+    void asignarEstado(String tituloPropuesta, EEstadoPropuesta estado, LocalDate fecha);
+
+
 }

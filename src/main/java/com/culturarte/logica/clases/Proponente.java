@@ -1,7 +1,6 @@
 package com.culturarte.logica.clases;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,7 +10,10 @@ import java.util.List;
 public class Proponente extends Usuario {
 
     String direccion;
+
+    @Lob
     String biografia;
+
     String link;
     @OneToMany(mappedBy = "proponente") // importante el mappedBy
     List<Propuesta> propuestas;

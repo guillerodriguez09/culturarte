@@ -74,11 +74,18 @@ public class MenuPrincipal extends JFrame {
         itemConsultarColaboracion.addActionListener(e -> abrirConsultaColaboracionPropuesta());
         itemCancelarColaboracion.addActionListener(e -> abrirCancelarColaboracion());
 
+        JMenu menuDDP = new JMenu("Datos de Prueba");
+        JMenuItem itemCargarDatosDePrueba = new JMenuItem("Cargar Datos de Prueba");
+
+        menuDDP.add(itemCargarDatosDePrueba);
+
+        itemCargarDatosDePrueba.addActionListener(e -> cargarDatosDePrueba());
+
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
         menuBar.add(menuCategoria);
         menuBar.add(menuColab);
-
+        menuBar.add(menuDDP);
 
         setJMenuBar(menuBar);
     }
@@ -181,6 +188,20 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
+    /*
+    private void abrirRegistrarColaboracion() {
+       RegistrarColaboracion regColab = new RegistrarColaboracion();
+        JInternalFrame frame = new JInternalFrame("Registrar Colaboracion", true, true, true, true);
+        frame.setContentPane(regColab.traerPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
     private void abrirCancelarColaboracion() {
         CancelarColaboración canceColab = new CancelarColaboración();
@@ -209,6 +230,16 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
+
+    private void cargarDatosDePrueba() {
+        DatosDePrueba DDP = new DatosDePrueba();
+        try {
+            DDP.crearDatosPrueba();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void abrirRegistrarColaboracion() {
         RegistrarColaboracion form = new RegistrarColaboracion();
         JInternalFrame frame = new JInternalFrame("Registrar Colaboración", true, true, true, true);
