@@ -196,6 +196,22 @@ public class PropuestaController implements IPropuestaController {
             dto.retornos = p.getRetornos();
             dto.estadoActual = p.getEstadoActual().getNombre().toString();
             dto.montoRecaudado = (double)p.getMontoRecaudado();
+            dto.estadoActual = p.getEstadoActual().getNombre().toString();
+            dto.montoRecaudado = (double)p.getMontoRecaudado();
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Override
+    public List<DTOPropuesta> listarPropuestasConProponente() {
+        List<Propuesta> propuestas = propuestaDAO.obtenerTodas();
+        List<DTOPropuesta> dtos = new ArrayList<>();
+
+        for (Propuesta p : propuestas) {
+            DTOPropuesta dto = new DTOPropuesta();
+            dto.titulo = p.getTitulo();
+            dto.proponenteNick = p.getProponente().getNick(); // solo lo necesario
             dtos.add(dto);
         }
         return dtos;

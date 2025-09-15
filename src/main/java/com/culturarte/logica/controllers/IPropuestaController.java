@@ -14,6 +14,7 @@ public interface IPropuestaController {
     List<String> listarPropuestas();
     List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado); //luego sera un DTO el estado si no entiendo mal
     void modificarPropuesta(String titulo, DTOPropuesta dtoPropuesta);
+    public List<DTOPropuesta> listarPropuestasConProponente();
     void asignarEstado(String tituloPropuesta, EEstadoPropuesta estado, LocalDate fecha);
 
 

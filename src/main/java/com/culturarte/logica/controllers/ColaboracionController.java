@@ -58,6 +58,8 @@ public class ColaboracionController implements IColaboracionController {
         colaboracionDAO.guardar(nueva);
         propuestaDAO.actualizar(propuesta); //para q guarde el colaborador sino no se ve al consultar propuesta
 
+        propuestaDAO.actualizar(propuesta);
+        colaboradorDAO.actualizar(colaborador);
     }
 
     public List<DTOColabConsulta> listarColaboraciones() {
@@ -75,6 +77,26 @@ public class ColaboracionController implements IColaboracionController {
             dtos.add(dto);
         }
 
+        return dtos;
+    }
+
+    public List<DTOColabConsulta> consultarColaboracionesPorColaborador(String colaboradorNick) {
+        Colaborador col = colaboradorDAO.buscarPorNick(colaboradorNick);
+        if (col == null) throw new IllegalArgumentException("Colaborador no encontrado.");
+
+        List<DTOColabConsulta> dtos = new ArrayList<>();
+        if (col.getColaboraciones() != null) {
+            for (Colaboracion c : col.getColaboraciones()) {
+                DTOColabConsulta dto = new DTOColabConsulta(
+                        c.getId(),
+                        col.getNick(),
+                        c.getMonto(),
+                        c.getRetorno(),
+                        c.getFecha()
+                );
+                dtos.add(dto);
+            }
+        }
         return dtos;
     }
 

@@ -46,7 +46,7 @@ public class Propuesta {
     @Column(name = "retorno", nullable = false)
     private List<ETipoRetorno> retornos;
 
-    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Colaboracion> colaboraciones;
 
 
