@@ -210,12 +210,24 @@ public class PropuestaController implements IPropuestaController {
 
         for (Propuesta p : propuestas) {
             DTOPropuesta dto = new DTOPropuesta();
-            dto.titulo = p.getTitulo();
-            dto.proponenteNick = p.getProponente().getNick(); // solo lo necesario
+            dto.setTitulo(p.getTitulo());
+            dto.setDescripcion(p.getDescripcion());
+            dto.setLugar(p.getLugar());
+            dto.setFecha(p.getFecha());
+            dto.setPrecioEntrada(p.getPrecioEntrada());
+            dto.setMontoAReunir(p.getMontoAReunir());
+            dto.setMontoRecaudado(Double.valueOf(p.getMontoRecaudado()));
+            dto.setProponenteNick(p.getProponente().getNick());
+            dto.setCategoriaNombre(p.getCategoria().getNombre());
+            dto.setRetornos(p.getRetornos());
+            dto.setEstadoActual(p.getEstadoActual() != null ? p.getEstadoActual().toString() : "Desconocido");
+
             dtos.add(dto);
         }
+
         return dtos;
     }
+
 
     @Override
     public void asignarEstado(String tituloPropuesta, EEstadoPropuesta estado, LocalDate fecha) {

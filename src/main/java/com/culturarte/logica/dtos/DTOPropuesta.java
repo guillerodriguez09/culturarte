@@ -41,6 +41,7 @@ public class DTOPropuesta {
     public LocalDate getFechaPublicacion() { return fechaPublicacion; }
     public String getEstadoActual() { return estadoActual; }
     public Double getMontoRecaudado() { return montoRecaudado;}
+    public List<String> getColaboradores() { return colaboradores; }
 
     // setters
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -56,4 +57,5 @@ public class DTOPropuesta {
     public void setFechaPublicacion(LocalDate fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
     public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
     public void setMontoRecaudado(Double montoRecaudado) { this.montoRecaudado = montoRecaudado; }
+    public void setColaboradores(List<String> colaboradores) { this.colaboradores = colaboradores; }
 }
