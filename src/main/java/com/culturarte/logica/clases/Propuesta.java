@@ -49,7 +49,6 @@ public class Propuesta {
     @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Colaboracion> colaboraciones;
 
-
     // constructor vacio para jpa
     protected Propuesta() {}
 
