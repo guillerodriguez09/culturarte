@@ -7,8 +7,6 @@ import com.culturarte.logica.dtos.*;
 import com.culturarte.logica.fabrica.Fabrica;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.logica.enums.ETipoRetorno;
-import mdlaf.MaterialLookAndFeel;
-import mdlaf.themes.MaterialOceanicTheme;
 
 import java.net.StandardSocketOptions;
 import java.time.LocalDate;
@@ -87,17 +85,13 @@ public class Culturarte {
        controllerColab.registrarColaboracion(dto1);
        controllerColab.registrarColaboracion(dto);
 
-
-        try {
-            // Look & Feel Material Design
-            UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialOceanicTheme()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        SwingUtilities.invokeLater(() -> new MenuPrincipal().setVisible(true));
-    }
+*/
+        SwingUtilities.invokeLater(() -> {
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.setVisible(true);
+        });
 
     }
+}
 
 

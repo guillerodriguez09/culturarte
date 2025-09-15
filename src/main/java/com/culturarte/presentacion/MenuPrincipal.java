@@ -16,6 +16,15 @@ public class MenuPrincipal extends JFrame {
 
         add(desktopPane, BorderLayout.CENTER);
 
+
+
+        JLabel label = new JLabel("Bienvenido a Culturarte", SwingConstants.CENTER);
+        label.setFont(new Font("SansSerif", Font.BOLD, 36));
+        label.setForeground(new Color(70, 70, 70));
+        desktopPane.add(label);
+        label.setBounds(0, 0, 800, 600);
+
+
         //barrita menu
         JMenuBar menuBar = new JMenuBar();
 
@@ -190,20 +199,6 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
-    /*
-    private void abrirRegistrarColaboracion() {
-       RegistrarColaboracion regColab = new RegistrarColaboracion();
-        JInternalFrame frame = new JInternalFrame("Registrar Colaboracion", true, true, true, true);
-        frame.setContentPane(regColab.traerPanel());
-        frame.pack();
-        frame.setVisible(true);
-        desktopPane.add(frame);
-        try {
-            frame.setSelected(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     private void abrirCancelarColaboracion() {
         CancelarColaboración canceColab = new CancelarColaboración();
