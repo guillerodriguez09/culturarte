@@ -44,6 +44,10 @@ public class ColaboracionController implements IColaboracionController {
             throw new IllegalArgumentException("Colaborador no encontrado.");
         }
 
+        if(colaboracionDAO.existe(dto.colaboradorNick, dto.propuestaTitulo)){
+            throw new IllegalArgumentException("El usuario " + dto.colaboradorNick + " ya colaboro a la propuesta " + dto.propuestaTitulo);
+        }
+
         // Crear y persiste la colab
         Colaboracion nueva = new Colaboracion(
                 dto.monto,

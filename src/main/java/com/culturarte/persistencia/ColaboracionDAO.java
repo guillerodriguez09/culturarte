@@ -2,6 +2,7 @@ package com.culturarte.persistencia;
 
 import com.culturarte.logica.clases.Colaboracion;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 import java.util.List;
 
@@ -21,6 +22,23 @@ public class ColaboracionDAO {
             } finally {
                 em.close();
             }
+        }
+
+        public Colaboracion buscarPorNickYTitulo(String nick, String titulo) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT c FROM Colaboracion c WHERE c.colaborador.nickname = :nick AND c.propuesta.titulo = :titulo", Colaboracion.class)
+                    .setParameter("nick", nick).setParameter("titulo", titulo).getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }finally {
+            em.close();
+        }
+
+    }
+
+        public boolean existe(String nick, String titulo){
+            return buscarPorNickYTitulo(nick, titulo) != null;
         }
 
         public List<Colaboracion> obtenerTodas() {

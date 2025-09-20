@@ -6,6 +6,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -35,8 +36,19 @@ public class ConsultaColaboracionPropuesta {
                 mostrarDetallesSeleccion();
             }
         });
-        aceptar.addActionListener(e -> cerrar());
-        cancelar.addActionListener(e -> limpiar());
+        aceptar.addActionListener(e -> limpiar());
+
+        cancelar.addActionListener(e ->{JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
+        });
     }
 
     private void cargarColaboradores() {

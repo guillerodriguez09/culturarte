@@ -109,6 +109,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,6 +125,7 @@ public class MenuPrincipal extends JFrame {
         frame.setSize(Math.max(frame.getWidth(), 600), Math.max(frame.getHeight(), 600));
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,6 +140,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,6 +155,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,6 +184,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,6 +199,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -245,6 +251,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -259,6 +266,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -273,6 +281,7 @@ public class MenuPrincipal extends JFrame {
         frame.setVisible(true);
         desktopPane.add(frame);
         try {
+            frame.setMaximum(true);
             frame.setSelected(true);
         } catch (Exception e) {
             e.printStackTrace();

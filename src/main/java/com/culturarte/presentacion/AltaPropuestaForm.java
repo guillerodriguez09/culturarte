@@ -54,7 +54,18 @@ public class AltaPropuestaForm {
 
         imgButton.addActionListener(e -> seleccionarImagen());
 
-        cancelarButton.addActionListener(e -> SwingUtilities.getWindowAncestor(panel1).dispose());
+        cancelarButton.addActionListener(e -> {
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, panel1);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(panel1);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
+        });
     }
 
     private void registrarPropuesta() {

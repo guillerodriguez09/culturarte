@@ -7,6 +7,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.List;
 
 public class ConsultaPropuestasEstado {
@@ -31,8 +32,19 @@ public class ConsultaPropuestasEstado {
 
         buscar.addActionListener(e -> cargarPropuestas());
         verDetalles.addActionListener(e -> mostrarDetallesSeleccion());
-        cancelar.addActionListener(e -> limpiar());
-        aceptar.addActionListener(e -> cerrar());
+        cancelar.addActionListener(e -> {
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
+        });
+        aceptar.addActionListener(e -> limpiar());
     }
 
     private void cargarEstados() {
@@ -99,10 +111,6 @@ public class ConsultaPropuestasEstado {
     private void limpiar() {
         listado.setModel(new DefaultTableModel());
         estados.setSelectedIndex(-1);
-    }
-
-    private void cerrar() {
-        SwingUtilities.getWindowAncestor(mainPanel).dispose();
     }
 
     public JPanel getMainPanel() {

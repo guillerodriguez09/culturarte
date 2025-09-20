@@ -26,7 +26,7 @@ public class ModificarPropuestaForm {
     private JPanel pan1;
     private JComboBox <String> comboPropuestas;
     private JPanel pan2;
-    private JTextField descripcion;
+    private JTextPane descripcion;
     private JTextField lugar;
     private JTextField fecha;
     private JTextField estadoActual;

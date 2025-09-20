@@ -8,6 +8,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 import com.culturarte.persistencia.ColaboracionDAO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class CancelarColaboración {
@@ -63,7 +64,16 @@ public class CancelarColaboración {
         });
 
         cancelarButton.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor(mainPanel).dispose();
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                // Por si se ejecuta fuera de un InternalFrame, solo oculta la ventana padre
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
         });
     }
 

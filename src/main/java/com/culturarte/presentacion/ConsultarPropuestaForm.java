@@ -16,7 +16,7 @@ public class ConsultarPropuestaForm {
     private JPanel pan2;
     private JComboBox <String> comboPropuestas;
     private JTextField titulo;
-    private JTextField descripcion;
+    private JTextPane descripcion;
     private JTextField lugar;
     private JTextField fecha;
     private JTextField montoE;
