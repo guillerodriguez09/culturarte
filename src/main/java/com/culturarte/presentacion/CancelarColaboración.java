@@ -15,7 +15,7 @@ public class CancelarColaboración {
     private JPanel mainPanel;
     private JPanel p1;
     private JPanel p2;
-    private JComboBox <Integer> comboColab;
+    private JComboBox <DTOColabConsulta> comboColab;
     private JTextField nickColab;
     private JTextField fecha;
     private JTextField monto;
@@ -29,35 +29,28 @@ public class CancelarColaboración {
 
         List<DTOColabConsulta> colaboraciones = controller.listarColaboraciones();
         for (DTOColabConsulta dto : colaboraciones) {
-            comboColab.addItem(dto.getId()); //lista los id de las colaboraciones
+            comboColab.addItem(dto); //lista la info completa, cambie lo del solo id
         }
 
         mostrarDatosButton.addActionListener(e -> {
-            Integer idSeleccionado = (Integer) comboColab.getSelectedItem();
-            if (idSeleccionado == null) return;
+            DTOColabConsulta seleccionada = (DTOColabConsulta) comboColab.getSelectedItem();
+            if (seleccionada == null) return;
 
-            DTOColabConsulta seleccionada = colaboraciones.stream()
-                    .filter(c -> c.getId() == idSeleccionado)
-                    .findFirst()
-                    .orElse(null);
-
-            if (seleccionada != null) { //carga los datos de la colaboracion elegida
-                nickColab.setText(seleccionada.getColaboradorNick());
-                monto.setText(seleccionada.getMonto().toString());
-                retorno.setText(seleccionada.getRetorno().toString());
-                fecha.setText(seleccionada.getFecha().toString());
-            }
+            nickColab.setText(seleccionada.getColaboradorNick());
+            monto.setText(seleccionada.getMonto().toString());
+            retorno.setText(seleccionada.getRetorno().toString());
+            fecha.setText(seleccionada.getFecha().toString());
         });
 
         aceptarButton.addActionListener(e -> {
-            Integer idSeleccionado = (Integer) comboColab.getSelectedItem();
-            if (idSeleccionado == null) return;
+            DTOColabConsulta seleccionada = (DTOColabConsulta) comboColab.getSelectedItem();
+            if (seleccionada == null) return;
 
             try {
-                controller.cancelarColaboracion(idSeleccionado);
+                controller.cancelarColaboracion(seleccionada.getId()); // usamos el id real
                 JOptionPane.showMessageDialog(mainPanel, "Colaboración cancelada con éxito.");
                 limpiarCampos();
-                comboColab.removeItem(idSeleccionado);
+                comboColab.removeItem(seleccionada);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(mainPanel, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }

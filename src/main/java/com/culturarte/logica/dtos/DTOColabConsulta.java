@@ -35,5 +35,12 @@ public class DTOColabConsulta {
     public void setMonto(Integer monto) { this.monto = monto; }
     public void setRetorno(ETipoRetorno retorno) { this.retorno = retorno; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
+
+
+    @Override
+    public String toString() {
+        return "ID: " + id + " | " + colaboradorNick + " | $" + monto + " | " + fecha;
+    }
+
 }
 
