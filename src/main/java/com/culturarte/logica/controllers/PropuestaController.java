@@ -174,9 +174,21 @@ public class PropuestaController implements IPropuestaController {
         propuesta.setCategoria(categoria);
         propuesta.setRetornos(dto.retornos);
 
-        // Persistir cambios
+        // 🔑 Actualizar estado actual si viene en el DTO
+        if (dto.estadoActual != null && !dto.estadoActual.isBlank()) {
+            EEstadoPropuesta nuevoEstado = EEstadoPropuesta.valueOf(dto.estadoActual);
+
+            Estado estado = new Estado(nuevoEstado, LocalDate.now());
+            estado.setPropuesta(propuesta);
+
+            propuesta.setEstadoActual(estado);
+            propuesta.getHistorialEstados().add(estado);
+        }
+
+        // ✅ Guardar todo en un único UPDATE
         propuestaDAO.actualizar(propuesta);
     }
+
 
     @Override
     public List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado) {

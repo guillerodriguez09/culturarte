@@ -149,6 +149,8 @@ public class ModificarPropuestaForm {
             dto.categoriaNombre = nodoSeleccionado.toString();
             dto.proponenteNick = (String) comboProponente.getSelectedItem();
             dto.retornos = listaRet.getSelectedValuesList();
+            dto.setEstadoActual(((EEstadoPropuesta) comboEstados.getSelectedItem()).name());
+
 
 
             controller.modificarPropuesta(titulo.getText(), dto);

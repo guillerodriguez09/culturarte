@@ -2,13 +2,16 @@ package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.clases.Colaboracion;
 import com.culturarte.logica.clases.Colaborador;
+import com.culturarte.logica.clases.Estado;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColabConsulta;
 import com.culturarte.logica.dtos.DTOColaboracion;
+import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ColaboracionDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.PropuestaDAO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,17 +41,31 @@ public class ColaboracionController implements IColaboracionController {
             throw new IllegalArgumentException("Propuesta no encontrada.");
         }
 
+
+        EEstadoPropuesta estado = propuesta.getEstadoActual().getNombre();
+        switch (estado) {
+            case INGRESADA, CANCELADA, FINANCIADA, NO_FINANCIADA -> {
+                throw new IllegalArgumentException(
+                        "No se puede colaborar en una propuesta con estado: " + estado
+                );
+            }
+            case PUBLICADA, EN_FINANCIACION -> {
+                // permitido hacer colab
+            }
+        }
+
         // Busca colaborador
         Colaborador colaborador = colaboradorDAO.buscarPorNick(dto.colaboradorNick);
         if (colaborador == null) {
             throw new IllegalArgumentException("Colaborador no encontrado.");
         }
 
-        if(colaboracionDAO.existe(dto.colaboradorNick, dto.propuestaTitulo)){
-            throw new IllegalArgumentException("El usuario " + dto.colaboradorNick + " ya colaboro a la propuesta " + dto.propuestaTitulo);
+        if (colaboracionDAO.existe(dto.colaboradorNick, dto.propuestaTitulo)) {
+            throw new IllegalArgumentException("El usuario " + dto.colaboradorNick +
+                    " ya colaboró en la propuesta " + dto.propuestaTitulo);
         }
 
-        // Crear y persiste la colab
+        // Crear y persistir la colaboración
         Colaboracion nueva = new Colaboracion(
                 dto.monto,
                 dto.retorno,
@@ -59,12 +76,21 @@ public class ColaboracionController implements IColaboracionController {
 
         propuesta.addColaboracion(nueva);
         colaborador.addColaboracion(nueva);
-        colaboracionDAO.guardar(nueva);
-        propuestaDAO.actualizar(propuesta); //para q guarde el colaborador sino no se ve al consultar propuesta
 
+        colaboracionDAO.guardar(nueva);
         propuestaDAO.actualizar(propuesta);
         colaboradorDAO.actualizar(colaborador);
+
+        // para que cuando se agrega una colab cambie el estado a enfinanciacion
+        if (estado == EEstadoPropuesta.PUBLICADA) {
+            Estado nuevoEstado = new Estado(EEstadoPropuesta.EN_FINANCIACION, LocalDate.now());
+            nuevoEstado.setPropuesta(propuesta);
+            propuesta.setEstadoActual(nuevoEstado);
+            propuesta.getHistorialEstados().add(nuevoEstado);
+            propuestaDAO.actualizar(propuesta);
+        }
     }
+
 
     public List<DTOColabConsulta> listarColaboraciones() {
         List<Colaboracion> colabs = colaboracionDAO.obtenerTodas();

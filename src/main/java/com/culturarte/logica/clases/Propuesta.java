@@ -29,7 +29,8 @@ public class Propuesta {
     @JoinColumn(name = "CATEGORIA_NOMBRE", nullable = false)
     private Categoria categoria;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ESTADOACTUAL_ID")
     private Estado estadoActual;
 
     @OneToMany(mappedBy = "propuesta", cascade = CascadeType.ALL, orphanRemoval = true)
