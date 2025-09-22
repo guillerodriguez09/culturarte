@@ -37,15 +37,6 @@ public class SeguimientoUsuarioForm {
         grupo.add(rbtnSeguir);
         grupo.add(rbtnDejarSeguir);
 
-        List<String> proponentes = controllerPro.listarProponentes();
-        List<String> colaborador = controllerCol.listarColaboradores();
-
-        for (String prop : proponentes) cbxUsuarioSeguidor.addItem(prop);
-        for (String cola : colaborador) cbxUsuarioSeguidor.addItem(cola);
-
-        for (String prop : proponentes) cbxUsuarioSeguido.addItem(prop);
-        for (String cola : colaborador) cbxUsuarioSeguido.addItem(cola);
-
         btnAceptar.addActionListener(e -> {
             ejecutadoor();
         });
@@ -62,6 +53,55 @@ public class SeguimientoUsuarioForm {
                 }
             }
         });
+
+        rbtnSeguir.addActionListener(e -> {
+            paraSeguir();
+        });
+
+        rbtnDejarSeguir.addActionListener(e -> {
+           paraDejarSeguir();
+        });
+
+        cbxUsuarioSeguidor.addActionListener(e -> {
+            seguidoresDeNick();
+        });
+
+    }
+
+    public void paraSeguir(){
+        cbxUsuarioSeguidor.removeAllItems();
+        cbxUsuarioSeguido.removeAllItems();
+
+        List<String> proponentes = controllerPro.listarProponentes();
+        List<String> colaborador = controllerCol.listarColaboradores();
+
+        for (String prop : proponentes) cbxUsuarioSeguidor.addItem(prop);
+        for (String cola : colaborador) cbxUsuarioSeguidor.addItem(cola);
+
+        for (String prop : proponentes) cbxUsuarioSeguido.addItem(prop);
+        for (String cola : colaborador) cbxUsuarioSeguido.addItem(cola);
+    }
+
+    public void paraDejarSeguir(){
+
+        cbxUsuarioSeguidor.removeAllItems();
+        cbxUsuarioSeguido.removeAllItems();
+
+        List<String> proponentes = controllerPro.listarProponentes();
+        List<String> colaborador = controllerCol.listarColaboradores();
+
+        for (String prop : proponentes) cbxUsuarioSeguidor.addItem(prop);
+        for (String cola : colaborador) cbxUsuarioSeguidor.addItem(cola);
+
+        seguidoresDeNick();
+    }
+
+    public void seguidoresDeNick(){
+
+        cbxUsuarioSeguido.removeAllItems();
+
+        List<String> seguimientos = controllerSegui.listarSeguidosDeNick(cbxUsuarioSeguidor.getSelectedItem().toString());
+        for (String segui : seguimientos) cbxUsuarioSeguido.addItem(segui);
 
     }
 

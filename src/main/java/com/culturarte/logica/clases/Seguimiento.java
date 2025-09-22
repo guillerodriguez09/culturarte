@@ -38,4 +38,9 @@ public class Seguimiento {
         this.usuarioSeguido = usuarioSeguido;
     }
 
+    @Override
+    public String toString() {
+        return this != null ? this.usuarioSeguidor.getNick() : usuarioSeguidor.getNick();
+    }
+
 }

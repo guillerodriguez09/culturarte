@@ -12,6 +12,7 @@ public interface ISeguimientoController {
     int conseguirId(String nick, String nicky);
     void cancelarSeguimiento(int idSeguimiento);
     List<DTOSeguimiento> listarSeguimientos();
+    List<String> listarSeguidosDeNick(String nick);
 
 
 }

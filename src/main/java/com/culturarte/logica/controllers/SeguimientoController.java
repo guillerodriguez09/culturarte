@@ -107,5 +107,13 @@ public class SeguimientoController implements ISeguimientoController{
 
     }
 
+    @Override
+    public List<String> listarSeguidosDeNick(String nick){
 
+        return seguimientoDAO.obtenerTodosDeNick(nick)
+                .stream()
+                .map(Seguimiento::getUsuarioSeguido)
+                .toList();
+
+    }
 }
