@@ -73,6 +73,7 @@ public class ConsultaColaboracionPropuesta {
             return;
         }
 
+        // Filtrar colaboraciones del colaborador seleccionado
         colaboracionesFiltradas = new ArrayList<>();
         for (DTOColabConsulta c : todasColaboraciones) {
             if (c.getColaboradorNick().equals(colaboradorSeleccionado)) {
@@ -80,13 +81,14 @@ public class ConsultaColaboracionPropuesta {
             }
         }
 
-        String[] columnas = {"ID", "Monto", "Retorno", "Fecha"};
+        // Columnas de la tabla con el nombre de la propuesta
+        String[] columnas = {"Propuesta", "Monto", "Retorno", "Fecha"};
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
 
         if (!colaboracionesFiltradas.isEmpty()) {
             for (DTOColabConsulta c : colaboracionesFiltradas) {
                 model.addRow(new Object[]{
-                        c.getId(),
+                        c.getPropuestaNombre(), // <-- nombre de la propuesta
                         c.getMonto(),
                         c.getRetorno(),
                         c.getFecha()
@@ -111,7 +113,7 @@ public class ConsultaColaboracionPropuesta {
         String[] columnas = {"Campo", "Valor"};
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
 
-        model.addRow(new Object[]{"ID", c.getId()});
+        model.addRow(new Object[]{"Propuesta", c.getPropuestaNombre()});
         model.addRow(new Object[]{"Colaborador", c.getColaboradorNick()});
         model.addRow(new Object[]{"Monto", c.getMonto()});
         model.addRow(new Object[]{"Retorno", c.getRetorno()});

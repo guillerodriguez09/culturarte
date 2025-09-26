@@ -10,6 +10,7 @@ public class DTOColabConsulta {
     private Integer monto;
     private ETipoRetorno retorno;
     private LocalDateTime fecha;
+    private String propuestaNombre;
 
     public DTOColabConsulta() {
     }
@@ -28,6 +29,7 @@ public class DTOColabConsulta {
     public Integer getMonto() { return monto; }
     public ETipoRetorno getRetorno() { return retorno; }
     public LocalDateTime getFecha() { return fecha; }
+    public String getPropuestaNombre() { return propuestaNombre; }
 
     // Setters
     public void setId(int id) { this.id = id; }
@@ -35,7 +37,7 @@ public class DTOColabConsulta {
     public void setMonto(Integer monto) { this.monto = monto; }
     public void setRetorno(ETipoRetorno retorno) { this.retorno = retorno; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
-
+    public void setPropuestaNombre(String propuestaNombre) { this.propuestaNombre = propuestaNombre; }
 
     @Override
     public String toString() {
