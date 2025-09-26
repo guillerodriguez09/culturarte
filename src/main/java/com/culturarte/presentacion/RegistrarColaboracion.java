@@ -1,6 +1,7 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.controllers.IColaboracionController;
+import com.culturarte.logica.controllers.IColaboradorController;
 import com.culturarte.logica.controllers.IPropuestaController;
 import com.culturarte.logica.dtos.DTOColaboracion;
 import com.culturarte.logica.dtos.DTOPropuesta;
@@ -8,12 +9,12 @@ import com.culturarte.logica.enums.ETipoRetorno;
 import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class RegistrarColaboracion {
-
     private JPanel mainPanel;
     private JComboBox<String> propuestas;
     private JButton verInformacion;
@@ -26,43 +27,86 @@ public class RegistrarColaboracion {
     private JButton cancelar;
     private JLabel abSeleccionLaPropuesta;
     private JLabel abIngresarColaboracion;
+    private JComboBox<String> SeleccionColaborador;
+    private JLabel Colaborador;
 
-    private final IColaboracionController colaboracionController;
-    private final IPropuestaController propuestaController;
+    private final IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
+    private final IPropuestaController controllerPro = Fabrica.getInstancia().getPropuestaController();
+    private final IColaboracionController controllerColab = Fabrica.getInstancia().getColaboracionController();
 
     private List<DTOPropuesta> listaPropuestas;
 
     public RegistrarColaboracion() {
-        this.colaboracionController = Fabrica.getInstancia().getColaboracionController();
-        this.propuestaController = Fabrica.getInstancia().getPropuestaController();
+        List<String> colaboradores = controllerCol.listarColaboradores();
+        for (String nick : colaboradores) {
+            SeleccionColaborador.addItem(nick);
+        }
 
-        cargarPropuestas();
-        cargarRetornos();
+        listaPropuestas = controllerPro.listarPropuestasConProponente();
+        for (DTOPropuesta dto : listaPropuestas) {
+            propuestas.addItem(dto.getTitulo() + " (" + dto.getProponenteNick() + ")");
+        }
+
+        for (ETipoRetorno tipo : ETipoRetorno.values()) {
+            retorno.addItem(tipo);
+        }
+
+        aceptar.addActionListener(e -> registrarColaboracion());
+
+        cancelar.addActionListener(e -> {
+            JInternalFrame internal = (JInternalFrame) SwingUtilities.getAncestorOfClass(JInternalFrame.class, mainPanel);
+            if (internal != null) {
+                internal.dispose();
+            } else {
+                Window ventana = SwingUtilities.getWindowAncestor(mainPanel);
+                if (ventana != null) {
+                    ventana.setVisible(false);
+                }
+            }
+        });
 
         verInformacion.addActionListener(e -> mostrarDetallesSeleccion());
-        aceptar.addActionListener(e -> registrarColaboracion());
-        cancelar.addActionListener(e -> limpiarCampos());
     }
 
-    private void cargarPropuestas() {
-        propuestas.removeAllItems();
-        listaPropuestas = propuestaController.listarPropuestasConProponente();
-        if (listaPropuestas != null && !listaPropuestas.isEmpty()) {
-            for (DTOPropuesta p : listaPropuestas) {
-                propuestas.addItem(p.getTitulo());
-            }
-        } else {
-            propuestas.addItem("No hay propuestas disponibles");
+    private void registrarColaboracion() {
+        int index = propuestas.getSelectedIndex();
+        if (index < 0 || listaPropuestas == null || listaPropuestas.isEmpty()) {
+            JOptionPane.showMessageDialog(mainPanel, "Debe seleccionar una propuesta");
+            return;
         }
-        propuestas.setSelectedIndex(-1); // nada seleccionado al inicio
-    }
+        DTOPropuesta propuestaSeleccionada = listaPropuestas.get(index);
 
-    private void cargarRetornos() {
-        retorno.removeAllItems();
-        for (ETipoRetorno r : ETipoRetorno.values()) {
-            retorno.addItem(r);
+        String colaboradorNick = (String) SeleccionColaborador.getSelectedItem();
+        if (colaboradorNick == null || colaboradorNick.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(mainPanel, "Debe seleccionar un colaborador");
+            return;
         }
-        retorno.setSelectedIndex(0);
+
+        ETipoRetorno tipoRetorno = (ETipoRetorno) retorno.getSelectedItem();
+
+        int monto;
+        try {
+            monto = Integer.parseInt(montoDigito.getText().trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Monto inválido");
+            return;
+        }
+
+        DTOColaboracion dto = new DTOColaboracion();
+        dto.setPropuestaTitulo(propuestaSeleccionada.getTitulo());
+        dto.setColaboradorNick(colaboradorNick);
+        dto.setMonto(monto);
+        dto.setRetorno(tipoRetorno);
+        dto.setFecha(LocalDateTime.now());
+        dto.setMonto(monto);
+
+        try {
+            controllerColab.registrarColaboracion(dto);
+            JOptionPane.showMessageDialog(mainPanel, "Colaboración registrada exitosamente");
+            limpiarCampos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Error: " + ex.getMessage());
+        }
     }
 
     private void mostrarDetallesSeleccion() {
@@ -89,52 +133,11 @@ public class RegistrarColaboracion {
         infoPropuesta.setModel(model);
     }
 
-    private void registrarColaboracion() {
-        int index = propuestas.getSelectedIndex();
-        if (index < 0 || listaPropuestas == null || listaPropuestas.isEmpty()) {
-            JOptionPane.showMessageDialog(mainPanel, "Seleccione una propuesta primero");
-            return;
-        }
-
-        DTOPropuesta propuestaSeleccionada = listaPropuestas.get(index);
-
-        String colaboradorNick = JOptionPane.showInputDialog(mainPanel, "Ingrese nickname del colaborador:");
-        if (colaboradorNick == null || colaboradorNick.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(mainPanel, "Debe ingresar un colaborador");
-            return;
-        }
-
-        ETipoRetorno tipoRetorno = (ETipoRetorno) retorno.getSelectedItem();
-
-        int monto;
-        try {
-            monto = Integer.parseInt(montoDigito.getText().trim());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(mainPanel, "Monto inválido");
-            return;
-        }
-
-        DTOColaboracion dto = new DTOColaboracion();
-        dto.setPropuestaTitulo(propuestaSeleccionada.getTitulo());
-        dto.setColaboradorNick(colaboradorNick);
-        dto.setMonto(monto);
-        dto.setRetorno(tipoRetorno);
-        dto.setFecha(LocalDateTime.now());
-
-        try {
-            colaboracionController.registrarColaboracion(dto);
-            JOptionPane.showMessageDialog(mainPanel, "Colaboración registrada exitosamente");
-            limpiarCampos();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel, "Error al registrar colaboración: " + ex.getMessage());
-        }
-    }
-
     private void limpiarCampos() {
-        montoDigito.setText("");
-        retorno.setSelectedIndex(0);
+        SeleccionColaborador.setSelectedIndex(-1);
         propuestas.setSelectedIndex(-1);
-        infoPropuesta.setModel(new DefaultTableModel());
+        retorno.setSelectedIndex(-1);
+        montoDigito.setText("");
     }
 
     public JPanel getMainPanel() {

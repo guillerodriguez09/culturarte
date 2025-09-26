@@ -104,6 +104,7 @@ public class ColaboracionController implements IColaboracionController {
                     c.getRetorno(),
                     c.getFecha()
             );
+            dto.setPropuestaNombre(c.getPropuesta().getTitulo());
             dtos.add(dto);
         }
 
