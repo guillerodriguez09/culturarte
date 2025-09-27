@@ -34,15 +34,18 @@ public class MenuPrincipal extends JFrame {
         JMenuItem itemConsultaPropuesta = new JMenuItem("Consulta de Propuestas");
         JMenuItem itemConsultaPropuestasEstado = new JMenuItem("Consulta Propuestas por Estado");
         JMenuItem itemModificarPropuesta = new JMenuItem("Modificar Propuesta");
+        JMenuItem itemEvaluarPropuesta = new JMenuItem("Evaluar Propuesta");
 
         menuPropuesta.add(itemAltaPropuesta);
         menuPropuesta.add(itemConsultaPropuesta);
         menuPropuesta.add(itemConsultaPropuestasEstado);
         menuPropuesta.add(itemModificarPropuesta);
+        menuPropuesta.add(itemEvaluarPropuesta);
         itemAltaPropuesta.addActionListener(e -> abrirAltaPropuesta());
         itemConsultaPropuesta.addActionListener(e -> abrirConsultaPropuesta());
         itemConsultaPropuestasEstado.addActionListener(e -> abrirConsultaPropuestasEstado());
         itemModificarPropuesta.addActionListener(e -> abrirModificarPropuesta());
+        itemEvaluarPropuesta.addActionListener(e -> abrirEvaluarPropuesta());
 
         //Menu de usuarios
         JMenu menuUsuario = new JMenu("Usuario");
@@ -136,6 +139,21 @@ public class MenuPrincipal extends JFrame {
         ModificarPropuestaForm form = new ModificarPropuestaForm();
         JInternalFrame frame = new JInternalFrame("Modificar Propuesta", true, true, true, true);
         frame.setContentPane(form.traerPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setMaximum(true);
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirEvaluarPropuesta() {
+        EvaluarPropuestaForm form = new EvaluarPropuestaForm();
+        JInternalFrame frame = new JInternalFrame("Evaluar Propuesta", true, true, true, true);
+        frame.setContentPane(form.getPanel());
         frame.pack();
         frame.setVisible(true);
         desktopPane.add(frame);

@@ -12,10 +12,11 @@ public interface IPropuestaController {
     void altaPropuesta(DTOPropuesta dtoPropuesta);
     DTOPropuesta consultarPropuesta(String titulo);
     List<String> listarPropuestas();
-    List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado); //luego sera un DTO el estado si no entiendo mal
+    List<DTOPropuesta> listarPorEstado(EEstadoPropuesta estado);
     void modificarPropuesta(String titulo, DTOPropuesta dtoPropuesta);
     public List<DTOPropuesta> listarPropuestasConProponente();
     void asignarEstado(String tituloPropuesta, EEstadoPropuesta estado, LocalDate fecha);
-
+    public List<DTOPropuesta> listarPropuestasIngresadas();
+    public void evaluarPropuesta(String tituloPropuesta, boolean publicar);
 
 }

@@ -259,4 +259,32 @@ public class PropuestaController implements IPropuestaController {
         propuestaDAO.actualizar(prop);
     }
 
+
+    public List<DTOPropuesta> listarPropuestasIngresadas() {
+        return listarPorEstado(EEstadoPropuesta.INGRESADA);
+    }
+
+
+    public void evaluarPropuesta(String tituloPropuesta, boolean publicar) {
+        Propuesta prop = propuestaDAO.buscarPorTitulo(tituloPropuesta);
+        if (prop == null) {
+            throw new IllegalArgumentException("Propuesta no encontrada: " + tituloPropuesta);
+        }
+
+        if (prop.getEstadoActual() == null || prop.getEstadoActual().getNombre() != EEstadoPropuesta.INGRESADA) {
+            throw new IllegalStateException("Solo se pueden evaluar propuestas en estado INGRESADA.");
+        }
+
+        EEstadoPropuesta nuevoEstado = publicar ?
+                EEstadoPropuesta.PUBLICADA : EEstadoPropuesta.CANCELADA;
+
+        Estado estado = new Estado(nuevoEstado, LocalDate.now());
+        estado.setPropuesta(prop);
+
+        prop.setEstadoActual(estado);
+        prop.getHistorialEstados().add(estado);
+
+        propuestaDAO.actualizar(prop);
+    }
+
 }
