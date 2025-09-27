@@ -58,4 +58,12 @@ public class DTOPropuesta {
     public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
     public void setMontoRecaudado(Double montoRecaudado) { this.montoRecaudado = montoRecaudado; }
     public void setColaboradores(List<String> colaboradores) { this.colaboradores = colaboradores; }
+
+
+    //para caso de uso evaluar propuesta
+    @Override
+    public String toString() {
+        return titulo + " - " + proponenteNick;
+    }
+
 }

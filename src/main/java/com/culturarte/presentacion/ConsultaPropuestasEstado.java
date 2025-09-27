@@ -13,7 +13,6 @@ import java.util.List;
 public class ConsultaPropuestasEstado {
 
     private JPanel mainPanel;
-    private JTextField seleccioneElEstado;
     private JComboBox<EEstadoPropuesta> estados;
     private JButton buscar;
     private JTable listado;
