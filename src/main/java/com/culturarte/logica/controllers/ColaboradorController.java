@@ -28,6 +28,12 @@ public class ColaboradorController implements IColaboradorController {
         if (dtoC.getApellido() == null || dtoC.getApellido().isBlank() ){
             throw new IllegalArgumentException("Apellido de colaborador es obligatorio.");
         }
+        if(dtoC.getContrasenia() == null || dtoC.getContrasenia().isBlank() ){
+            throw new IllegalArgumentException("Contraseña de colaborador es obligatoria.");
+        }
+        if(!dtoC.getConfContrasenia().equals(dtoC.getContrasenia()) || dtoC.getConfContrasenia().isBlank() ){
+            throw new IllegalArgumentException("Confirmación de contraseña tiene que ser igual a la contraseña");
+        }
         if (dtoC.getCorreo() == null || dtoC.getCorreo().isBlank() ){
             throw new IllegalArgumentException("Correo de colaborador es obligatorio.");
         }
@@ -46,6 +52,8 @@ public class ColaboradorController implements IColaboradorController {
                 dtoC.getNick(),
                 dtoC.getNombre(),
                 dtoC.getApellido(),
+                dtoC.getContrasenia(),
+                dtoC.getConfContrasenia(),
                 dtoC.getCorreo(),
                 dtoC.getFechaNac(),
                 dtoC.getDirImagen()
@@ -79,6 +87,8 @@ public class ColaboradorController implements IColaboradorController {
             dtoCol.setNick(col.getNick());
             dtoCol.setNombre(col.getNombre());
             dtoCol.setApellido(col.getApellido());
+            dtoCol.setContrasenia(col.getContrasenia());
+            dtoCol.setConfContrasenia(col.getConfContrasenia());
             dtoCol.setCorreo(col.getCorreo());
             dtoCol.setFechaNac(col.getFechaNac());
             dtoCol.setDirImagen(col.getDirImagen());
@@ -110,6 +120,8 @@ public class ColaboradorController implements IColaboradorController {
         dtoCol.setNick(col.getNick());
         dtoCol.setNombre(col.getNombre());
         dtoCol.setApellido(col.getApellido());
+        dtoCol.setContrasenia(col.getContrasenia());
+        dtoCol.setConfContrasenia(col.getConfContrasenia());
         dtoCol.setCorreo(col.getCorreo());
         dtoCol.setFechaNac(col.getFechaNac());
         dtoCol.setDirImagen(col.getDirImagen());

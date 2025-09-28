@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class DTOColaborador extends DTOUsuario {
 
-    public DTOColaborador(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String dirImagen){
-        super(nickname, nombre, apellido, correo, fechaNac, dirImagen);
+    public DTOColaborador(String nickname, String nombre, String apellido, String contrasenia, String confContrasenia, String correo, LocalDate fechaNac, String dirImagen){
+        super(nickname, nombre, apellido, contrasenia, confContrasenia, correo, fechaNac, dirImagen);
     }
     public DTOColaborador(){};
 

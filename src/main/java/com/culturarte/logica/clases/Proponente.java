@@ -21,8 +21,8 @@ public class Proponente extends Usuario {
 
     public Proponente(){}
 
-    public Proponente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String dirImagen, String direccion, String biografia, String link){
-        super(nickname, nombre, apellido, correo, fechaNac, dirImagen);
+    public Proponente(String nickname, String nombre, String apellido, String contrasenia, String confContrasenia, String correo, LocalDate fechaNac, String dirImagen, String direccion, String biografia, String link){
+        super(nickname, nombre, apellido, contrasenia, confContrasenia, correo, fechaNac, dirImagen);
         this.direccion = direccion;
         this.biografia = biografia;
         this.link = link;

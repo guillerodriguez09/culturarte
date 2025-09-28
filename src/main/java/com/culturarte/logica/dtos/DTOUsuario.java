@@ -7,6 +7,8 @@ public class DTOUsuario {
     String nickname;
     String nombre;
     String apellido;
+    String contrasenia;
+    String confContrasenia;
     String correo;
     LocalDate fechaNac;
     String dirImagen;
@@ -14,10 +16,12 @@ public class DTOUsuario {
 
     public DTOUsuario(){}
 
-    public DTOUsuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String dirImagen) {
+    public DTOUsuario(String nickname, String nombre, String apellido, String contrasenia, String confContrasenia, String correo, LocalDate fechaNac, String dirImagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.contrasenia = contrasenia;
+        this.confContrasenia = confContrasenia;
         this.correo = correo;
         this.fechaNac = fechaNac;
         this.dirImagen = dirImagen;
@@ -32,9 +36,9 @@ public class DTOUsuario {
     public String getApellido(){
         return apellido;
     }
-    public String getCorreo(){
-        return correo;
-    }
+    public String getContrasenia(){ return contrasenia; }
+    public String getConfContrasenia(){ return confContrasenia; }
+    public String getCorreo(){return correo;}
     public LocalDate getFechaNac(){
         return  fechaNac;
     }
@@ -51,6 +55,8 @@ public class DTOUsuario {
     public void setApellido(String apellido){
         this.apellido = apellido;
     }
+    public void setContrasenia(String contrasenia){ this.contrasenia = contrasenia; }
+    public void setConfContrasenia(String confContrasenia){ this.confContrasenia = confContrasenia; }
     public void setCorreo(String correo){
         this.correo = correo;
     }

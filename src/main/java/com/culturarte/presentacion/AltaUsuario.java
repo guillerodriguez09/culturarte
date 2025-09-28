@@ -3,7 +3,6 @@ package com.culturarte.presentacion;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import com.culturarte.logica.fabrica.Fabrica;
@@ -45,6 +44,12 @@ public class AltaUsuario {
     private JLabel comunicadoor;
     private JLabel GOKUESGRANDE;
     private JLabel cutillo;
+    private JTextField txtContrasenia;
+    private JTextField txtConfContrasenia;
+    private JLabel lblContrasenia;
+    private JLabel lblConfContrasenia;
+    private JLabel Chivito;
+    private JLabel finalizadoor;
 
     private final IColaboradorController controllerCol = Fabrica.getInstancia().getColaboradorController();
     private final IProponenteController controllerPro = Fabrica.getInstancia().getProponenteController();
@@ -83,6 +88,8 @@ public class AltaUsuario {
             String nick = txtNickname.getText();
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
+            String contrasenia = txtContrasenia.getText();
+            String confContrasenia = txtConfContrasenia.getText();
             String correo = txtCorreo.getText();
 
             String fechaNac = ftxtFechaNacimiento.getText();
@@ -95,7 +102,7 @@ public class AltaUsuario {
                 tipoUsuario = "Colaborador";
             }
 
-            if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNac.isEmpty()){
+            if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNac.isEmpty() || contrasenia.isEmpty() || confContrasenia.isEmpty()){
                 JOptionPane.showMessageDialog(mainPanel,
                         "Por favor completa todos los campos",
                         "Faltan datos",
@@ -129,6 +136,8 @@ public class AltaUsuario {
                     dtoC.setNick(nick);
                     dtoC.setNombre(nombre);
                     dtoC.setApellido(apellido);
+                    dtoC.setContrasenia(contrasenia);
+                    dtoC.setConfContrasenia(confContrasenia);
                     dtoC.setCorreo(correo);
                     dtoC.setFechaNac(fechaNacimiento);
                     dtoC.setDirImagen(txtImagen.getText());
@@ -142,6 +151,8 @@ public class AltaUsuario {
                     dtoP.setNick(nick);
                     dtoP.setNombre(nombre);
                     dtoP.setApellido(apellido);
+                    dtoP.setContrasenia(contrasenia);
+                    dtoP.setConfContrasenia(confContrasenia);
                     dtoP.setCorreo(correo);
                     dtoP.setFechaNac(fechaNacimiento); // el formato es yyyy-mm-dd
                     dtoP.setDirImagen(txtImagen.getText());
@@ -178,6 +189,8 @@ public class AltaUsuario {
         txtNickname.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
+        txtContrasenia.setText("");
+        txtConfContrasenia.setText("");
         txtCorreo.setText("");
         ftxtFechaNacimiento.setText("");
         txtBio.setText("");

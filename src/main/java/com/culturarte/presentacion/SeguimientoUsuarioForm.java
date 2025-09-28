@@ -114,13 +114,13 @@ public class SeguimientoUsuarioForm {
                 if (controllerPro.obtenerProponente(usrSeguidoor) != null) {
 
                     DTOProponente pepe = controllerPro.obtenerProponente(usrSeguidoor);
-                    Proponente pro = new Proponente(pepe.getNick(), pepe.getNombre(), pepe.getApellido(), pepe.getCorreo(), pepe.getFechaNac(), pepe.getDirImagen(), pepe.getDireccion(), pepe.getBiografia(), pepe.getLink());
+                    Proponente pro = new Proponente(pepe.getNick(), pepe.getNombre(), pepe.getApellido(), pepe.getContrasenia(), pepe.getConfContrasenia(), pepe.getCorreo(), pepe.getFechaNac(), pepe.getDirImagen(), pepe.getDireccion(), pepe.getBiografia(), pepe.getLink());
                     dtoSegui.setUsuarioSeguidor(pro);
 
                 } else if (controllerCol.obtenerColaborador(usrSeguidoor) != null) {
 
                     DTOColaborador jaun = controllerCol.obtenerColaborador(usrSeguidoor);
-                    Colaborador col = new Colaborador(jaun.getNick(), jaun.getNombre(), jaun.getApellido(), jaun.getCorreo(), jaun.getFechaNac(), jaun.getDirImagen());
+                    Colaborador col = new Colaborador(jaun.getNick(), jaun.getNombre(), jaun.getApellido(), jaun.getContrasenia(), jaun.getConfContrasenia(), jaun.getCorreo(), jaun.getFechaNac(), jaun.getDirImagen());
                     dtoSegui.setUsuarioSeguidor(col);
 
                 }
