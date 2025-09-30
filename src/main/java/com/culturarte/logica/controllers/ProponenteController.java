@@ -33,9 +33,6 @@ public class ProponenteController implements IProponenteController {
         if (dtoP.getContrasenia() == null || dtoP.getContrasenia().isBlank()){
             throw new IllegalArgumentException("Contraseña de proponente es obligatoria");
         }
-        if(!dtoP.getConfContrasenia().equals(dtoP.getContrasenia()) || dtoP.getConfContrasenia().isBlank()){
-            throw new IllegalArgumentException("Confirmación de contraseña tiene que ser igual a la contraseña");
-        }
         if (dtoP.getCorreo() == null || dtoP.getCorreo().isBlank() ){
             throw new IllegalArgumentException("Correo de proponente es obligatorio.");
         }
@@ -63,7 +60,6 @@ public class ProponenteController implements IProponenteController {
                 dtoP.getNombre(),
                 dtoP.getApellido(),
                 dtoP.getContrasenia(),
-                dtoP.getConfContrasenia(),
                 dtoP.getCorreo(),
                 dtoP.getFechaNac(),
                 dtoP.getDirImagen(),
@@ -97,7 +93,6 @@ public class ProponenteController implements IProponenteController {
         dtoProp.setNombre(prop.getNombre());
         dtoProp.setApellido(prop.getApellido());
         dtoProp.setContrasenia(prop.getContrasenia());
-        dtoProp.setConfContrasenia(prop.getConfContrasenia());
         dtoProp.setCorreo(prop.getCorreo());
         dtoProp.setFechaNac(prop.getFechaNac());
         dtoProp.setDirImagen(prop.getDirImagen());
@@ -125,7 +120,6 @@ public class ProponenteController implements IProponenteController {
             dtoProp.setNombre(prop.getNombre());
             dtoProp.setApellido(prop.getApellido());
             dtoProp.setContrasenia(prop.getContrasenia());
-            dtoProp.setConfContrasenia(prop.getConfContrasenia());
             dtoProp.setCorreo(prop.getCorreo());
             dtoProp.setFechaNac(prop.getFechaNac());
             dtoProp.setDirImagen(prop.getDirImagen());
@@ -164,7 +158,6 @@ public class ProponenteController implements IProponenteController {
             dtoProp.setNombre(prop.getNombre());
             dtoProp.setApellido(prop.getApellido());
             dtoProp.setContrasenia(prop.getContrasenia());
-            dtoProp.setConfContrasenia(prop.getConfContrasenia());
             dtoProp.setCorreo(prop.getCorreo());
             dtoProp.setFechaNac(prop.getFechaNac());
             dtoProp.setDirImagen(prop.getDirImagen());

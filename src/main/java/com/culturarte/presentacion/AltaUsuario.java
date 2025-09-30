@@ -100,6 +100,12 @@ public class AltaUsuario {
                 tipoUsuario = "Proponente";
             }else if(rbtnColaborador.isSelected()){
                 tipoUsuario = "Colaborador";
+            }else if(tipoUsuario.equals("chivito")){
+                JOptionPane.showMessageDialog(mainPanel,
+                        "Por favor seleccione tipo usuario",
+                        "Sin tipo usuario",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
             }
 
             if (nick.isBlank() || nombre.isBlank() || apellido.isBlank() || correo.isBlank() || fechaNac.isEmpty() || contrasenia.isEmpty() || confContrasenia.isEmpty()){
@@ -130,6 +136,14 @@ public class AltaUsuario {
 
             }
 
+            if(!contrasenia.equals(confContrasenia)){
+                JOptionPane.showMessageDialog(mainPanel,
+                        "Confirmacion de contraseña debe ser igual a contraseña",
+                        "Incorrecta conformación",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             try {
                 if (tipoUsuario.equals("Colaborador")) {
                     DTOColaborador dtoC = new DTOColaborador();
@@ -137,7 +151,6 @@ public class AltaUsuario {
                     dtoC.setNombre(nombre);
                     dtoC.setApellido(apellido);
                     dtoC.setContrasenia(contrasenia);
-                    dtoC.setConfContrasenia(confContrasenia);
                     dtoC.setCorreo(correo);
                     dtoC.setFechaNac(fechaNacimiento);
                     dtoC.setDirImagen(txtImagen.getText());
@@ -152,7 +165,6 @@ public class AltaUsuario {
                     dtoP.setNombre(nombre);
                     dtoP.setApellido(apellido);
                     dtoP.setContrasenia(contrasenia);
-                    dtoP.setConfContrasenia(confContrasenia);
                     dtoP.setCorreo(correo);
                     dtoP.setFechaNac(fechaNacimiento); // el formato es yyyy-mm-dd
                     dtoP.setDirImagen(txtImagen.getText());

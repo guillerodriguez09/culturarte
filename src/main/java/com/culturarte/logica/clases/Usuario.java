@@ -17,7 +17,6 @@ public abstract class Usuario {
     String nombre;
     String apellido;
     String contrasenia;
-    String confContrasenia;
     String correo;
     LocalDate fechaNac;
     String dirImagen;
@@ -27,12 +26,11 @@ public abstract class Usuario {
 
     public Usuario(){}
 
-    public Usuario(String nickname, String nombre, String apellido,String contrasenia, String confContrasenia, String correo, LocalDate fechaNac, String dirImagen) {
+    public Usuario(String nickname, String nombre, String apellido,String contrasenia, String correo, LocalDate fechaNac, String dirImagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.contrasenia = contrasenia;
-        this.confContrasenia = confContrasenia;
         this.correo = correo;
         this.fechaNac = fechaNac;
         this.dirImagen = dirImagen;
@@ -48,7 +46,6 @@ public abstract class Usuario {
         return apellido;
     }
     public String getContrasenia(){ return contrasenia; }
-    public String getConfContrasenia(){ return confContrasenia; }
     public String getCorreo(){
         return correo;
     }
@@ -69,7 +66,6 @@ public abstract class Usuario {
         this.apellido = apellido;
     }
     public void setContrasenia(String contrasenia){ this.contrasenia = contrasenia; }
-    public void setConfContrasenia(String confContrasenia){ this.confContrasenia = confContrasenia; }
     public void setCorreo(String correo){
         this.correo = correo;
     }

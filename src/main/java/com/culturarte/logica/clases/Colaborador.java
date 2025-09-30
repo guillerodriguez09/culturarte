@@ -13,8 +13,8 @@ public class Colaborador extends Usuario {
     private List<Colaboracion> colaboraciones = new ArrayList<>();
 
 
-    public Colaborador(String nickname, String nombre, String apellido, String contrasenia, String confContrasenia, String correo, LocalDate fechaNac, String dirImagen){
-        super(nickname, nombre, apellido, contrasenia, confContrasenia, correo, fechaNac, dirImagen);
+    public Colaborador(String nickname, String nombre, String apellido, String contrasenia, String correo, LocalDate fechaNac, String dirImagen){
+        super(nickname, nombre, apellido, contrasenia, correo, fechaNac, dirImagen);
     }
     public Colaborador(){};
 
