@@ -76,9 +76,15 @@ public class ConsultaColaboradorFrom {
         txtFechaNacimiento.setText(dtoCola.getFechaNac().toString());
 
         if (dtoCola.getDirImagen() != null && !dtoCola.getDirImagen().isBlank()) {
-            ImageIcon icon = new ImageIcon(dtoCola.getDirImagen());
-            Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            lblImagenShow.setIcon(new ImageIcon(img));
+            //ImageIcon icon = new ImageIcon(dtoCola.getDirImagen());
+            String dirImagen = dtoCola.getDirImagen();
+            try {
+                ImageIcon icon = new ImageIcon(getClass().getResource(dirImagen));
+                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                lblImagenShow.setIcon(new ImageIcon(img));
+            }catch(Exception e){
+                return;
+            }
         } else {
             lblImagenShow.setIcon(null);
         }

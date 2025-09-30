@@ -101,7 +101,7 @@ public class DatosDePrueba {
         dtoP5.setApellido("Silva");
         dtoP5.setContrasenia("Nada");
         dtoP5.setFechaNac(LocalDate.of(1947, 01, 01));
-        dtoP5.setDirImagen("src/main/resources/imagenes/404.png");
+        dtoP5.setDirImagen("/imagenes/404.png");
         dtoP5.setDireccion("Br. Artigas 4567");
         dtoP5.setLink("https://www.facebook.com/C1080?ref=br_rs");
         dtoP5.setBiografia("Nace en el año 1947 en el conventillo “Medio Mundo” ubicado en pleno Barrio Sur. Es heredero parcialmente- " +

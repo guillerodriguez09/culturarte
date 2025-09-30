@@ -96,9 +96,15 @@ public class ConsultaProponenteForm {
         txtFechaNacimiento.setText(dtoProp.getFechaNac().toString());
 
         if (dtoProp.getDirImagen() != null && !dtoProp.getDirImagen().isBlank()) {
-            ImageIcon icon = new ImageIcon(dtoProp.getDirImagen());
-            Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            lblImagenShow.setIcon(new ImageIcon(img));
+            //ImageIcon icon = new ImageIcon(dtoProp.getDirImagen());
+            String dirImagen = dtoProp.getDirImagen();
+            try {
+                ImageIcon icon = new ImageIcon(getClass().getResource(dirImagen));
+                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                lblImagenShow.setIcon(new ImageIcon(img));
+            }catch(Exception e){
+                return;
+            }
         } else {
             lblImagenShow.setIcon(null);
         }
