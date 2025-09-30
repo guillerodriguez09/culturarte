@@ -663,7 +663,7 @@ public class DatosDePrueba {
 
         //
 
-        // UNA VEZ SE AGREGUEN LAS CATEGORIAS CORREGUIR CATEGORIAS EN PROPUESTAS
+        //
         //PROPUESTAS
 
         DTOPropuesta dtoProp = new DTOPropuesta();
@@ -801,7 +801,41 @@ public class DatosDePrueba {
         //PROPUESTAS
         //
 
-        // FALTA LA HORA PORQUE POR SUPUESTO QUE FALTA LA HORA NUNCA SE MENCIONO LA HORA HASTA AHORA
+        //ESTADOS DE LAS PROP
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 5, 15, 15, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30).toLocalDate());
+        //controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30).toLocalDate());
+        //controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50).toLocalDate());
+
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 6, 18, 4, 28).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25).toLocalDate());
+        //controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45).toLocalDate());
+
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 1, 7, 40).toLocalDate());
+
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 30, 15, 40).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50).toLocalDate());
+
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 4, 12, 20).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 13, 4, 58).toLocalDate());
+
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 6, 2, 0).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 15, 4, 48).toLocalDate());
+
+        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40).toLocalDate());
+        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58).toLocalDate());
+
+        controllerP.asignarEstado("Bardo en la FING", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12).toLocalDate());
+        //
+
+        //
         //COLABORACIONES
         DTOColaboracion dto = new DTOColaboracion();
         dto.setColaboradorNick(dtoC3.getNick());
@@ -940,40 +974,6 @@ public class DatosDePrueba {
         controllerC.registrarColaboracion(dto17);
         //COLABORACIONES
         //
-
-        //ESTADOS DE LAS PROP
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 5, 15, 15, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50).toLocalDate());
-
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 6, 18, 4, 28).toLocalDate());
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56).toLocalDate());
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25).toLocalDate());
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45).toLocalDate());
-
-        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30).toLocalDate());
-        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30).toLocalDate());
-        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 1, 7, 40).toLocalDate());
-
-        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 30, 15, 40).toLocalDate());
-        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30).toLocalDate());
-        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50).toLocalDate());
-
-        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 4, 12, 20).toLocalDate());
-        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25).toLocalDate());
-        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 13, 4, 58).toLocalDate());
-
-        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 6, 2, 0).toLocalDate());
-        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50).toLocalDate());
-        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 15, 4, 48).toLocalDate());
-
-        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40).toLocalDate());
-        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58).toLocalDate());
-
-        controllerP.asignarEstado("Bardo en la FING", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12).toLocalDate());
-
 
     }
     //si no hago esto no me funciona porque al pasarle una categoria con el string no basta je
