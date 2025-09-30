@@ -92,7 +92,7 @@ public class MenuPrincipal extends JFrame {
 
         menuDDP.add(itemCargarDatosDePrueba);
 
-//        itemCargarDatosDePrueba.addActionListener(e -> cargarDatosDePrueba());
+        itemCargarDatosDePrueba.addActionListener(e -> cargarDatosDePrueba());
 
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
@@ -252,14 +252,14 @@ public class MenuPrincipal extends JFrame {
         }
     }
 
-//    private void cargarDatosDePrueba() {
-//        DatosDePrueba DDP = new DatosDePrueba();
-//        try {
-//            DDP.crearDatosPrueba();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void cargarDatosDePrueba() {
+        DatosDePrueba DDP = new DatosDePrueba();
+        try {
+            DDP.crearDatosPrueba();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void abrirRegistrarColaboracion() {
         RegistrarColaboracion form = new RegistrarColaboracion();
