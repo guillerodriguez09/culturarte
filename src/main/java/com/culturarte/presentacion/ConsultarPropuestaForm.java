@@ -84,9 +84,15 @@ public class ConsultarPropuestaForm {
         colaboradores.setListData(dto.colaboradores.toArray(new String[0]));
 
         if (dto.imagen != null && !dto.imagen.isBlank()) {
-            ImageIcon icon = new ImageIcon(dto.imagen);
-            Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            imagendir.setIcon(new ImageIcon(img));
+            //ImageIcon icon = new ImageIcon(dto.imagen);
+            String dirImagen = dto.imagen;
+            try {
+                ImageIcon icon = new ImageIcon(getClass().getResource(dirImagen));
+                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                imagendir.setIcon(new ImageIcon(img));
+            }catch(Exception e){
+                return;
+            }
         } else {
             imagendir.setIcon(null);
         }

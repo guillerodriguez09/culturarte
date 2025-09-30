@@ -695,7 +695,7 @@ public class DatosDePrueba {
                 "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema " +
                 "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde " +
                 "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.");
-        dtoProp2.setImagen("src/main/resources/imagenes/404.png");
+        dtoProp2.setImagen("/imagenes/404.png");
         dtoProp2.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp2);
 
@@ -712,7 +712,7 @@ public class DatosDePrueba {
                 "Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se " +
                 "parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, " +
                 "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.");
-        dtoProp3.setImagen("src/main/resources/imagenes/elPimientoIndomable.jpg");
+        dtoProp3.setImagen("/imagenes/elPimientoIndomable.jpg");
         dtoProp3.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp3);
 
@@ -728,7 +728,7 @@ public class DatosDePrueba {
         dtoProp4.setDescripcion("La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más " +
                 "de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de " +
                 "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.");
-        dtoProp4.setImagen("src/main/resources/imagenes/pilsenRock.jpg");
+        dtoProp4.setImagen("/imagenes/pilsenRock.jpg");
         dtoProp4.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp4);
 
@@ -745,7 +745,7 @@ public class DatosDePrueba {
                 "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, " +
                 "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó " +
                 "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.");
-        dtoProp5.setImagen("src/main/resources/imagenes/404.png");
+        dtoProp5.setImagen("/imagenes/404.png");
         dtoProp5.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp5);
 
@@ -761,7 +761,7 @@ public class DatosDePrueba {
         dtoProp6.setDescripcion("La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las " +
                 "cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un " +
                 "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.");
-        dtoProp6.setImagen("src/main/resources/imagenes/imagenes/unDiaDeJulio.jpg");
+        dtoProp6.setImagen("/imagenes/unDiaDeJulio.jpg");
         dtoProp6.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp6);
 
