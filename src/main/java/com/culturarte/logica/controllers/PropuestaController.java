@@ -286,5 +286,29 @@ public class PropuestaController implements IPropuestaController {
 
         propuestaDAO.actualizar(prop);
     }
+    public void cancelarPropuesta(String tituloPropuesta) {
+        Propuesta prop = propuestaDAO.buscarPorTitulo(tituloPropuesta);
+        if (prop == null) {
+            throw new IllegalArgumentException("Propuesta no encontrada: " + tituloPropuesta);
+        }
+
+        EEstadoPropuesta estadoActual = prop.getEstadoActual().getNombre();
+
+        // Solo se cancela si está INGRESADA o FINANCIADA
+        if (estadoActual == EEstadoPropuesta.INGRESADA || estadoActual == EEstadoPropuesta.FINANCIADA) {
+            Estado nuevoEstado = new Estado(EEstadoPropuesta.CANCELADA, LocalDate.now());
+            nuevoEstado.setPropuesta(prop);
+
+            prop.setEstadoActual(nuevoEstado);
+            prop.getHistorialEstados().add(nuevoEstado);
+
+            propuestaDAO.actualizar(prop);
+        } else {
+            throw new IllegalStateException(
+                    "No se puede cancelar una propuesta en estado " + estadoActual
+            );
+        }
+    }
+
 
 }
