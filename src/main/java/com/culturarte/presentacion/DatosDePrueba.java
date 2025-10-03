@@ -8,6 +8,11 @@ import com.culturarte.logica.dtos.*;
 import com.culturarte.logica.enums.ETipoRetorno;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +30,23 @@ public class DatosDePrueba {
 
     public void crearDatosPrueba() {
         //
+
+        // Copiar imágenes de prueba desde resources a carpeta externa "imagenes/"
+        copiarImagenDeResources("imagenes/hrubino.JPG", "imagenes/hrubino.JPG");
+        copiarImagenDeResources("imagenes/mbusca.jpg", "imagenes/mbusca.jpg");
+        copiarImagenDeResources("imagenes/losBardo.jpg", "imagenes/losBardo.jpg");
+        copiarImagenDeResources("imagenes/sergiop.jpg", "imagenes/sergiop.jpg");
+        copiarImagenDeResources("imagenes/tonyp.jpg", "imagenes/tonyp.jpg");
+        copiarImagenDeResources("imagenes/nicoj.jpg", "imagenes/nicoj.jpg");
+
+     // Reutilizables como "imagen faltante"
+        copiarImagenDeResources("imagenes/404.png", "imagenes/404.png");
+
+     // Propuestas
+        copiarImagenDeResources("imagenes/elPimientoIndomable.jpg", "imagenes/elPimientoIndomable.jpg");
+        copiarImagenDeResources("imagenes/pilsenRock.jpg", "imagenes/pilsenRock.jpg");
+        copiarImagenDeResources("imagenes/unDiaDeJulio.jpg", "imagenes/unDiaDeJulio.jpg");
+
         //PROPONENTES
         DTOProponente dtoP = new DTOProponente();
         dtoP.setNick("hrubino");
@@ -982,6 +1004,21 @@ public class DatosDePrueba {
                 .filter(c -> c.getNombre().equalsIgnoreCase(nombre))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static void copiarImagenDeResources(String resourcePath, String destino) {
+        try (InputStream is = DatosDePrueba.class.getClassLoader().getResourceAsStream(resourcePath)) {
+            if (is != null) {
+                File destFile = new File(System.getProperty("user.dir"), destino);
+                destFile.getParentFile().mkdirs(); // crea carpeta "imagenes" si no existe
+                Files.copy(is, destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("✅ Imagen copiada: " + destFile.getAbsolutePath());
+            } else {
+                System.out.println("⚠ No se encontró resource: " + resourcePath);
+            }
+        } catch (IOException e) {
+            System.out.println("⚠ Error copiando " + resourcePath + ": " + e.getMessage());
+        }
     }
 
 
