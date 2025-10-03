@@ -8,6 +8,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,18 +77,19 @@ public class ConsultaColaboradorFrom {
         txtFechaNacimiento.setText(dtoCola.getFechaNac().toString());
 
         if (dtoCola.getDirImagen() != null && !dtoCola.getDirImagen().isBlank()) {
-            //ImageIcon icon = new ImageIcon(dtoCola.getDirImagen());
-            String dirImagen = dtoCola.getDirImagen();
-            try {
-                ImageIcon icon = new ImageIcon(getClass().getResource(dirImagen));
+            File file = new File(System.getProperty("user.dir"), dtoCola.getDirImagen());
+            if (file.exists()) {
+                ImageIcon icon = new ImageIcon(file.getAbsolutePath());
                 Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 lblImagenShow.setIcon(new ImageIcon(img));
-            }catch(Exception e){
-                return;
+            } else {
+                System.out.println("Imagen de colaborador no encontrada: " + file.getAbsolutePath());
+                lblImagenShow.setIcon(null);
             }
         } else {
             lblImagenShow.setIcon(null);
         }
+
 
         /*
         for(Object[] fila : colConProp) {

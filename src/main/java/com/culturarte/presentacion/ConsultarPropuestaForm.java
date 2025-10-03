@@ -7,6 +7,7 @@ import com.culturarte.logica.enums.ETipoRetorno;
 import com.culturarte.logica.fabrica.Fabrica;
 
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 
 
@@ -80,25 +81,24 @@ public class ConsultarPropuestaForm {
         }
 
 
-
         colaboradores.setListData(dto.colaboradores.toArray(new String[0]));
 
         if (dto.imagen != null && !dto.imagen.isBlank()) {
-            //ImageIcon icon = new ImageIcon(dto.imagen);
-            String dirImagen = dto.imagen;
-            try {
-                ImageIcon icon = new ImageIcon(getClass().getResource(dirImagen));
+            File file = new File(System.getProperty("user.dir"), dto.imagen);
+            if (file.exists()) {
+                ImageIcon icon = new ImageIcon(file.getAbsolutePath());
                 Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 imagendir.setIcon(new ImageIcon(img));
-            }catch(Exception e){
-                return;
+            } else {
+                System.out.println("Imagen de propuesta no encontrada: " + file.getAbsolutePath());
+                imagendir.setIcon(null);
             }
         } else {
             imagendir.setIcon(null);
         }
     }
 
-    public JPanel traerPanel() {
+        public JPanel traerPanel() {
         return mainPanel;
     }
 

@@ -9,6 +9,7 @@ import com.culturarte.logica.fabrica.Fabrica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,18 +97,19 @@ public class ConsultaProponenteForm {
         txtFechaNacimiento.setText(dtoProp.getFechaNac().toString());
 
         if (dtoProp.getDirImagen() != null && !dtoProp.getDirImagen().isBlank()) {
-            //ImageIcon icon = new ImageIcon(dtoProp.getDirImagen());
-            String dirImagen = dtoProp.getDirImagen();
-            try {
-                ImageIcon icon = new ImageIcon(getClass().getResource(dirImagen));
+            File file = new File(System.getProperty("user.dir"), dtoProp.getDirImagen());
+            if (file.exists()) {
+                ImageIcon icon = new ImageIcon(file.getAbsolutePath());
                 Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 lblImagenShow.setIcon(new ImageIcon(img));
-            }catch(Exception e){
-                return;
+            } else {
+                System.out.println("Imagen de proponente no encontrada: " + file.getAbsolutePath());
+                lblImagenShow.setIcon(null);
             }
         } else {
             lblImagenShow.setIcon(null);
         }
+
 
         txtBio.setText(dtoProp.getBiografia());
         txtLink.setText(dtoProp.getLink());

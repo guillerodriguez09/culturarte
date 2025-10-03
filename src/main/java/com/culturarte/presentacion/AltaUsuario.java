@@ -2,6 +2,10 @@ package com.culturarte.presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -214,36 +218,42 @@ public class AltaUsuario {
 
     private void seleccionarImagen() {
         JFileChooser chooser = new JFileChooser();
-        chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes JPG y PNG", "jpg", "jpeg", "png"));
+        chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                "Imágenes JPG y PNG", "jpg", "jpeg", "png"
+        ));
 
-        //agregue esto para q guarde en la carpeta imagenes
         int resultado = chooser.showOpenDialog(mainPanel);
         if (resultado == JFileChooser.APPROVE_OPTION) {
-            java.io.File archivoOriginal = chooser.getSelectedFile();
+            File archivoOriginal = chooser.getSelectedFile();
 
-            java.io.File carpetaDestino = new java.io.File("imagenes");
+            // Carpeta externa "imagenes" en el working directory
+            File carpetaDestino = new File(System.getProperty("user.dir"), "imagenes");
             if (!carpetaDestino.exists()) {
                 carpetaDestino.mkdirs();
             }
 
-            // Crear archivo destino
-            java.io.File archivoDestino = new java.io.File(carpetaDestino, archivoOriginal.getName());
+            // Crear archivo destino dentro de esa carpeta
+            File archivoDestino = new File(carpetaDestino, archivoOriginal.getName());
 
             try {
-                java.nio.file.Files.copy(
+                Files.copy(
                         archivoOriginal.toPath(),
                         archivoDestino.toPath(),
-                        java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                        StandardCopyOption.REPLACE_EXISTING
                 );
 
-                // Guardar ruta en el campo imagen
-                txtImagen.setText(archivoDestino.getPath());
+                // Guardar SOLO la ruta relativa (para BD y GUI)
+                String rutaRelativa = "imagenes/" + archivoOriginal.getName();
+                txtImagen.setText(rutaRelativa);
 
-            } catch (java.io.IOException e) {
-                JOptionPane.showMessageDialog(mainPanel, "Error al copiar la imagen " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(mainPanel,
+                        "Error al copiar la imagen: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
+
 
     public JPanel getMainPanel() { return mainPanel; }
 
