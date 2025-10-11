@@ -31,6 +31,16 @@ public class ColaboradorDAO {
         }
     }
 
+    public Colaborador buscarPorCorreo(String correo) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT col FROM Colaborador col WHERE col.correo = :correo", Colaborador.class)
+                    .setParameter("correo", correo).getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
     public boolean existe(String nick) {
         return buscarPorNick(nick) != null;
     }

@@ -33,6 +33,16 @@ public class ProponenteDAO {
         }
     }
 
+    public Proponente buscarPorCorreo(String correo) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT pro FROM Proponente pro WHERE pro.correo = :correo", Proponente.class)
+                    .setParameter("correo", correo).getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
     public boolean existe(String nick) {
         return buscarPorNick(nick) != null;
     }

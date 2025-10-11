@@ -124,4 +124,33 @@ public class ColaboradorController implements IColaboradorController {
 
     }
 
+    @Override
+    public DTOColaborador obtenerColaboradorCorreo(String correo){
+
+        DTOColaborador dtoCol = new DTOColaborador();
+
+        try {
+
+            Colaborador col = colaboradorDAO.buscarPorCorreo(correo);
+
+            if (col == null) {return null;}
+
+
+            dtoCol.setNick(col.getNick());
+            dtoCol.setNombre(col.getNombre());
+            dtoCol.setApellido(col.getApellido());
+            dtoCol.setContrasenia(col.getContrasenia());
+            dtoCol.setCorreo(col.getCorreo());
+            dtoCol.setFechaNac(col.getFechaNac());
+            dtoCol.setDirImagen(col.getDirImagen());
+
+        }catch(Exception e){
+            return null;
+        }
+
+        return dtoCol;
+
+    }
+
+
 }

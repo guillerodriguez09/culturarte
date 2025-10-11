@@ -105,6 +105,35 @@ public class ProponenteController implements IProponenteController {
     }
 
     @Override
+    public DTOProponente obtenerProponenteCorreo(String correo){
+
+        DTOProponente dtoProp = new DTOProponente();
+
+        try {
+            Proponente prop = proponenteDAO.buscarPorCorreo(correo);
+
+            if (prop == null) {return null;}
+
+            dtoProp.setNick(prop.getNick());
+            dtoProp.setNombre(prop.getNombre());
+            dtoProp.setApellido(prop.getApellido());
+            dtoProp.setContrasenia(prop.getContrasenia());
+            dtoProp.setCorreo(prop.getCorreo());
+            dtoProp.setFechaNac(prop.getFechaNac());
+            dtoProp.setDirImagen(prop.getDirImagen());
+            dtoProp.setBiografia(prop.getBiografia());
+            dtoProp.setDireccion(prop.getDireccion());
+            dtoProp.setLink(prop.getLink());
+
+        }catch(Exception e){
+            return null;
+        }
+
+        return dtoProp;
+    }
+
+
+    @Override
     public List<Object[]> obtenerTodPropConPropu (String nick){
         List<Object[]> Marco = proponenteDAO.obtenerTodPropConPropu(nick);
         List<Object[]> Polo = new ArrayList<>();
