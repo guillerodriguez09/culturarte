@@ -827,13 +827,13 @@ public class DatosDePrueba {
         controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 5, 15, 15, 30).toLocalDate());
         controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30).toLocalDate());
         controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30).toLocalDate());
-        //controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30).toLocalDate());
-        //controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50).toLocalDate());
 
         controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 6, 18, 4, 28).toLocalDate());
         controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56).toLocalDate());
         controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25).toLocalDate());
-        //controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45).toLocalDate());
+       // controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45).toLocalDate());
 
         controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30).toLocalDate());
         controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30).toLocalDate());
@@ -859,6 +859,7 @@ public class DatosDePrueba {
 
         //
         //COLABORACIONES
+        /*
         DTOColaboracion dto = new DTOColaboracion();
         dto.setColaboradorNick(dtoC3.getNick());
         dto.setPropuestaTitulo(dtoProp.getTitulo());
@@ -882,6 +883,8 @@ public class DatosDePrueba {
         dto3.setMonto(50000);
         dto3.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto3);
+
+         */
 
         DTOColaboracion dto4 = new DTOColaboracion();
         dto4.setColaboradorNick(dtoC2.getNick());

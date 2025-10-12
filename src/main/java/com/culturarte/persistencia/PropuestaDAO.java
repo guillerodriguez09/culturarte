@@ -1,6 +1,7 @@
 package com.culturarte.persistencia;
 
 import com.culturarte.logica.clases.Propuesta;
+import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -81,6 +82,21 @@ public class PropuestaDAO {
             em.close();
         }
     }
+
+    public List<Propuesta> buscarPorTexto(String filtro) {
+        String pattern = "%" + filtro.toLowerCase() + "%";
+
+        EntityManager em = JpaUtil.getEntityManager();
+        return em.createQuery("""
+        SELECT p FROM Propuesta p
+        WHERE LOWER(p.titulo) LIKE :f
+           OR LOWER(p.descripcion) LIKE :f
+           OR LOWER(p.lugar) LIKE :f
+    """, Propuesta.class)
+                .setParameter("f", pattern)
+                .getResultList();
+    }
+
 }
 
 

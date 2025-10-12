@@ -286,6 +286,7 @@ public class PropuestaController implements IPropuestaController {
 
         propuestaDAO.actualizar(prop);
     }
+
     public void cancelarPropuesta(String tituloPropuesta) {
         Propuesta prop = propuestaDAO.buscarPorTitulo(tituloPropuesta);
         if (prop == null) {
@@ -294,8 +295,7 @@ public class PropuestaController implements IPropuestaController {
 
         EEstadoPropuesta estadoActual = prop.getEstadoActual().getNombre();
 
-        // Solo se cancela si está INGRESADA o FINANCIADA
-        if (estadoActual == EEstadoPropuesta.INGRESADA || estadoActual == EEstadoPropuesta.FINANCIADA) {
+        if (estadoActual == EEstadoPropuesta.FINANCIADA) {
             Estado nuevoEstado = new Estado(EEstadoPropuesta.CANCELADA, LocalDate.now());
             nuevoEstado.setPropuesta(prop);
 
@@ -309,6 +309,43 @@ public class PropuestaController implements IPropuestaController {
             );
         }
     }
+
+    @Override
+    public List<DTOPropuesta> buscarPropuestas(String filtro) {
+        List<Propuesta> entidades;
+
+        if (filtro == null || filtro.isBlank()) {
+            entidades = propuestaDAO.obtenerTodas(); // devuelve List<Propuesta>
+        } else {
+            entidades = propuestaDAO.buscarPorTexto(filtro);
+        }
+
+        // Convertir las entidades a DTOPropuesta
+        List<DTOPropuesta> dtos = new ArrayList<>();
+        for (Propuesta p : entidades) {
+            DTOPropuesta dto = new DTOPropuesta();
+            dto.setTitulo(p.getTitulo());
+            dto.setDescripcion(p.getDescripcion());
+            dto.setLugar(p.getLugar());
+            dto.setFecha(p.getFecha());
+            dto.setMontoAReunir(p.getMontoAReunir());
+            dto.setMontoRecaudado((double) p.getMontoRecaudado());
+            dto.setPrecioEntrada(p.getPrecioEntrada());
+            dto.setImagen(p.getImagen());
+            dto.setEstadoActual(p.getEstadoActual().getNombre().toString());
+            dto.setProponenteNick(p.getProponente().getNick());
+            dto.setColaboradores(
+                    p.getColaboraciones().stream()
+                            .map(c -> c.getColaborador().getNick())
+                            .toList()
+            );
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+
 
 
 }
