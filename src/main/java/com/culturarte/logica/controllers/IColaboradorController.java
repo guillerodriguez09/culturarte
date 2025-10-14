@@ -11,4 +11,5 @@ public interface IColaboradorController {
     List<Object[]> obtenerTodColConPropu(String nick);
     DTOColaborador obtenerColaborador(String nick);
     DTOColaborador obtenerColaboradorCorreo(String correo);
+    List<DTOColaborador> listarTodos();
 }

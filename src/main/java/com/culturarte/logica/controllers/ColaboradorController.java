@@ -69,6 +69,29 @@ public class ColaboradorController implements IColaboradorController {
     }
 
     @Override
+    public List<DTOColaborador> listarTodos(){
+        List<Colaborador> cola = colaboradorDAO.obtenerTodos();
+        List<DTOColaborador> dtoCol = new ArrayList<>();
+
+        for (Colaborador col : cola) {
+            DTOColaborador dtoCola = new DTOColaborador();
+
+            dtoCola.setNick(col.getNick());
+            dtoCola.setNombre(col.getNombre());
+            dtoCola.setApellido(col.getApellido());
+            dtoCola.setContrasenia(col.getContrasenia());
+            dtoCola.setCorreo(col.getCorreo());
+            dtoCola.setFechaNac(col.getFechaNac());
+            dtoCola.setDirImagen(col.getDirImagen());
+
+            dtoCol.add(dtoCola);
+
+        }
+
+        return dtoCol;
+    }
+
+    @Override
     public List<Object[]> obtenerTodColConPropu(String nick) {
         List<Object[]> Tuti = colaboradorDAO.obtenerTodColConPropu(nick);
         List<Object[]> Fruti = new ArrayList<>();

@@ -15,6 +15,7 @@ public interface IProponenteController {
     List<String> listarProponentes();
 
     DTOProponente obtenerProponente(String nick);
+    List<DTOProponente> listarTodos();
     DTOProponente obtenerProponenteCorreo(String correo);
 
     List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
