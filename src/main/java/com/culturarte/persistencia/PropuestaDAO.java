@@ -30,11 +30,26 @@ public class PropuestaDAO {
     public Propuesta buscarPorTitulo(String titulo) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            return em.find(Propuesta.class, titulo);
+            return em.createQuery("""
+            SELECT p
+            FROM Propuesta p
+            LEFT JOIN FETCH p.estadoActual ea
+            LEFT JOIN FETCH p.colaboraciones c
+            LEFT JOIN FETCH c.colaborador
+            WHERE p.titulo = :titulo
+        """, Propuesta.class)
+                    .setParameter("titulo", titulo)
+                    .setHint("jakarta.persistence.cache.retrieveMode", jakarta.persistence.CacheRetrieveMode.BYPASS)
+                    .setHint("jakarta.persistence.cache.storeMode", jakarta.persistence.CacheStoreMode.REFRESH)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            return null;
         } finally {
             em.close();
         }
     }
+
+
 
     //busca
     public boolean existePropuesta(String titulo) {

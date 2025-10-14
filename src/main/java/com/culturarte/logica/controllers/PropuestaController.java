@@ -93,13 +93,15 @@ public class PropuestaController implements IPropuestaController {
 
     @Override
     public DTOPropuesta consultarPropuesta(String titulo) {
-        Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
+        // Forzar una recarga limpia del estado desde la BD, me daba problemas en el web.
+        PropuestaDAO daoNuevo = new PropuestaDAO();
+        Propuesta propuesta = daoNuevo.buscarPorTitulo(titulo);
 
         if (propuesta == null) {
             throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
         }
 
-        // Armo el DTO con la info básica
+        // Armar el DTO
         DTOPropuesta dto = new DTOPropuesta();
         dto.titulo = propuesta.getTitulo();
         dto.descripcion = propuesta.getDescripcion();
@@ -116,9 +118,11 @@ public class PropuestaController implements IPropuestaController {
         // Estado actual
         if (propuesta.getEstadoActual() != null) {
             dto.estadoActual = propuesta.getEstadoActual().getNombre().toString();
+        } else {
+            dto.estadoActual = "DESCONOCIDO";
         }
 
-        // Colaboradores nicks
+        // Colaboradores
         List<String> colaboradores = new ArrayList<>();
         for (Colaboracion colab : propuesta.getColaboraciones()) {
             if (colab.getColaborador() != null) {
@@ -127,11 +131,12 @@ public class PropuestaController implements IPropuestaController {
         }
         dto.colaboradores = colaboradores;
 
-        // total recaudado
+        //Monto recaudado actualizado
         dto.montoRecaudado = (double) propuesta.getMontoRecaudado();
 
         return dto;
     }
+
 
     @Override
     public void modificarPropuesta(String titulo, DTOPropuesta dto) {
