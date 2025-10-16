@@ -1,6 +1,7 @@
 package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.clases.Seguimiento;
+import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.dtos.DTOSeguimiento;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public interface ISeguimientoController {
     void cancelarSeguimiento(int idSeguimiento);
     List<DTOSeguimiento> listarSeguimientos();
     List<String> listarSeguidosDeNick(String nick);
+    List<String> listarSeguidoresDeNick(String nick);
 
 
 }

@@ -6,6 +6,7 @@ import com.culturarte.logica.clases.Seguimiento;
 import com.culturarte.logica.clases.Usuario;
 import com.culturarte.logica.dtos.DTOSeguimiento;
 
+import com.culturarte.logica.dtos.DTOUsuario;
 import com.culturarte.persistencia.SeguimientoDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.ProponenteDAO;
@@ -114,6 +115,19 @@ public class SeguimientoController implements ISeguimientoController{
                 .stream()
                 .map(Seguimiento::getUsuarioSeguido)
                 .toList();
+
+    }
+
+    @Override
+    public List<String> listarSeguidoresDeNick(String nick){
+
+        List<Seguimiento> seguidoores = seguimientoDAO.obtenerSeguidoresDeNick(nick);
+        List<String> seguidoresNick = new ArrayList<>();
+        for (Seguimiento s : seguidoores) {
+            Usuario usuarioSeguidoor = s.getUsuarioSeguidor();
+            seguidoresNick.add(usuarioSeguidoor.getNick());
+        }
+        return seguidoresNick;
 
     }
 }

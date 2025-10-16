@@ -1,5 +1,6 @@
 package com.culturarte.logica.controllers;
 
+import com.culturarte.logica.clases.Colaboracion;
 import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColaborador;
@@ -38,7 +39,7 @@ public class ColaboradorController implements IColaboradorController {
             throw new IllegalArgumentException("Fecha de nacimiento de colaborador es obligatoria.");
         }
         if (dtoC.getDirImagen() == null){
-            dtoC.setDirImagen("No tiene");
+            dtoC.setDirImagen("");
         }
 
         if (colaboradorDAO.existe(dtoC.getNick())) {
@@ -94,6 +95,7 @@ public class ColaboradorController implements IColaboradorController {
     @Override
     public List<Object[]> obtenerTodColConPropu(String nick) {
         List<Object[]> Tuti = colaboradorDAO.obtenerTodColConPropu(nick);
+        if(Tuti == null){return null;}
         List<Object[]> Fruti = new ArrayList<>();
         for(Object[] fila : Tuti) {
 
@@ -112,10 +114,34 @@ public class ColaboradorController implements IColaboradorController {
             dtoCol.setDirImagen(col.getDirImagen());
 
             dtoCP.titulo = p.getTitulo();
+            dtoCP.descripcion = p.getDescripcion();
+            dtoCP.lugar = p.getLugar();
+            dtoCP.fecha = p.getFecha();
+            dtoCP.precioEntrada = p.getPrecioEntrada();
+            dtoCP.montoAReunir = p.getMontoAReunir();
+            dtoCP.imagen = p.getImagen();
+            dtoCP.categoriaNombre = p.getCategoria().getNombre();
             dtoCP.proponenteNick = p.getProponente().getNick();
+            dtoCP.fechaPublicacion = p.getFechaPublicacion();
+            dtoCP.retornos = p.getRetornos();
+
+            // Estado actual
             if (p.getEstadoActual() != null) {
                 dtoCP.estadoActual = p.getEstadoActual().getNombre().toString();
+            } else {
+                dtoCP.estadoActual = "DESCONOCIDO";
             }
+
+            // Colaboradores
+            List<String> colaboradores = new ArrayList<>();
+            for (Colaboracion colab : p.getColaboraciones()) {
+                if (colab.getColaborador() != null) {
+                    colaboradores.add(colab.getColaborador().getNick());
+                }
+            }
+            dtoCP.colaboradores = colaboradores;
+
+            //Monto recaudado actualizado
             dtoCP.montoRecaudado = (double) p.getMontoRecaudado();
 
             Object[] filaJuan = new Object[] {dtoCol, dtoCP};

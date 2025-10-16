@@ -40,7 +40,7 @@ public class ProponenteController implements IProponenteController {
             throw new IllegalArgumentException("Fecha de nacimiento de proponente es obligatoria.");
         }
         if (dtoP.getDirImagen() == null){
-            dtoP.setDirImagen("No tiene");
+            dtoP.setDirImagen("");
         }
         if (dtoP.getDireccion() == null || dtoP.getDireccion().isBlank() ){
             throw new IllegalArgumentException("Direccion de proponente es obligatorio.");
@@ -162,6 +162,7 @@ public class ProponenteController implements IProponenteController {
     @Override
     public List<Object[]> obtenerTodPropConPropu (String nick){
         List<Object[]> Marco = proponenteDAO.obtenerTodPropConPropu(nick);
+        if(Marco == null){return null;}
         List<Object[]> Polo = new ArrayList<>();
         for(Object[] fila : Marco) {
 
@@ -183,9 +184,34 @@ public class ProponenteController implements IProponenteController {
             dtoProp.setLink(prop.getLink());
 
             dtoPropu.titulo = p.getTitulo();
+            dtoPropu.descripcion = p.getDescripcion();
+            dtoPropu.lugar = p.getLugar();
+            dtoPropu.fecha = p.getFecha();
+            dtoPropu.precioEntrada = p.getPrecioEntrada();
+            dtoPropu.montoAReunir = p.getMontoAReunir();
+            dtoPropu.imagen = p.getImagen();
+            dtoPropu.categoriaNombre = p.getCategoria().getNombre();
+            dtoPropu.proponenteNick = p.getProponente().getNick();
+            dtoPropu.fechaPublicacion = p.getFechaPublicacion();
+            dtoPropu.retornos = p.getRetornos();
+
+            // Estado actual
             if (p.getEstadoActual() != null) {
                 dtoPropu.estadoActual = p.getEstadoActual().getNombre().toString();
+            } else {
+                dtoPropu.estadoActual = "DESCONOCIDO";
             }
+
+            // Colaboradores
+            List<String> colaboradores = new ArrayList<>();
+            for (Colaboracion colab : p.getColaboraciones()) {
+                if (colab.getColaborador() != null) {
+                    colaboradores.add(colab.getColaborador().getNick());
+                }
+            }
+            dtoPropu.colaboradores = colaboradores;
+
+            //Monto recaudado actualizado
             dtoPropu.montoRecaudado = (double) p.getMontoRecaudado();
 
             Object[] filaJuan = new Object[] {dtoProp, dtoPropu};

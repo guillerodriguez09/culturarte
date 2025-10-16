@@ -78,6 +78,18 @@ public class SeguimientoDAO {
         }
     }
 
+    public List<Seguimiento> obtenerSeguidoresDeNick(String nick){
+        EntityManager em = JpaUtil.getEntityManager();
+        try{
+            return em.createQuery("SELECT s FROM Seguimiento s Where s.usuarioSeguido = :nick", Seguimiento.class)
+                    .setParameter("nick", nick).getResultList();
+        }catch(Exception e){
+            return null;
+        }finally {
+            em.close();
+        }
+    }
+
     public int conseguirId(String nick, String nicky){
         EntityManager em = JpaUtil.getEntityManager();
         try {
