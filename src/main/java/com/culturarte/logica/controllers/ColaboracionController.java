@@ -111,6 +111,7 @@ public class ColaboracionController implements IColaboracionController {
         return dtos;
     }
 
+
     public List<DTOColabConsulta> consultarColaboracionesPorColaborador(String colaboradorNick) {
         Colaborador col = colaboradorDAO.buscarPorNick(colaboradorNick);
         if (col == null) throw new IllegalArgumentException("Colaborador no encontrado.");
@@ -125,11 +126,22 @@ public class ColaboracionController implements IColaboracionController {
                         c.getRetorno(),
                         c.getFecha()
                 );
+
+
+              //anade el nom de la propuesta al dto
+                if (c.getPropuesta() != null) {
+                    dto.setPropuestaNombre(c.getPropuesta().getTitulo());
+                } else {
+                    dto.setPropuestaNombre("Propuesta no disponible"); // Por si acaso
+                }
+
                 dtos.add(dto);
             }
         }
         return dtos;
     }
+
+// ...
 
     public void cancelarColaboracion(int id) {
         // Busca la colab por el id
