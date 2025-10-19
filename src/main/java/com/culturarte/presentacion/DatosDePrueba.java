@@ -692,7 +692,7 @@ public class DatosDePrueba {
         dtoProp.setProponenteNick(dtoP7.getNick());
         dtoProp.setTitulo("Cine en el Botánico");
         dtoProp.setCategoriaNombre("Cine al Aire Libre");
-        dtoProp.setFecha(LocalDate.of(2017, 9, 16));
+        dtoProp.setFecha(LocalDate.of(2025, 9, 16));
         dtoProp.setLugar("Jardín Botánico");
         dtoProp.setPrecioEntrada(200);
         dtoProp.setMontoAReunir(150000);
@@ -708,7 +708,7 @@ public class DatosDePrueba {
         dtoProp2.setProponenteNick(dtoP.getNick());
         dtoProp2.setTitulo("Religiosamente");
         dtoProp2.setCategoriaNombre("Parodistas");
-        dtoProp2.setFecha(LocalDate.of(2017, 10, 07));
+        dtoProp2.setFecha(LocalDate.of(2025, 10, 07));
         dtoProp2.setLugar("Teatro de Verano");
         dtoProp2.setPrecioEntrada(300);
         dtoProp2.setMontoAReunir(300000);
@@ -725,7 +725,7 @@ public class DatosDePrueba {
         dtoProp3.setProponenteNick(dtoP2.getNick());
         dtoProp3.setTitulo("El Pimiento Indomable");
         dtoProp3.setCategoriaNombre("Concierto");
-        dtoProp3.setFecha(LocalDate.of(2017, 10, 19));
+        dtoProp3.setFecha(LocalDate.of(2025, 10, 19));
         dtoProp3.setLugar("Teatro Solís");
         dtoProp3.setPrecioEntrada(400);
         dtoProp3.setMontoAReunir(400000);
@@ -742,7 +742,7 @@ public class DatosDePrueba {
         dtoProp4.setProponenteNick(dtoP8.getNick());
         dtoProp4.setTitulo("Pilsen Rock");
         dtoProp4.setCategoriaNombre("Festival");
-        dtoProp4.setFecha(LocalDate.of(2017, 10, 21));
+        dtoProp4.setFecha(LocalDate.of(2025, 10, 21));
         dtoProp4.setLugar("Rural de Prado");
         dtoProp4.setPrecioEntrada(1000);
         dtoProp4.setMontoAReunir(900000);
@@ -758,7 +758,7 @@ public class DatosDePrueba {
         dtoProp5.setProponenteNick(dtoP6.getNick());
         dtoProp5.setTitulo("Romeo y Julieta");
         dtoProp5.setCategoriaNombre("Ballet");
-        dtoProp5.setFecha(LocalDate.of(2017, 11, 05));
+        dtoProp5.setFecha(LocalDate.of(2025, 11, 05));
         dtoProp5.setLugar("Rural de Prado");
         dtoProp5.setPrecioEntrada(800);
         dtoProp5.setMontoAReunir(750000);
@@ -775,7 +775,7 @@ public class DatosDePrueba {
         dtoProp6.setProponenteNick(dtoP4.getNick());
         dtoProp6.setTitulo("Un día de Julio");
         dtoProp6.setCategoriaNombre("Murga");
-        dtoProp6.setFecha(LocalDate.of(2017, 11, 16));
+        dtoProp6.setFecha(LocalDate.of(2025, 11, 16));
         dtoProp6.setLugar("Landia");
         dtoProp6.setPrecioEntrada(650);
         dtoProp6.setMontoAReunir(300000);
@@ -791,7 +791,7 @@ public class DatosDePrueba {
         dtoProp7.setProponenteNick(dtoP3.getNick());
         dtoProp7.setTitulo("El Lazarillo de Tormes");
         dtoProp7.setCategoriaNombre("Teatro Dramático");
-        dtoProp7.setFecha(LocalDate.of(2017, 12, 03));
+        dtoProp7.setFecha(LocalDate.of(2025, 12, 03));
         dtoProp7.setLugar("Teatro el Galpón");
         dtoProp7.setPrecioEntrada(350);
         dtoProp7.setMontoAReunir(175000);
@@ -808,7 +808,7 @@ public class DatosDePrueba {
         dtoProp8.setProponenteNick(dtoP9.getNick());
         dtoProp8.setTitulo("Bardo en la FING");
         dtoProp8.setCategoriaNombre("Stand-up");
-        dtoProp8.setFecha(LocalDate.of(2017, 12, 10));
+        dtoProp8.setFecha(LocalDate.of(2025, 12, 10));
         dtoProp8.setLugar("Anfiteatro Edificio “José Luis Massera”");
         dtoProp8.setPrecioEntrada(200);
         dtoProp8.setMontoAReunir(100000);
@@ -824,46 +824,45 @@ public class DatosDePrueba {
         //
 
         //ESTADOS DE LAS PROP
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 5, 15, 15, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30).toLocalDate());
-        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 5, 15, 15, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 5, 17, 8, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 5, 20, 14, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 5, 30, 18, 30).toLocalDate());
+        controllerP.asignarEstado("Cine en el Botánico", EEstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 6, 15, 14, 50).toLocalDate());
 
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 6, 18, 4, 28).toLocalDate());
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56).toLocalDate());
-        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25).toLocalDate());
-       // controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 6, 18, 4, 28).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 6, 20, 4, 56).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 6, 30, 14, 25).toLocalDate());
+        controllerP.asignarEstado("Religiosamente", EEstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 7, 15, 9, 45).toLocalDate());
 
-        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30).toLocalDate());
-        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30).toLocalDate());
-        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 1, 7, 40).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 7, 26, 15, 30).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 7, 31, 8, 30).toLocalDate());
+        controllerP.asignarEstado("El Pimiento Indomable", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 1, 7, 40).toLocalDate());
 
-        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 30, 15, 40).toLocalDate());
-        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30).toLocalDate());
-        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 7, 30, 15, 40).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 1, 14, 30).toLocalDate());
+        controllerP.asignarEstado("Pilsen Rock", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 5, 16, 50).toLocalDate());
 
-        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 4, 12, 20).toLocalDate());
-        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25).toLocalDate());
-        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 13, 4, 58).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 4, 12, 20).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 10, 10, 25).toLocalDate());
+        controllerP.asignarEstado("Romeo y Julieta", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 13, 4, 58).toLocalDate());
 
-        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 6, 2, 0).toLocalDate());
-        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50).toLocalDate());
-        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 15, 4, 48).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 6, 2, 0).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 12, 4, 50).toLocalDate());
+        controllerP.asignarEstado("Un día de Julio", EEstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 15, 4, 48).toLocalDate());
 
-        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40).toLocalDate());
-        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58).toLocalDate());
+        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 18, 2, 40).toLocalDate());
+        controllerP.asignarEstado("El Lazarillo de Tormes", EEstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 20, 21, 58).toLocalDate());
 
-        controllerP.asignarEstado("Bardo en la FING", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12).toLocalDate());
+        controllerP.asignarEstado("Bardo en la FING", EEstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 23, 2, 12).toLocalDate());
         //
 
         //
         //COLABORACIONES
-        /*
         DTOColaboracion dto = new DTOColaboracion();
         dto.setColaboradorNick(dtoC3.getNick());
         dto.setPropuestaTitulo(dtoProp.getTitulo());
-        dto.setFecha(LocalDateTime.of(2017, 05, 20, 14, 30));
+        dto.setFecha(LocalDateTime.of(2025, 05, 20, 14, 30));
         dto.setMonto(50000);
         dto.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto);
@@ -871,7 +870,7 @@ public class DatosDePrueba {
         DTOColaboracion dto2 = new DTOColaboracion();
         dto2.setColaboradorNick(dtoC.getNick());
         dto2.setPropuestaTitulo(dtoProp.getTitulo());
-        dto2.setFecha(LocalDateTime.of(2017, 05, 24, 17, 25));
+        dto2.setFecha(LocalDateTime.of(2025, 05, 24, 17, 25));
         dto2.setMonto(50000);
         dto2.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto2);
@@ -879,17 +878,15 @@ public class DatosDePrueba {
         DTOColaboracion dto3 = new DTOColaboracion();
         dto3.setColaboradorNick(dtoC7.getNick());
         dto3.setPropuestaTitulo(dtoProp.getTitulo());
-        dto3.setFecha(LocalDateTime.of(2017, 05, 30, 18, 30));
+        dto3.setFecha(LocalDateTime.of(2025, 05, 30, 18, 30));
         dto3.setMonto(50000);
         dto3.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto3);
 
-         */
-
         DTOColaboracion dto4 = new DTOColaboracion();
         dto4.setColaboradorNick(dtoC2.getNick());
         dto4.setPropuestaTitulo(dtoProp2.getTitulo());
-        dto4.setFecha(LocalDateTime.of(2017, 06, 30, 14, 25));
+        dto4.setFecha(LocalDateTime.of(2025, 06, 30, 14, 25));
         dto4.setMonto(200000);
         dto4.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto4);
@@ -897,7 +894,7 @@ public class DatosDePrueba {
         DTOColaboracion dto5 = new DTOColaboracion();
         dto5.setColaboradorNick(dtoC11.getNick());
         dto5.setPropuestaTitulo(dtoProp2.getTitulo());
-        dto5.setFecha(LocalDateTime.of(2017, 07, 01, 18, 05));
+        dto5.setFecha(LocalDateTime.of(2025, 07, 01, 18, 05));
         dto5.setMonto(500);
         dto5.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
         controllerC.registrarColaboracion(dto5);
@@ -905,7 +902,7 @@ public class DatosDePrueba {
         DTOColaboracion dto6 = new DTOColaboracion();
         dto6.setColaboradorNick(dtoC9.getNick());
         dto6.setPropuestaTitulo(dtoProp2.getTitulo());
-        dto6.setFecha(LocalDateTime.of(2017, 07, 07, 17, 45));
+        dto6.setFecha(LocalDateTime.of(2025, 07, 07, 17, 45));
         dto6.setMonto(600);
         dto6.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
         controllerC.registrarColaboracion(dto6);
@@ -913,7 +910,7 @@ public class DatosDePrueba {
         DTOColaboracion dto7 = new DTOColaboracion();
         dto7.setColaboradorNick(dtoC3.getNick());
         dto7.setPropuestaTitulo(dtoProp2.getTitulo());
-        dto7.setFecha(LocalDateTime.of(2017, 07, 10, 14, 35));
+        dto7.setFecha(LocalDateTime.of(2025, 07, 10, 14, 35));
         dto7.setMonto(50000);
         dto7.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto7);
@@ -921,7 +918,7 @@ public class DatosDePrueba {
         DTOColaboracion dto8 = new DTOColaboracion();
         dto8.setColaboradorNick(dtoC4.getNick());
         dto8.setPropuestaTitulo(dtoProp2.getTitulo());
-        dto8.setFecha(LocalDateTime.of(2017, 07, 15, 9, 45));
+        dto8.setFecha(LocalDateTime.of(2025, 07, 15, 9, 45));
         dto8.setMonto(50000);
         dto8.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto8);
@@ -929,7 +926,7 @@ public class DatosDePrueba {
         DTOColaboracion dto9 = new DTOColaboracion();
         dto9.setColaboradorNick(dtoC2.getNick());
         dto9.setPropuestaTitulo(dtoProp3.getTitulo());
-        dto9.setFecha(LocalDateTime.of(2017, 8, 01, 07, 40));
+        dto9.setFecha(LocalDateTime.of(2025, 8, 01, 07, 40));
         dto9.setMonto(200000);
         dto9.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto9);
@@ -937,7 +934,7 @@ public class DatosDePrueba {
         DTOColaboracion dto10 = new DTOColaboracion();
         dto10.setColaboradorNick(dtoC4.getNick());
         dto10.setPropuestaTitulo(dtoProp3.getTitulo());
-        dto10.setFecha(LocalDateTime.of(2017, 8, 03, 9, 25));
+        dto10.setFecha(LocalDateTime.of(2025, 8, 03, 9, 25));
         dto10.setMonto(80000);
         dto10.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto10);
@@ -945,7 +942,7 @@ public class DatosDePrueba {
         DTOColaboracion dto11 = new DTOColaboracion();
         dto11.setColaboradorNick(dtoC5.getNick());
         dto11.setPropuestaTitulo(dtoProp4.getTitulo());
-        dto11.setFecha(LocalDateTime.of(2017, 8, 05, 16, 50));
+        dto11.setFecha(LocalDateTime.of(2025, 8, 05, 16, 50));
         dto11.setMonto(50000);
         dto11.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
         controllerC.registrarColaboracion(dto11);
@@ -953,7 +950,7 @@ public class DatosDePrueba {
         DTOColaboracion dto12 = new DTOColaboracion();
         dto12.setColaboradorNick(dtoC3.getNick());
         dto12.setPropuestaTitulo(dtoProp4.getTitulo());
-        dto12.setFecha(LocalDateTime.of(2017, 8, 10, 15, 50));
+        dto12.setFecha(LocalDateTime.of(2025, 8, 10, 15, 50));
         dto12.setMonto(120000);
         dto12.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto12);
@@ -961,7 +958,7 @@ public class DatosDePrueba {
         DTOColaboracion dto13 = new DTOColaboracion();
         dto13.setColaboradorNick(dtoC6.getNick());
         dto13.setPropuestaTitulo(dtoProp4.getTitulo());
-        dto13.setFecha(LocalDateTime.of(2017, 8, 15, 19, 30));
+        dto13.setFecha(LocalDateTime.of(2025, 8, 15, 19, 30));
         dto13.setMonto(120000);
         dto13.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
         controllerC.registrarColaboracion(dto13);
@@ -969,7 +966,7 @@ public class DatosDePrueba {
         DTOColaboracion dto14 = new DTOColaboracion();
         dto14.setColaboradorNick(dtoC4.getNick());
         dto14.setPropuestaTitulo(dtoProp5.getTitulo());
-        dto14.setFecha(LocalDateTime.of(2017, 8, 13, 04, 58));
+        dto14.setFecha(LocalDateTime.of(2025, 8, 13, 04, 58));
         dto14.setMonto(100000);
         dto14.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto14);
@@ -977,7 +974,7 @@ public class DatosDePrueba {
         DTOColaboracion dto15 = new DTOColaboracion();
         dto15.setColaboradorNick(dtoC2.getNick());
         dto15.setPropuestaTitulo(dtoProp5.getTitulo());
-        dto15.setFecha(LocalDateTime.of(2017, 8, 14, 11, 25));
+        dto15.setFecha(LocalDateTime.of(2025, 8, 14, 11, 25));
         dto15.setMonto(200000);
         dto15.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto15);
@@ -985,7 +982,7 @@ public class DatosDePrueba {
         DTOColaboracion dto16 = new DTOColaboracion();
         dto16.setColaboradorNick(dtoC6.getNick());
         dto16.setPropuestaTitulo(dtoProp6.getTitulo());
-        dto16.setFecha(LocalDateTime.of(2017, 8, 15, 04, 48));
+        dto16.setFecha(LocalDateTime.of(2025, 8, 15, 04, 48));
         dto16.setMonto(30000);
         dto16.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
         controllerC.registrarColaboracion(dto16);
@@ -993,7 +990,7 @@ public class DatosDePrueba {
         DTOColaboracion dto17 = new DTOColaboracion();
         dto17.setColaboradorNick(dtoC2.getNick());
         dto17.setPropuestaTitulo(dtoProp6.getTitulo());
-        dto17.setFecha(LocalDateTime.of(2017, 8, 17, 15, 30));
+        dto17.setFecha(LocalDateTime.of(2025, 8, 17, 15, 30));
         dto17.setMonto(150000);
         dto17.setRetorno(ETipoRetorno.PORCENTAJE_GANANCIAS);
         controllerC.registrarColaboracion(dto17);
