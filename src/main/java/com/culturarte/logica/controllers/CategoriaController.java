@@ -3,11 +3,14 @@ package com.culturarte.logica.controllers;
 import com.culturarte.logica.clases.Categoria;
 import com.culturarte.logica.dtos.DTOCategoria;
 import com.culturarte.persistencia.CategoriaDAO;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.*;
 
+@WebService(endpointInterface = "com.culturarte.logica.controllers.ICategoriaController")
 public class CategoriaController implements ICategoriaController {
 
     private final CategoriaDAO categoriaDAO = new CategoriaDAO();

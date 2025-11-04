@@ -6,11 +6,13 @@ import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ProponenteDAO;
+import jakarta.jws.WebService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
+@WebService(endpointInterface = "com.culturarte.logica.controllers.IProponenteController")
 public class ProponenteController implements IProponenteController {
 
     private final ProponenteDAO proponenteDAO = new ProponenteDAO();
@@ -165,6 +167,7 @@ public class ProponenteController implements IProponenteController {
         if(Marco == null){return null;}
         List<Object[]> Polo = new ArrayList<>();
         for(Object[] fila : Marco) {
+            if (fila.length >= 2 && fila[0] instanceof Proponente && fila[1] instanceof Propuesta) {
 
             Proponente prop = (Proponente) fila[0];
             Propuesta p = (Propuesta) fila[1];
@@ -216,6 +219,10 @@ public class ProponenteController implements IProponenteController {
 
             Object[] filaJuan = new Object[] {dtoProp, dtoPropu};
             Polo.add(filaJuan);
+
+            } else {
+                System.err.println("Invalid row: " + Arrays.toString(fila));
+            }
 
         }
 

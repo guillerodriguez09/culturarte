@@ -10,10 +10,11 @@ import com.culturarte.logica.dtos.DTOUsuario;
 import com.culturarte.persistencia.SeguimientoDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.ProponenteDAO;
+import jakarta.jws.WebService;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@WebService(endpointInterface = "com.culturarte.logica.controllers.ISeguimientoController")
 public class SeguimientoController implements ISeguimientoController{
 
     private final SeguimientoDAO seguimientoDAO = new SeguimientoDAO();

@@ -1,18 +1,24 @@
 package com.culturarte.logica.dtos;
 
 import com.culturarte.logica.enums.ETipoRetorno;
+import com.culturarte.logica.utiles.LocalDateAdaptador;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTOPropuesta {
 
     public String titulo;
     public String descripcion;
     public String lugar;
+    @XmlJavaTypeAdapter(LocalDateAdaptador.class)
     public LocalDate fecha;
     public Integer precioEntrada;
     public Integer montoAReunir;
+    @XmlJavaTypeAdapter(LocalDateAdaptador.class)
     public LocalDate fechaPublicacion;
     public String imagen;
 

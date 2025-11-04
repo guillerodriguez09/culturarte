@@ -6,10 +6,12 @@ import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.persistencia.ColaboradorDAO;
+import jakarta.jws.WebService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
+@WebService(endpointInterface = "com.culturarte.logica.controllers.IColaboradorController")
 public class ColaboradorController implements IColaboradorController {
 
     private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
@@ -97,10 +99,12 @@ public class ColaboradorController implements IColaboradorController {
         List<Object[]> Tuti = colaboradorDAO.obtenerTodColConPropu(nick);
         if(Tuti == null){return null;}
         List<Object[]> Fruti = new ArrayList<>();
-        for(Object[] fila : Tuti) {
 
+        for(Object[] fila : Tuti) {
+            if (fila.length >= 2 && fila[0] instanceof Colaborador && fila[1] instanceof Propuesta) {
             Colaborador col = (Colaborador) fila[0];
-            Propuesta p = (Propuesta) fila[2];
+            Propuesta p = (Propuesta) fila[1];
+
 
             DTOColaborador dtoCol = new DTOColaborador();
             DTOPropuesta dtoCP = new DTOPropuesta();
@@ -146,6 +150,9 @@ public class ColaboradorController implements IColaboradorController {
 
             Object[] filaJuan = new Object[] {dtoCol, dtoCP};
             Fruti.add(filaJuan);
+            } else {
+                System.err.println("Invalid row: " + Arrays.toString(fila));
+            }
 
         }
 

@@ -10,12 +10,13 @@ import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ColaboracionDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.PropuestaDAO;
+import jakarta.jws.WebService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@WebService(endpointInterface = "com.culturarte.logica.controllers.IColaboracionController")
 public class ColaboracionController implements IColaboracionController {
 
     private final ColaboracionDAO colaboracionDAO = new ColaboracionDAO();
