@@ -6,10 +6,12 @@ import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.persistencia.ColaboradorDAO;
+import jakarta.jws.WebService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
+@WebService(endpointInterface = "com.culturarte.logica.controllers.IColaboradorController")
 public class ColaboradorController implements IColaboradorController {
 
     private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();

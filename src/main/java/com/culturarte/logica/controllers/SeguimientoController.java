@@ -4,26 +4,28 @@ import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.clases.Seguimiento;
 import com.culturarte.logica.clases.Usuario;
+import com.culturarte.logica.dtos.DTOColaborador;
+import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.dtos.DTOSeguimiento;
 
 import com.culturarte.logica.dtos.DTOUsuario;
 import com.culturarte.persistencia.SeguimientoDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.ProponenteDAO;
+import jakarta.jws.WebService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class SeguimientoController implements ISeguimientoController{
+@WebService(endpointInterface = "com.culturarte.logica.controllers.ISeguimientoController")
+public class SeguimientoController implements ISeguimientoController {
 
     private final SeguimientoDAO seguimientoDAO = new SeguimientoDAO();
     private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
     private final ProponenteDAO proponenteDAO = new ProponenteDAO();
 
 
-
     @Override
-    public void registrarSeguimiento(DTOSeguimiento dtoSegui){
+    public void registrarSeguimiento(DTOSeguimiento dtoSegui) {
 
         if (dtoSegui == null) {
             throw new IllegalArgumentException("Datos de seguimiento no provistos.");
@@ -46,11 +48,11 @@ public class SeguimientoController implements ISeguimientoController{
         Colaborador colaborador = colaboradorDAO.buscarPorNick(dtoSegui.getUsuarioSeguidor().getNick());
         Proponente proponente = proponenteDAO.buscarPorNick(dtoSegui.getUsuarioSeguidor().getNick());
 
-        if(colaborador != null){
+        if (colaborador != null) {
             juliano = colaborador;
-        }else if(proponente != null){
+        } else if (proponente != null) {
             juliano = proponente;
-        }else{
+        } else {
             throw new IllegalArgumentException("El usuario no existe");
         }
 
@@ -64,19 +66,19 @@ public class SeguimientoController implements ISeguimientoController{
     }
 
     @Override
-    public int conseguirId(String nick, String nicky){
+    public int conseguirId(String nick, String nicky) {
 
         int existeId = seguimientoDAO.conseguirId(nick, nicky);
 
-        if(existeId != 0){
+        if (existeId != 0) {
             return existeId;
-        }else{
+        } else {
             throw new IllegalArgumentException("Este seguimiento no existe");
         }
     }
 
     @Override
-    public void cancelarSeguimiento(int idSeguimiento){
+    public void cancelarSeguimiento(int idSeguimiento) {
 
         // Busca el seguimiento por el id
         Seguimiento segui = seguimientoDAO.buscarPorId(idSeguimiento);
@@ -89,27 +91,28 @@ public class SeguimientoController implements ISeguimientoController{
 
     }
 
-    @Override
-    public List<DTOSeguimiento> listarSeguimientos(){
+    /*
+        @Override
+        public List<DTOSeguimiento> listarSeguimientos(){
 
-        List<Seguimiento> seguim = seguimientoDAO.obtenerTodos();
-        //Muchos dtoSeguimiento
-        List<DTOSeguimiento> dtoSeguim = new ArrayList<>();
+            List<Seguimiento> seguim = seguimientoDAO.obtenerTodos();
+            //Muchos dtoSeguimiento
+            List<DTOSeguimiento> dtoSeguim = new ArrayList<>();
 
-        for (Seguimiento s : seguim) {
-            DTOSeguimiento dtoSegui = new DTOSeguimiento(
-                    s.getUsuarioSeguidor(),
-                    s.getUsuarioSeguido()
-            );
-            dtoSeguim.add(dtoSegui);
+            for (Seguimiento s : seguim) {
+                DTOSeguimiento dtoSegui = new DTOSeguimiento(
+                        s.getUsuarioSeguidor(),
+                        s.getUsuarioSeguido()
+                );
+                dtoSeguim.add(dtoSegui);
+            }
+
+            return dtoSeguim;
+
         }
-
-        return dtoSeguim;
-
-    }
-
+    */
     @Override
-    public List<String> listarSeguidosDeNick(String nick){
+    public List<String> listarSeguidosDeNick(String nick) {
 
         return seguimientoDAO.obtenerTodosDeNick(nick)
                 .stream()
@@ -119,7 +122,7 @@ public class SeguimientoController implements ISeguimientoController{
     }
 
     @Override
-    public List<String> listarSeguidoresDeNick(String nick){
+    public List<String> listarSeguidoresDeNick(String nick) {
 
         List<Seguimiento> seguidoores = seguimientoDAO.obtenerSeguidoresDeNick(nick);
         List<String> seguidoresNick = new ArrayList<>();
@@ -129,5 +132,46 @@ public class SeguimientoController implements ISeguimientoController{
         }
         return seguidoresNick;
 
+    }
+
+
+    public List<DTOSeguimiento> listarSeguimientos() {
+
+        List<Seguimiento> seguim = seguimientoDAO.obtenerTodos();
+        List<DTOSeguimiento> dtoSeguim = new ArrayList<>();
+
+        for (Seguimiento s : seguim) {
+            DTOUsuario dtoSeguidor = convertirUsuario(s.getUsuarioSeguidor());
+            DTOSeguimiento dtoSegui = new DTOSeguimiento(dtoSeguidor, s.getUsuarioSeguido());
+            dtoSeguim.add(dtoSegui);
+        }
+
+        return dtoSeguim;
+    }
+
+    private DTOUsuario convertirUsuario(Usuario u) {
+        if (u == null) return null;
+
+        if (u instanceof Proponente p) {
+            DTOProponente dto = new DTOProponente();
+            dto.setNick(p.getNick());
+            dto.setNombre(p.getNombre());
+            dto.setApellido(p.getApellido());
+            dto.setCorreo(p.getCorreo());
+            dto.setDireccion(p.getDireccion());
+            dto.setBiografia(p.getBiografia());
+            dto.setLink(p.getLink());
+            return dto;
+
+        } else if (u instanceof Colaborador c) {
+            DTOColaborador dto = new DTOColaborador();
+            dto.setNick(c.getNick());
+            dto.setNombre(c.getNombre());
+            dto.setApellido(c.getApellido());
+            dto.setCorreo(c.getCorreo());
+            return dto;
+        }
+
+        return null;
     }
 }

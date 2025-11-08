@@ -7,11 +7,13 @@ import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.CategoriaDAO;
 import com.culturarte.persistencia.ProponenteDAO;
 import com.culturarte.persistencia.PropuestaDAO;
+import jakarta.jws.WebService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@WebService(endpointInterface = "com.culturarte.logica.controllers.IPropuestaController")
 public class PropuestaController implements IPropuestaController {
 
     private final PropuestaDAO  propuestaDAO  = new PropuestaDAO(); // para acceso a bd

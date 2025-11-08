@@ -1,14 +1,19 @@
 package com.culturarte.logica.dtos;
 
 import com.culturarte.logica.enums.ETipoRetorno;
+import com.culturarte.logica.utiles.LocalDateTimeAdaptador;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDateTime;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTOColabConsulta {
     private int id;
     private String colaboradorNick;
     private Integer monto;
     private ETipoRetorno retorno;
+    @XmlJavaTypeAdapter(LocalDateTimeAdaptador.class)
     private LocalDateTime fecha;
     private String propuestaNombre;
 

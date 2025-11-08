@@ -96,51 +96,60 @@ public class SeguimientoUsuarioForm {
         seguidoresDeNick();
     }
 
-    public void seguidoresDeNick(){
+    public void seguidoresDeNick() {
+        Object seleccionado = cbxUsuarioSeguidor.getSelectedItem();
+        if (seleccionado == null) {
+            return; //evita nullexcep
+        }
 
+        String nickSeleccionado = seleccionado.toString();
         cbxUsuarioSeguido.removeAllItems();
 
-        List<String> seguimientos = controllerSegui.listarSeguidosDeNick(cbxUsuarioSeguidor.getSelectedItem().toString());
-        for (String segui : seguimientos) cbxUsuarioSeguido.addItem(segui);
-
+        List<String> seguimientos = controllerSegui.listarSeguidosDeNick(nickSeleccionado);
+        for (String segui : seguimientos) {
+            cbxUsuarioSeguido.addItem(segui);
+        }
     }
+
 
     public void ejecutadoor(){
         try {
             if (rbtnSeguir.isSelected()) {
-                String usrSeguidoor = cbxUsuarioSeguidor.getSelectedItem().toString();
+
+                String nickSeguidor = cbxUsuarioSeguidor.getSelectedItem().toString();
+                String nickSeguido = cbxUsuarioSeguido.getSelectedItem().toString();
+
                 DTOSeguimiento dtoSegui = new DTOSeguimiento();
 
-                if (controllerPro.obtenerProponente(usrSeguidoor) != null) {
+                // obtenemos el DTO del seguidor según su tipo
+                DTOProponente dtoProp = controllerPro.obtenerProponente(nickSeguidor);
+                DTOColaborador dtoCol = controllerCol.obtenerColaborador(nickSeguidor);
 
-                    DTOProponente pepe = controllerPro.obtenerProponente(usrSeguidoor);
-                    Proponente pro = new Proponente(pepe.getNick(), pepe.getNombre(), pepe.getApellido(), pepe.getContrasenia(), pepe.getCorreo(), pepe.getFechaNac(), pepe.getDirImagen(), pepe.getDireccion(), pepe.getBiografia(), pepe.getLink());
-                    dtoSegui.setUsuarioSeguidor(pro);
-
-                } else if (controllerCol.obtenerColaborador(usrSeguidoor) != null) {
-
-                    DTOColaborador jaun = controllerCol.obtenerColaborador(usrSeguidoor);
-                    Colaborador col = new Colaborador(jaun.getNick(), jaun.getNombre(), jaun.getApellido(), jaun.getContrasenia(), jaun.getCorreo(), jaun.getFechaNac(), jaun.getDirImagen());
-                    dtoSegui.setUsuarioSeguidor(col);
-
+                if (dtoProp != null) {
+                    dtoSegui.setUsuarioSeguidor(dtoProp);
+                } else if (dtoCol != null) {
+                    dtoSegui.setUsuarioSeguidor(dtoCol);
+                } else {
+                    throw new Exception("No se encontró el usuario seguidor: " + nickSeguidor);
                 }
 
-                dtoSegui.setUsuarioSeguido(cbxUsuarioSeguido.getSelectedItem().toString());
+                dtoSegui.setUsuarioSeguido(nickSeguido);
                 controllerSegui.registrarSeguimiento(dtoSegui);
-                JOptionPane.showMessageDialog(mainPanel, "Seguimiento Realizado");
+                JOptionPane.showMessageDialog(mainPanel, "Seguimiento realizado");
 
             } else if (rbtnDejarSeguir.isSelected()) {
-
                 String nick = cbxUsuarioSeguidor.getSelectedItem().toString();
                 String nicky = cbxUsuarioSeguido.getSelectedItem().toString();
 
                 controllerSegui.cancelarSeguimiento(controllerSegui.conseguirId(nick, nicky));
-                JOptionPane.showMessageDialog(mainPanel, "Dejar de seguir Realizado");
+                JOptionPane.showMessageDialog(mainPanel, "Dejar de seguir realizado");
             }
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(mainPanel, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     public JPanel getMainPanel() {return mainPanel;}
 }

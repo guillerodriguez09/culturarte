@@ -1,10 +1,12 @@
 package com.culturarte.logica.dtos;
 
 import com.culturarte.logica.clases.Propuesta;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTOProponente extends DTOUsuario{
 
     String direccion;

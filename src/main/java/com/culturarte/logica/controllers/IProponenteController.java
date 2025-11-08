@@ -3,21 +3,30 @@ package com.culturarte.logica.controllers;
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.enums.EEstadoPropuesta;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 
 import java.util.List;
-
+@WebService
 public interface IProponenteController {
 
+    @WebMethod
     void altaProponente(DTOProponente dtoProponente);
 
+    @WebMethod
     List<Object[]> obtenerTodPropConPropu (String nick);
 
+    @WebMethod
     List<String> listarProponentes();
 
+    @WebMethod
     DTOProponente obtenerProponente(String nick);
+    @WebMethod
     List<DTOProponente> listarTodos();
+    @WebMethod
     DTOProponente obtenerProponenteCorreo(String correo);
 
+    @WebMethod
     List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
 
 

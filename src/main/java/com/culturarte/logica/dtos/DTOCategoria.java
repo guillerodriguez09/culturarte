@@ -2,10 +2,12 @@ package com.culturarte.logica.dtos;
 
 import com.culturarte.logica.clases.Categoria;
 import jakarta.persistence.ManyToOne;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTOCategoria {
 
     String nombre;

@@ -8,7 +8,6 @@
 
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-        <!-- Lista de entidades -->
         <class>com.culturarte.logica.clases.Usuario</class>
         <class>com.culturarte.logica.clases.Proponente</class>
         <class>com.culturarte.logica.clases.Colaborador</class>
@@ -19,14 +18,6 @@
         <class>com.culturarte.logica.clases.Seguimiento</class>
 
         <properties>
-            <!-- Conexión MySQL XAMPP -->
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/culturarte?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
-            <property name="jakarta.persistence.jdbc.user" value="root"/>
-         <!--   <property name="jakarta.persistence.jdbc.password" value="tecnologo"/>
--->
-            <!-- EclipseLink config (solo DEV) -->
             <property name="eclipselink.ddl-generation" value="create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>
             <property name="eclipselink.logging.level" value="FINE"/>

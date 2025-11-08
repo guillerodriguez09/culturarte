@@ -1,7 +1,12 @@
 package com.culturarte.logica.dtos;
 
-import java.time.LocalDate;
+import com.culturarte.logica.utiles.LocalDateAdaptador;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.time.LocalDate;
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTOUsuario {
 
     String nickname;
@@ -10,6 +15,7 @@ public class DTOUsuario {
     String contrasenia;
     String confContrasenia;
     String correo;
+    @XmlJavaTypeAdapter(LocalDateAdaptador.class)
     LocalDate fechaNac;
     String dirImagen;
 
