@@ -28,6 +28,32 @@ public class DatosDePrueba {
 
     DefaultMutableTreeNode raiz = Fabrica.getInstancia().getCategoriaController().construirArbolCategorias();
 
+    private void registrarSeg(String nickSeguidor, String nickSeguido) {
+        DTOSeguimiento dtoSeg = new DTOSeguimiento();
+
+        DTOProponente prop = controllerPro.obtenerProponente(nickSeguidor);
+        DTOColaborador col = controllerCol.obtenerColaborador(nickSeguidor);
+
+        if (prop != null) {
+            dtoSeg.setUsuarioSeguidor(prop);
+        } else if (col != null) {
+            dtoSeg.setUsuarioSeguidor(col);
+        } else {
+            System.err.println("⚠ No se encontró usuario seguidor con nick: " + nickSeguidor);
+            return;
+        }
+
+        dtoSeg.setUsuarioSeguido(nickSeguido);
+
+        try {
+            controllerSegui.registrarSeguimiento(dtoSeg);
+        } catch (Exception e) {
+            System.err.println("Error al registrar seguimiento " + nickSeguidor + " → " + nickSeguido + ": " + e.getMessage());
+        }
+    }
+
+
+
     public void crearDatosPrueba() {
         //
 
@@ -303,339 +329,74 @@ public class DatosDePrueba {
         //COLABORADORES
         //
 
-        //45
-        //SEGUIMIENTOS
-        DTOSeguimiento dtoSegui = new DTOSeguimiento();
+        // SEGUIMIENTOS
 
-        DTOProponente dtoPP = controllerPro.obtenerProponente(dtoP.getNick());
-        Proponente pro = new Proponente(dtoPP.getNick(), dtoPP.getNombre(), dtoPP.getApellido(), dtoPP.getContrasenia(), dtoPP.getCorreo(), dtoPP.getFechaNac(), dtoPP.getDirImagen(), dtoPP.getDireccion(), dtoPP.getBiografia(), dtoPP.getLink());
+        registrarSeg("hrubino", "hectorg");
+        registrarSeg("hrubino", "diegop");
+        registrarSeg("hrubino", "losBardo");
 
-        dtoSegui.setUsuarioSeguidor(pro);
-        dtoSegui.setUsuarioSeguido(dtoP3.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui);
+        registrarSeg("mbusca", "tabarec");
+        registrarSeg("mbusca", "cachilas");
+        registrarSeg("mbusca", "kairoh");
 
-        DTOSeguimiento dtoSegui2 = new DTOSeguimiento();
+        registrarSeg("hectorg", "mbusca");
+        registrarSeg("hectorg", "juliob");
 
-        dtoSegui2.setUsuarioSeguidor(pro);
-        dtoSegui2.setUsuarioSeguido(dtoP7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui2);
+        registrarSeg("tabarec", "hrubino");
+        registrarSeg("tabarec", "cachilas");
 
-        DTOSeguimiento dtoSegui3 = new DTOSeguimiento();
+        registrarSeg("cachilas", "hrubino");
 
-        dtoSegui3.setUsuarioSeguidor(pro);
-        dtoSegui3.setUsuarioSeguido(dtoP9.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui3);
+        registrarSeg("juliob", "mbusca");
+        registrarSeg("juliob", "diegop");
 
-        DTOSeguimiento dtoSegui4 = new DTOSeguimiento();
+        registrarSeg("diegop", "hectorg");
+        registrarSeg("diegop", "losBardo");
 
-        DTOProponente dtoPP2 = controllerPro.obtenerProponente(dtoP2.getNick());
-        Proponente pro2 = new Proponente(dtoPP2.getNick(), dtoPP2.getNombre(), dtoPP2.getApellido(), dtoPP2.getContrasenia(), dtoPP2.getCorreo(), dtoPP2.getFechaNac(), dtoPP2.getDirImagen(), dtoPP2.getDireccion(), dtoPP2.getBiografia(), dtoPP2.getLink());
+        registrarSeg("kairoh", "sergiop");
 
-        dtoSegui4.setUsuarioSeguidor(pro2);
-        dtoSegui4.setUsuarioSeguido(dtoP4.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui4);
+        registrarSeg("losBardo", "hrubino");
+        registrarSeg("losBardo", "nicoj");
 
-        DTOSeguimiento dtoSegui5 = new DTOSeguimiento();
+        registrarSeg("robinh", "hectorg");
+        registrarSeg("robinh", "juliob");
+        registrarSeg("robinh", "diegop");
 
-        dtoSegui5.setUsuarioSeguidor(pro2);
-        dtoSegui5.setUsuarioSeguido(dtoP5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui5);
+        registrarSeg("marcelot", "cachilas");
+        registrarSeg("marcelot", "juliob");
+        registrarSeg("marcelot", "kairoh");
 
-        DTOSeguimiento dtoSegui6 = new DTOSeguimiento();
+        registrarSeg("novick", "hrubino");
+        registrarSeg("novick", "tabarec");
+        registrarSeg("novick", "cachilas");
 
-        dtoSegui6.setUsuarioSeguidor(pro2);
-        dtoSegui6.setUsuarioSeguido(dtoP8.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui6);
+        registrarSeg("sergiop", "mbusca");
+        registrarSeg("sergiop", "juliob");
+        registrarSeg("sergiop", "diegop");
 
-        DTOSeguimiento dtoSegui7 = new DTOSeguimiento();
+        registrarSeg("chino", "tonyp");
+        registrarSeg("tonyp", "chino");
 
-        DTOProponente dtoPP3 = controllerPro.obtenerProponente(dtoP3.getNick());
-        Proponente pro3 = new Proponente(dtoPP3.getNick(), dtoPP3.getNombre(), dtoPP3.getApellido(), dtoPP3.getContrasenia(), dtoPP3.getCorreo(), dtoPP3.getFechaNac(), dtoPP3.getDirImagen(), dtoPP3.getDireccion(), dtoPP3.getBiografia(), dtoPP3.getLink());
+        registrarSeg("nicoj", "diegop");
+        registrarSeg("nicoj", "losBardo");
 
-        dtoSegui7.setUsuarioSeguidor(pro3);
-        dtoSegui7.setUsuarioSeguido(dtoP2.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui7);
+        registrarSeg("juanP", "tabarec");
+        registrarSeg("juanP", "cachilas");
+        registrarSeg("juanP", "kairoh");
 
-        DTOSeguimiento dtoSegui8 = new DTOSeguimiento();
+        registrarSeg("Mengano", "hectorg");
+        registrarSeg("Mengano", "juliob");
+        registrarSeg("Mengano", "chino");
 
-        dtoSegui8.setUsuarioSeguidor(pro3);
-        dtoSegui8.setUsuarioSeguido(dtoP6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui8);
+        registrarSeg("Perengano", "diegop");
+        registrarSeg("Perengano", "tonyp");
 
-        DTOSeguimiento dtoSegui9 = new DTOSeguimiento();
+        registrarSeg("Tiajaci", "juliob");
+        registrarSeg("Tiajaci", "kairoh");
+        registrarSeg("Tiajaci", "sergiop");
 
-        DTOProponente dtoPP4 = controllerPro.obtenerProponente(dtoP4.getNick());
-        Proponente pro4 = new Proponente(dtoPP4.getNick(), dtoPP4.getNombre(), dtoPP4.getApellido(), dtoPP4.getContrasenia(), dtoPP4.getCorreo(), dtoPP4.getFechaNac(), dtoPP4.getDirImagen(), dtoPP4.getDireccion(), dtoPP4.getBiografia(), dtoPP4.getLink());
+// FIN SEGUIMIENTOS
 
-        dtoSegui9.setUsuarioSeguidor(pro4);
-        dtoSegui9.setUsuarioSeguido(dtoP.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui9);
-
-        DTOSeguimiento dtoSegui10 = new DTOSeguimiento();
-
-        dtoSegui10.setUsuarioSeguidor(pro4);
-        dtoSegui10.setUsuarioSeguido(dtoP5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui10);
-
-        DTOSeguimiento dtoSegui11 = new DTOSeguimiento();
-
-        DTOProponente dtoPP5 = controllerPro.obtenerProponente(dtoP5.getNick());
-        Proponente pro5 = new Proponente(dtoPP5.getNick(), dtoPP5.getNombre(), dtoPP5.getApellido(), dtoPP5.getContrasenia(), dtoPP5.getCorreo(), dtoPP5.getFechaNac(), dtoPP5.getDirImagen(), dtoPP5.getDireccion(), dtoPP5.getBiografia(), dtoPP5.getLink());
-
-        dtoSegui11.setUsuarioSeguidor(pro5);
-        dtoSegui11.setUsuarioSeguido(dtoP.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui11);
-
-        DTOSeguimiento dtoSegui12 = new DTOSeguimiento();
-
-        DTOProponente dtoPP6 = controllerPro.obtenerProponente(dtoP6.getNick());
-        Proponente pro6 = new Proponente(dtoPP6.getNick(), dtoPP6.getNombre(), dtoPP6.getApellido(), dtoPP6.getContrasenia(), dtoPP6.getCorreo(), dtoPP6.getFechaNac(), dtoPP6.getDirImagen(), dtoPP6.getDireccion(), dtoPP6.getBiografia(), dtoPP6.getLink());
-
-        dtoSegui12.setUsuarioSeguidor(pro6);
-        dtoSegui12.setUsuarioSeguido(dtoP2.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui12);
-
-        DTOSeguimiento dtoSegui13 = new DTOSeguimiento();
-
-        dtoSegui13.setUsuarioSeguidor(pro6);
-        dtoSegui13.setUsuarioSeguido(dtoP7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui13);
-
-        DTOSeguimiento dtoSegui14 = new DTOSeguimiento();
-
-        DTOProponente dtoPP7 = controllerPro.obtenerProponente(dtoP7.getNick());
-        Proponente pro7 = new Proponente(dtoPP7.getNick(), dtoPP7.getNombre(), dtoPP7.getApellido(), dtoPP7.getContrasenia(), dtoPP7.getCorreo(), dtoPP7.getFechaNac(), dtoPP7.getDirImagen(), dtoPP7.getDireccion(), dtoPP7.getBiografia(), dtoPP7.getLink());
-
-        dtoSegui14.setUsuarioSeguidor(pro7);
-        dtoSegui14.setUsuarioSeguido(dtoP3.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui14);
-
-        DTOSeguimiento dtoSegui15 = new DTOSeguimiento();
-
-        dtoSegui15.setUsuarioSeguidor(pro7);
-        dtoSegui15.setUsuarioSeguido(dtoP9.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui15);
-
-        DTOSeguimiento dtoSegui16 = new DTOSeguimiento();
-
-        DTOProponente dtoPP8 = controllerPro.obtenerProponente(dtoP8.getNick());
-        Proponente pro8 = new Proponente(dtoPP8.getNick(), dtoPP8.getNombre(), dtoPP8.getApellido(), dtoPP8.getContrasenia(), dtoPP8.getCorreo(), dtoPP8.getFechaNac(), dtoPP8.getDirImagen(), dtoPP8.getDireccion(), dtoPP8.getBiografia(), dtoPP8.getLink());
-
-        dtoSegui16.setUsuarioSeguidor(pro8);
-        dtoSegui16.setUsuarioSeguido(dtoC4.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui16);
-
-        DTOSeguimiento dtoSegui17 = new DTOSeguimiento();
-
-        DTOProponente dtoPP9 = controllerPro.obtenerProponente(dtoP9.getNick());
-        Proponente pro9 = new Proponente(dtoPP9.getNick(), dtoPP9.getNombre(), dtoPP9.getApellido(), dtoPP9.getContrasenia(), dtoPP9.getCorreo(), dtoPP9.getFechaNac(), dtoPP9.getDirImagen(), dtoPP9.getDireccion(), dtoPP9.getBiografia(), dtoPP9.getLink());
-
-        dtoSegui17.setUsuarioSeguidor(pro9);
-        dtoSegui17.setUsuarioSeguido(dtoP.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui17);
-
-        DTOSeguimiento dtoSegui18 = new DTOSeguimiento();
-
-        dtoSegui18.setUsuarioSeguidor(pro9);
-        dtoSegui18.setUsuarioSeguido(dtoC7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui18);
-
-        DTOSeguimiento dtoSegui19 = new DTOSeguimiento();
-
-        DTOColaborador CC = controllerCol.obtenerColaborador(dtoC.getNick());
-        Colaborador col = new Colaborador(CC.getNick(), CC.getNombre(), CC.getApellido(), CC.getContrasenia(), CC.getCorreo(), CC.getFechaNac(), CC.getDirImagen());
-
-        dtoSegui19.setUsuarioSeguidor(col);
-        dtoSegui19.setUsuarioSeguido(dtoP3.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui19);
-
-        DTOSeguimiento dtoSegui20 = new DTOSeguimiento();
-
-        dtoSegui20.setUsuarioSeguidor(col);
-        dtoSegui20.setUsuarioSeguido(dtoP6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui20);
-
-        DTOSeguimiento dtoSegui21 = new DTOSeguimiento();
-
-        dtoSegui21.setUsuarioSeguidor(col);
-        dtoSegui21.setUsuarioSeguido(dtoP7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui21);
-
-        DTOSeguimiento dtoSegui22 = new DTOSeguimiento();
-
-        DTOColaborador CC2 = controllerCol.obtenerColaborador(dtoC2.getNick());
-        Colaborador col2 = new Colaborador(CC2.getNick(), CC2.getNombre(), CC2.getApellido(), CC2.getContrasenia(), CC2.getCorreo(), CC2.getFechaNac(), CC2.getDirImagen());
-
-        dtoSegui22.setUsuarioSeguidor(col2);
-        dtoSegui22.setUsuarioSeguido(dtoP5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui22);
-
-        DTOSeguimiento dtoSegui23 = new DTOSeguimiento();
-
-        dtoSegui23.setUsuarioSeguidor(col2);
-        dtoSegui23.setUsuarioSeguido(dtoP6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui23);
-
-        DTOSeguimiento dtoSegui24 = new DTOSeguimiento();
-
-        dtoSegui24.setUsuarioSeguidor(col2);
-        dtoSegui24.setUsuarioSeguido(dtoP8.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui24);
-
-        DTOSeguimiento dtoSegui25 = new DTOSeguimiento();
-
-        DTOColaborador CC3 = controllerCol.obtenerColaborador(dtoC3.getNick());
-        Colaborador col3 = new Colaborador(CC3.getNick(), CC3.getNombre(), CC3.getApellido(), CC3.getContrasenia(), CC3.getCorreo(), CC3.getFechaNac(), CC3.getDirImagen());
-
-        dtoSegui25.setUsuarioSeguidor(col3);
-        dtoSegui25.setUsuarioSeguido(dtoP.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui25);
-
-        DTOSeguimiento dtoSegui26 = new DTOSeguimiento();
-
-        dtoSegui26.setUsuarioSeguidor(col3);
-        dtoSegui26.setUsuarioSeguido(dtoP4.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui26);
-
-        DTOSeguimiento dtoSegui27 = new DTOSeguimiento();
-
-        dtoSegui27.setUsuarioSeguidor(col3);
-        dtoSegui27.setUsuarioSeguido(dtoP5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui27);
-
-        DTOSeguimiento dtoSegui28 = new DTOSeguimiento();
-
-        DTOColaborador CC4 = controllerCol.obtenerColaborador(dtoC4.getNick());
-        Colaborador col4 = new Colaborador(CC4.getNick(), CC4.getNombre(), CC4.getApellido(), CC4.getContrasenia(), CC4.getCorreo(), CC4.getFechaNac(), CC4.getDirImagen());
-
-        dtoSegui28.setUsuarioSeguidor(col4);
-        dtoSegui28.setUsuarioSeguido(dtoP2.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui28);
-
-        DTOSeguimiento dtoSegui29 = new DTOSeguimiento();
-
-        dtoSegui29.setUsuarioSeguidor(col4);
-        dtoSegui29.setUsuarioSeguido(dtoP6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui29);
-
-        DTOSeguimiento dtoSegui30 = new DTOSeguimiento();
-
-        dtoSegui30.setUsuarioSeguidor(col4);
-        dtoSegui30.setUsuarioSeguido(dtoP7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui30);
-
-        DTOSeguimiento dtoSegui31 = new DTOSeguimiento();
-
-        DTOColaborador CC5 = controllerCol.obtenerColaborador(dtoC5.getNick());
-        Colaborador col5 = new Colaborador(CC5.getNick(), CC5.getNombre(), CC5.getApellido(), CC5.getContrasenia(), CC5.getCorreo(), CC5.getFechaNac(), CC5.getDirImagen());
-
-        dtoSegui31.setUsuarioSeguidor(col5);
-        dtoSegui31.setUsuarioSeguido(dtoC6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui31);
-
-        DTOSeguimiento dtoSegui32 = new DTOSeguimiento();
-
-        DTOColaborador CC6 = controllerCol.obtenerColaborador(dtoC6.getNick());
-        Colaborador col6 = new Colaborador(CC6.getNick(), CC6.getNombre(), CC6.getApellido(), CC6.getContrasenia(), CC6.getCorreo(), CC6.getFechaNac(), CC6.getDirImagen());
-
-        dtoSegui32.setUsuarioSeguidor(col6);
-        dtoSegui32.setUsuarioSeguido(dtoC5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui32);
-
-        DTOSeguimiento dtoSegui33 = new DTOSeguimiento();
-
-        DTOColaborador CC7 = controllerCol.obtenerColaborador(dtoC7.getNick());
-        Colaborador col7 = new Colaborador(CC7.getNick(), CC7.getNombre(), CC7.getApellido(), CC7.getContrasenia(), CC7.getCorreo(), CC7.getFechaNac(), CC7.getDirImagen());
-
-        dtoSegui33.setUsuarioSeguidor(col7);
-        dtoSegui33.setUsuarioSeguido(dtoP7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui33);
-
-        DTOSeguimiento dtoSegui34 = new DTOSeguimiento();
-
-        dtoSegui34.setUsuarioSeguidor(col7);
-        dtoSegui34.setUsuarioSeguido(dtoP9.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui34);
-
-        DTOSeguimiento dtoSegui35 = new DTOSeguimiento();
-
-        DTOColaborador CC8 = controllerCol.obtenerColaborador(dtoC8.getNick());
-        Colaborador col8 = new Colaborador(CC8.getNick(), CC8.getNombre(), CC8.getApellido(), CC8.getContrasenia(), CC8.getCorreo(), CC8.getFechaNac(), CC8.getDirImagen());
-
-        dtoSegui35.setUsuarioSeguidor(col8);
-        dtoSegui35.setUsuarioSeguido(dtoP4.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui35);
-
-        DTOSeguimiento dtoSegui36 = new DTOSeguimiento();
-
-        dtoSegui36.setUsuarioSeguidor(col8);
-        dtoSegui36.setUsuarioSeguido(dtoP5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui36);
-
-        DTOSeguimiento dtoSegui37 = new DTOSeguimiento();
-
-        dtoSegui37.setUsuarioSeguidor(col8);
-        dtoSegui37.setUsuarioSeguido(dtoP8.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui37);
-
-        DTOSeguimiento dtoSegui38 = new DTOSeguimiento();
-
-        DTOColaborador CC9 = controllerCol.obtenerColaborador(dtoC9.getNick());
-        Colaborador col9 = new Colaborador(CC9.getNick(), CC9.getNombre(), CC9.getApellido(), CC9.getContrasenia(), CC9.getCorreo(), CC9.getFechaNac(), CC9.getDirImagen());
-
-        dtoSegui38.setUsuarioSeguidor(col9);
-        dtoSegui38.setUsuarioSeguido(dtoP3.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui38);
-
-        DTOSeguimiento dtoSegui39 = new DTOSeguimiento();
-
-        dtoSegui39.setUsuarioSeguidor(col9);
-        dtoSegui39.setUsuarioSeguido(dtoP6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui39);
-
-        DTOSeguimiento dtoSegui40 = new DTOSeguimiento();
-
-        dtoSegui40.setUsuarioSeguidor(col9);
-        dtoSegui40.setUsuarioSeguido(dtoC5.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui40);
-
-        DTOSeguimiento dtoSegui41 = new DTOSeguimiento();
-
-        DTOColaborador CC10 = controllerCol.obtenerColaborador(dtoC10.getNick());
-        Colaborador col10 = new Colaborador(CC10.getNick(), CC10.getNombre(), CC10.getApellido(), CC10.getContrasenia(), CC10.getCorreo(), CC10.getFechaNac(), CC10.getDirImagen());
-
-        dtoSegui41.setUsuarioSeguidor(col10);
-        dtoSegui41.setUsuarioSeguido(dtoP7.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui41);
-
-        DTOSeguimiento dtoSegui42 = new DTOSeguimiento();
-
-        dtoSegui42.setUsuarioSeguidor(col10);
-        dtoSegui42.setUsuarioSeguido(dtoC6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui42);
-
-        DTOSeguimiento dtoSegui43 = new DTOSeguimiento();
-
-        DTOColaborador CC11 = controllerCol.obtenerColaborador(dtoC11.getNick());
-        Colaborador col11 = new Colaborador(CC11.getNick(), CC11.getNombre(), CC11.getApellido(), CC11.getContrasenia(), CC11.getCorreo(), CC11.getFechaNac(), CC11.getDirImagen());
-
-        dtoSegui43.setUsuarioSeguidor(col11);
-        dtoSegui43.setUsuarioSeguido(dtoP6.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui43);
-
-        DTOSeguimiento dtoSegui44 = new DTOSeguimiento();
-
-        dtoSegui44.setUsuarioSeguidor(col11);
-        dtoSegui44.setUsuarioSeguido(dtoP8.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui44);
-
-        DTOSeguimiento dtoSegui45 = new DTOSeguimiento();
-
-        dtoSegui45.setUsuarioSeguidor(col11);
-        dtoSegui45.setUsuarioSeguido(dtoC4.getNick());
-        controllerSegui.registrarSeguimiento(dtoSegui45);
-        //SEGUIMIENTOS
-        //
 
 
 // cats "raíces"

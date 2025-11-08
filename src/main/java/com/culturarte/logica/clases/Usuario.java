@@ -2,6 +2,7 @@ package com.culturarte.logica.clases;
 
 import jakarta.persistence.*;
 import com.culturarte.logica.clases.Seguimiento;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

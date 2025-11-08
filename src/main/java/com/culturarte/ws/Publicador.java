@@ -8,8 +8,8 @@ import java.util.Properties;
 
 public class Publicador {
 
-    /**
-     Carga las propiedades desde el archivo de config
+    /*
+     carga las propiedades desde el archivo de config
      */
     private static Properties getConfig() throws Exception {
         String configDir = System.getProperty("user.home") + System.getProperty("file.separator") + ".Culturarte";
@@ -22,7 +22,7 @@ public class Publicador {
         try {
             // Cargar la URL base desde el archivo de config
             Properties config = getConfig();
-            String urlBase = config.getProperty("ws.urlPublicacion"); // Ej: "http://localhost:9128"
+            String urlBase = config.getProperty("ws.urlPublicacion"); //9128
 
             if (urlBase == null) {
                 System.err.println("Error");

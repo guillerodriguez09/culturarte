@@ -99,12 +99,10 @@ public class ColaboradorController implements IColaboradorController {
         List<Object[]> Tuti = colaboradorDAO.obtenerTodColConPropu(nick);
         if(Tuti == null){return null;}
         List<Object[]> Fruti = new ArrayList<>();
-
         for(Object[] fila : Tuti) {
-            if (fila.length >= 2 && fila[0] instanceof Colaborador && fila[1] instanceof Propuesta) {
-            Colaborador col = (Colaborador) fila[0];
-            Propuesta p = (Propuesta) fila[1];
 
+            Colaborador col = (Colaborador) fila[0];
+            Propuesta p = (Propuesta) fila[2];
 
             DTOColaborador dtoCol = new DTOColaborador();
             DTOPropuesta dtoCP = new DTOPropuesta();
@@ -150,9 +148,6 @@ public class ColaboradorController implements IColaboradorController {
 
             Object[] filaJuan = new Object[] {dtoCol, dtoCP};
             Fruti.add(filaJuan);
-            } else {
-                System.err.println("Invalid row: " + Arrays.toString(fila));
-            }
 
         }
 
