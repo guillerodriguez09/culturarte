@@ -1,6 +1,7 @@
 package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.clases.*;
+import com.culturarte.logica.dtos.DTOPropoPropu;
 import com.culturarte.logica.dtos.DTOProponente;
 
 import com.culturarte.logica.dtos.DTOPropuesta;
@@ -83,7 +84,7 @@ public class ProponenteController implements IProponenteController {
     }
 
     @Override
-    public List<DTOProponente> listarTodos(){
+    public List<DTOProponente> listarTodosProponente(){
         List<Proponente> prop = proponenteDAO.obtenerTodos();
         List<DTOProponente> dtoProp = new ArrayList<>();
 
@@ -162,73 +163,79 @@ public class ProponenteController implements IProponenteController {
 
 
     @Override
-    public List<Object[]> obtenerTodPropConPropu (String nick){
-        List<Object[]> Marco = proponenteDAO.obtenerTodPropConPropu(nick);
-        if(Marco == null){return null;}
-        List<Object[]> Polo = new ArrayList<>();
-        for(Object[] fila : Marco) {
-            if (fila.length >= 2 && fila[0] instanceof Proponente && fila[1] instanceof Propuesta) {
+    public List <DTOPropoPropu> obtenerTodPropConPropu(String nick) {
+        List<Object[]> filas = proponenteDAO.obtenerTodPropConPropu(nick);
+        List<DTOPropoPropu> resultado = new ArrayList<>();
+
+        if (filas == null || filas.isEmpty()) {
+            return resultado;
+        }
+
+        DTOProponente dtoPro = null;
+        DTOPropoPropu pack = null;
+
+        for (Object[] fila : filas) {
+            if (fila.length < 2 || !(fila[0] instanceof Proponente) || !(fila[1] instanceof Propuesta)) {
+                System.err.println("Fila inválida: " + Arrays.toString(fila));
+                continue;
+            }
 
             Proponente prop = (Proponente) fila[0];
             Propuesta p = (Propuesta) fila[1];
 
-            DTOProponente dtoProp = new DTOProponente();
-            DTOPropuesta dtoPropu = new DTOPropuesta();
+            // Sólo creamos el DTOProponente una vez
+            if (dtoPro == null) {
+                dtoPro = new DTOProponente();
+                dtoPro.setNick(prop.getNick());
+                dtoPro.setNombre(prop.getNombre());
+                dtoPro.setApellido(prop.getApellido());
+                dtoPro.setContrasenia(prop.getContrasenia());
+                dtoPro.setCorreo(prop.getCorreo());
+                dtoPro.setFechaNac(prop.getFechaNac());
+                dtoPro.setDirImagen(prop.getDirImagen());
+                dtoPro.setDireccion(prop.getDireccion());
+                dtoPro.setBiografia(prop.getBiografia());
+                dtoPro.setLink(prop.getLink());
 
-            dtoProp.setNick(prop.getNick());
-            dtoProp.setNombre(prop.getNombre());
-            dtoProp.setApellido(prop.getApellido());
-            dtoProp.setContrasenia(prop.getContrasenia());
-            dtoProp.setCorreo(prop.getCorreo());
-            dtoProp.setFechaNac(prop.getFechaNac());
-            dtoProp.setDirImagen(prop.getDirImagen());
-            dtoProp.setDireccion(prop.getDireccion());
-            dtoProp.setBiografia(prop.getBiografia());
-            dtoProp.setLink(prop.getLink());
-
-            dtoPropu.titulo = p.getTitulo();
-            dtoPropu.descripcion = p.getDescripcion();
-            dtoPropu.lugar = p.getLugar();
-            dtoPropu.fecha = p.getFecha();
-            dtoPropu.precioEntrada = p.getPrecioEntrada();
-            dtoPropu.montoAReunir = p.getMontoAReunir();
-            dtoPropu.imagen = p.getImagen();
-            dtoPropu.categoriaNombre = p.getCategoria().getNombre();
-            dtoPropu.proponenteNick = p.getProponente().getNick();
-            dtoPropu.fechaPublicacion = p.getFechaPublicacion();
-            dtoPropu.retornos = p.getRetornos();
-
-            // Estado actual
-            if (p.getEstadoActual() != null) {
-                dtoPropu.estadoActual = p.getEstadoActual().getNombre().toString();
-            } else {
-                dtoPropu.estadoActual = "DESCONOCIDO";
+                pack = new DTOPropoPropu(dtoPro);
             }
 
-            // Colaboradores
-            List<String> colaboradores = new ArrayList<>();
-            for (Colaboracion colab : p.getColaboraciones()) {
-                if (colab.getColaborador() != null) {
-                    colaboradores.add(colab.getColaborador().getNick());
-                }
+            // Mapeamos cada propuesta
+            DTOPropuesta dtoP = new DTOPropuesta();
+            dtoP.titulo = p.getTitulo();
+            dtoP.descripcion = p.getDescripcion();
+            dtoP.lugar = p.getLugar();
+            dtoP.fecha = p.getFecha();
+            dtoP.precioEntrada = p.getPrecioEntrada();
+            dtoP.montoAReunir = p.getMontoAReunir();
+            dtoP.imagen = p.getImagen();
+            dtoP.categoriaNombre = p.getCategoria().getNombre();
+            dtoP.proponenteNick = p.getProponente().getNick();
+            dtoP.fechaPublicacion = p.getFechaPublicacion();
+            dtoP.estadoActual = (p.getEstadoActual() != null)
+                    ? p.getEstadoActual().getNombre().toString()
+                    : "DESCONOCIDO";
+            dtoP.montoRecaudado = (double) p.getMontoRecaudado();
+
+            dtoP.colaboradores = new ArrayList<>();
+            for (Colaboracion c : p.getColaboraciones()) {
+                if (c.getColaborador() != null)
+                    dtoP.colaboradores.add(c.getColaborador().getNick());
             }
-            dtoPropu.colaboradores = colaboradores;
 
-            //Monto recaudado actualizado
-            dtoPropu.montoRecaudado = (double) p.getMontoRecaudado();
+            dtoP.retornos = p.getRetornos();
 
-            Object[] filaJuan = new Object[] {dtoProp, dtoPropu};
-            Polo.add(filaJuan);
-
-            } else {
-                System.err.println("Invalid row: " + Arrays.toString(fila));
-            }
-
+            // Agregamos la propuesta al pack
+            pack.addPropuesta(dtoP);
         }
 
-        return Polo;
+        if (pack != null) {
+            resultado.add(pack);
+        }
 
+        return resultado;
     }
+
 
     @Override
     public List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick){

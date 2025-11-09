@@ -1,6 +1,7 @@
 package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.clases.Proponente;
+import com.culturarte.logica.dtos.DTOPropoPropu;
 import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import jakarta.jws.WebMethod;
@@ -14,7 +15,7 @@ public interface IProponenteController {
     void altaProponente(DTOProponente dtoProponente);
 
     @WebMethod
-    List<Object[]> obtenerTodPropConPropu (String nick);
+    List<DTOPropoPropu> obtenerTodPropConPropu (String nick);
 
     @WebMethod
     List<String> listarProponentes();
@@ -22,7 +23,7 @@ public interface IProponenteController {
     @WebMethod
     DTOProponente obtenerProponente(String nick);
     @WebMethod
-    List<DTOProponente> listarTodos();
+    List<DTOProponente> listarTodosProponente();
     @WebMethod
     DTOProponente obtenerProponenteCorreo(String correo);
 

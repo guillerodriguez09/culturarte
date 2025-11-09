@@ -2,6 +2,7 @@ package com.culturarte.persistencia;
 
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.clases.Propuesta;
+import com.culturarte.logica.dtos.DTOPropoPropu;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
