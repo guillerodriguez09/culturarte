@@ -2,6 +2,7 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.clases.Colaboracion;
 import com.culturarte.logica.controllers.IColaboradorController;
+import com.culturarte.logica.dtos.DTOColPropu;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.fabrica.Fabrica;
@@ -68,7 +69,7 @@ public class ConsultaColaboradorFrom {
         }
 
         DTOColaborador dtoCola = controllerCol.obtenerColaborador(col);
-        List<Object[]> colConProp = controllerCol.obtenerTodColConPropu(col);
+        List<DTOColPropu> colConProp = controllerCol.obtenerTodColConPropu(col);
 
         txtNickname.setText(dtoCola.getNick());
         txtNombre.setText(dtoCola.getNombre());
@@ -106,26 +107,24 @@ public class ConsultaColaboradorFrom {
 
         List<String> datos = new ArrayList<>();
 
-        for (Object[] fila : colConProp) {
-            // DTOColaborador dtoCol = (DTOColaborador) fila[0];
-            DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
+        if (colConProp != null && !colConProp.isEmpty()) {
+            for (DTOColPropu pack : colConProp) {
+                List<DTOPropuesta> propuestas = pack.getPropuestas();
 
-            String titulo = dtoCP.getTitulo();
-            String nickProponente = dtoCP.getProponenteNick();
-            double monto = dtoCP.montoRecaudado;
-            String estado = dtoCP.getEstadoActual().toString();
-
-            // Armo el texto a mostrar en la lista
-            String item = "Título: " + titulo +
-                    " | Proponente: " + nickProponente +
-                    " | Monto: " + monto +
-                    " | Estado: " + estado;
-
-            datos.add(item);
+                if (propuestas != null) {
+                    for (DTOPropuesta p : propuestas) {
+                        String item = "Título: " + p.getTitulo()
+                                + " | Proponente: " + p.getProponenteNick()
+                                + " | Monto: $" + p.montoRecaudado
+                                + " | Estado: " + p.getEstadoActual();
+                        datos.add(item);
+                    }
+                }
+            }
         }
 
+        // Mostrar la lista
         listColaboraciones.setListData(datos.toArray(new String[0]));
-
     }
 
     public JPanel getMainPanel() {return mainPanel;}

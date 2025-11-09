@@ -3,6 +3,7 @@ package com.culturarte.logica.controllers;
 import com.culturarte.logica.clases.Colaboracion;
 import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Propuesta;
+import com.culturarte.logica.dtos.DTOColPropu;
 import com.culturarte.logica.dtos.DTOColaborador;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.persistencia.ColaboradorDAO;
@@ -95,26 +96,40 @@ public class ColaboradorController implements IColaboradorController {
     }
 
     @Override
-    public List<Object[]> obtenerTodColConPropu(String nick) {
-        List<Object[]> Tuti = colaboradorDAO.obtenerTodColConPropu(nick);
-        if(Tuti == null){return null;}
-        List<Object[]> Fruti = new ArrayList<>();
-        for(Object[] fila : Tuti) {
+    public List<DTOColPropu> obtenerTodColConPropu(String nick) {
+        List<Object[]> filas = colaboradorDAO.obtenerTodColConPropu(nick);
+        List<DTOColPropu> resultado = new ArrayList<>();
+
+        if (filas == null || filas.isEmpty()) {
+            return resultado;
+        }
+
+        DTOColaborador dtoCol = null;
+        DTOColPropu pack = null;
+
+        for (Object[] fila : filas) {
+            if (fila.length < 3 || !(fila[0] instanceof Colaborador) || !(fila[2] instanceof Propuesta)) {
+                System.err.println("Fila inválida: " + Arrays.toString(fila));
+                continue;
+            }
 
             Colaborador col = (Colaborador) fila[0];
             Propuesta p = (Propuesta) fila[2];
 
-            DTOColaborador dtoCol = new DTOColaborador();
+            if (dtoCol == null) {
+                dtoCol = new DTOColaborador();
+                dtoCol.setNick(col.getNick());
+                dtoCol.setNombre(col.getNombre());
+                dtoCol.setApellido(col.getApellido());
+                dtoCol.setContrasenia(col.getContrasenia());
+                dtoCol.setCorreo(col.getCorreo());
+                dtoCol.setFechaNac(col.getFechaNac());
+                dtoCol.setDirImagen(col.getDirImagen());
+
+                pack = new DTOColPropu(dtoCol);
+            }
+
             DTOPropuesta dtoCP = new DTOPropuesta();
-
-            dtoCol.setNick(col.getNick());
-            dtoCol.setNombre(col.getNombre());
-            dtoCol.setApellido(col.getApellido());
-            dtoCol.setContrasenia(col.getContrasenia());
-            dtoCol.setCorreo(col.getCorreo());
-            dtoCol.setFechaNac(col.getFechaNac());
-            dtoCol.setDirImagen(col.getDirImagen());
-
             dtoCP.titulo = p.getTitulo();
             dtoCP.descripcion = p.getDescripcion();
             dtoCP.lugar = p.getLugar();
@@ -128,32 +143,30 @@ public class ColaboradorController implements IColaboradorController {
             dtoCP.retornos = p.getRetornos();
 
             // Estado actual
-            if (p.getEstadoActual() != null) {
-                dtoCP.estadoActual = p.getEstadoActual().getNombre().toString();
-            } else {
-                dtoCP.estadoActual = "DESCONOCIDO";
-            }
+            dtoCP.estadoActual = (p.getEstadoActual() != null)
+                    ? p.getEstadoActual().getNombre().toString()
+                    : "DESCONOCIDO";
 
             // Colaboradores
-            List<String> colaboradores = new ArrayList<>();
+            dtoCP.colaboradores = new ArrayList<>();
             for (Colaboracion colab : p.getColaboraciones()) {
-                if (colab.getColaborador() != null) {
-                    colaboradores.add(colab.getColaborador().getNick());
-                }
+                if (colab.getColaborador() != null)
+                    dtoCP.colaboradores.add(colab.getColaborador().getNick());
             }
-            dtoCP.colaboradores = colaboradores;
 
-            //Monto recaudado actualizado
+            // Monto recaudado
             dtoCP.montoRecaudado = (double) p.getMontoRecaudado();
 
-            Object[] filaJuan = new Object[] {dtoCol, dtoCP};
-            Fruti.add(filaJuan);
-
+            pack.addPropuesta(dtoCP);
         }
 
-        return Fruti;
+        if (pack != null) {
+            resultado.add(pack);
+        }
 
+        return resultado;
     }
+
 
     public DTOColaborador obtenerColaborador(String nick){
 

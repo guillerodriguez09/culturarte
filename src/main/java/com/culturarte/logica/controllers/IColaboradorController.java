@@ -1,5 +1,6 @@
 package com.culturarte.logica.controllers;
 
+import com.culturarte.logica.dtos.DTOColPropu;
 import com.culturarte.logica.dtos.DTOColaborador;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
@@ -13,7 +14,7 @@ public interface IColaboradorController {
     @WebMethod
     List<String> listarColaboradores();
     @WebMethod
-    List<Object[]> obtenerTodColConPropu(String nick);
+    List<DTOColPropu> obtenerTodColConPropu(String nick);
     @WebMethod
     DTOColaborador obtenerColaborador(String nick);
     @WebMethod
