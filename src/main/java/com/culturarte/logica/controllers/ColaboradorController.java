@@ -9,6 +9,7 @@ import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.persistencia.ColaboradorDAO;
 import jakarta.jws.WebService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -216,5 +217,15 @@ public class ColaboradorController implements IColaboradorController {
 
     }
 
+    @Override
+    public String eliminarColaborador(String nick, LocalDate fechaEliminacion){
+        try {
+            colaboradorDAO.eliminarColaborador(nick, fechaEliminacion);
+        }catch (Exception e){
+            return "FALLO";
+        }
+        return "EXITO";
+
+    }
 
 }

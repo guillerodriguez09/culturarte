@@ -283,4 +283,15 @@ public class ProponenteController implements IProponenteController {
 
     }
 
+    @Override
+    public String eliminarProponente(String nick, LocalDate fechaEliminacion){
+        try {
+            proponenteDAO.eliminarProponente(nick, fechaEliminacion);
+        }catch (Exception e){
+            return "FALLO";
+        }
+        return "EXITO";
+
+    }
+
 }
