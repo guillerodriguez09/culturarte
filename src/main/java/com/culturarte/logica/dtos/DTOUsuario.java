@@ -18,7 +18,8 @@ public class DTOUsuario {
     @XmlJavaTypeAdapter(LocalDateAdaptador.class)
     LocalDate fechaNac;
     String dirImagen;
-
+    boolean eliminado;
+    LocalDate fechaEliminacion;
 
     public DTOUsuario(){}
 
@@ -49,6 +50,8 @@ public class DTOUsuario {
     public String getDirImagen(){
         return dirImagen;
     }
+    public boolean getEliminado(){ return eliminado; }
+    public LocalDate getFechaEliminacion(){ return fechaEliminacion; }
 
     public void setNick(String nickname){
         this.nickname = nickname;
@@ -69,5 +72,7 @@ public class DTOUsuario {
     public void setDirImagen(String dirImagen){
         this.dirImagen = dirImagen;
     }
+    public void setEliminado(boolean eliminado){ this.eliminado = eliminado; }
+    public void setFechaEliminacion(LocalDate fechaEliminacion){ this.fechaEliminacion = fechaEliminacion; }
 
 }

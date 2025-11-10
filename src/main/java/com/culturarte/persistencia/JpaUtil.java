@@ -20,7 +20,7 @@ public class JpaUtil {
     private static Properties getConfig() throws Exception {
         String configDir = System.getProperty("user.home") + System.getProperty("file.separator") + ".Culturarte";
         Properties props = new Properties();
-        props.load(new FileReader(configDir + System.getProperty("file.separator") + "config.properties"));
+        props.load(new FileReader(configDir + System.getProperty("file.separator") + "config.properties.txt"));
         return props;
     }
 
