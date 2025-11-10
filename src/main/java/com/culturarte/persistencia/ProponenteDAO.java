@@ -99,4 +99,14 @@ public class ProponenteDAO {
         }
     }
 
+    public List<Object[]> obtenerTodPropConPropuDeEli(String nick) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT pro, p FROM Proponente pro INNER JOIN pro.propuestas p WHERE pro.nickname = :nick AND pro.eliminado = true", Object[].class)
+                    .setParameter("nick", nick).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

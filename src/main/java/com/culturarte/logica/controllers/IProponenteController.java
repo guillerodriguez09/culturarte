@@ -34,5 +34,7 @@ public interface IProponenteController {
     @WebMethod
     String eliminarProponente(String nick, LocalDate fechaEliminacion);
 
+    List<Object[]> obtenerTodPropConPropuDeEli(String nick);
+
 
 }
