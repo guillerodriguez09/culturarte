@@ -109,4 +109,13 @@ public class ProponenteDAO {
         }
     }
 
+    public List<Proponente> obtenerTodosElim() {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT pro FROM Proponente pro WHERE pro.eliminado = true", Proponente.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

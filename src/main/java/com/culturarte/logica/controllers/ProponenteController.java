@@ -339,7 +339,14 @@ public class ProponenteController implements IProponenteController {
 
         return SacaTripa;
 
+    }
 
+    @Override
+    public List<String> listarProponentesElim() {
+        return proponenteDAO.obtenerTodosElim()
+                .stream()
+                .map(Proponente::getNick)
+                .toList();
     }
 
 }

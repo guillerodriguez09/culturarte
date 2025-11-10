@@ -36,5 +36,7 @@ public interface IProponenteController {
 
     List<Object[]> obtenerTodPropConPropuDeEli(String nick);
 
+    List<String> listarProponentesElim();
+
 
 }
