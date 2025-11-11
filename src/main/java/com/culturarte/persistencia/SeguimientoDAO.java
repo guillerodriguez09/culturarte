@@ -106,4 +106,34 @@ public class SeguimientoDAO {
         return buscarPorNickYNicky(nick, nicky) != null;
     }
 
+    public void eliminarTodosDeSeguidoor(String seguidoor) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Seguimiento s WHERE s.usuarioSeguidor.nickname = :seguidoor")
+                    .setParameter("seguidoor", seguidoor).executeUpdate();
+            em.getTransaction().commit();
+        }catch(Exception e){
+            if (em.getTransaction().isActive()) {em.getTransaction().rollback();}
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public void eliminarTodosDeSeguido(String seguido) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Seguimiento s WHERE s.usuarioSeguido = :seguido")
+                    .setParameter("seguido", seguido).executeUpdate();
+            em.getTransaction().commit();
+        }catch(Exception e){
+            if (em.getTransaction().isActive()) {em.getTransaction().rollback();}
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
 }

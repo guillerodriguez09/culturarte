@@ -7,6 +7,7 @@ import com.culturarte.logica.dtos.DTOProponente;
 import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ProponenteDAO;
+import com.culturarte.persistencia.SeguimientoDAO;
 import jakarta.jws.WebService;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ProponenteController implements IProponenteController {
 
     private final ProponenteDAO proponenteDAO = new ProponenteDAO();
+    private final SeguimientoDAO seguimientoDAO = new SeguimientoDAO();
 
     @Override
     public void altaProponente(DTOProponente dtoP) {
@@ -287,6 +289,8 @@ public class ProponenteController implements IProponenteController {
     public String eliminarProponente(String nick, LocalDate fechaEliminacion){
         try {
             proponenteDAO.eliminarProponente(nick, fechaEliminacion);
+            seguimientoDAO.eliminarTodosDeSeguidoor(nick);
+            seguimientoDAO.eliminarTodosDeSeguido(nick);
         }catch (Exception e){
             return "FALLO";
         }

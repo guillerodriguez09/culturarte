@@ -62,7 +62,7 @@ public class ColaboradorDAO {
     public List<Object[]> obtenerTodColConPropu(String nick) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT col, c, p FROM Colaborador col INNER JOIN col.colaboraciones c INNER JOIN c.propuesta p WHERE col.nickname = :nick AND col.eliminado = false", Object[].class)
+            return em.createQuery("SELECT col, c, p FROM Colaborador col INNER JOIN col.colaboraciones c INNER JOIN c.propuesta p WHERE col.nickname = :nick AND col.eliminado = false AND p.proponente.eliminado = false", Object[].class)
                     .setParameter("nick", nick).getResultList();
         } finally {
             em.close();

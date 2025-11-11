@@ -62,7 +62,7 @@ public class PropuestaDAO {
         try {
             return em.createQuery("""
                 SELECT p FROM Propuesta p
-                WHERE p.estadoActual.nombre = :estado
+                WHERE p.estadoActual.nombre = :estado AND p.proponente.eliminado = false
                 """, Propuesta.class)
                     .setParameter("estado", estado)
                     .getResultList();
@@ -75,7 +75,7 @@ public class PropuestaDAO {
     public List<Propuesta> obtenerTodas() {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM Propuesta p", Propuesta.class)
+            return em.createQuery("SELECT p FROM Propuesta p WHERE p.proponente.eliminado = false", Propuesta.class)
                     .getResultList();
         } finally {
             em.close();
@@ -107,6 +107,7 @@ public class PropuestaDAO {
         WHERE LOWER(p.titulo) LIKE :f
            OR LOWER(p.descripcion) LIKE :f
            OR LOWER(p.lugar) LIKE :f
+           AND p.proponente.eliminado = false
     """, Propuesta.class)
                 .setParameter("f", pattern)
                 .getResultList();

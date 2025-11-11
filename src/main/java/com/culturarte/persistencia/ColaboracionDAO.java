@@ -44,7 +44,7 @@ public class ColaboracionDAO {
         public List<Colaboracion> obtenerTodas() {
             EntityManager em = JpaUtil.getEntityManager();
             try {
-                return em.createQuery("SELECT c FROM Colaboracion c", Colaboracion.class).getResultList();
+                return em.createQuery("SELECT c FROM Colaboracion c WHERE c.propuesta.proponente.eliminado = false", Colaboracion.class).getResultList();
             } finally {
                 em.close();
             }
