@@ -21,6 +21,8 @@ public abstract class Usuario {
     String correo;
     LocalDate fechaNac;
     String dirImagen;
+    boolean eliminado;
+    LocalDate fechaEliminacion;
 
     @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguimiento> usuariosSeguidos = new ArrayList<>();
@@ -56,6 +58,8 @@ public abstract class Usuario {
     public String getDirImagen(){
         return dirImagen;
     }
+    public boolean getEliminado(){ return eliminado; }
+    public LocalDate getFechaEliminacion(){ return fechaEliminacion; }
 
     public void setNick(String nickname){
         this.nickname = nickname;
@@ -76,6 +80,8 @@ public abstract class Usuario {
     public void setDirImagen(String dirImagen){
         this.dirImagen = dirImagen;
     }
+    public void setEliminado(boolean eliminado){ this.eliminado = eliminado; }
+    public void setFechaEliminacion(LocalDate fechaEliminacion){ this.fechaEliminacion = fechaEliminacion; }
 
     @Override
     public String toString() {

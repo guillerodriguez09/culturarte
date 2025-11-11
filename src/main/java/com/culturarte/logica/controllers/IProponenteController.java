@@ -7,6 +7,7 @@ import com.culturarte.logica.enums.EEstadoPropuesta;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 
+import java.time.LocalDate;
 import java.util.List;
 @WebService
 public interface IProponenteController {
@@ -29,6 +30,13 @@ public interface IProponenteController {
 
     @WebMethod
     List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
+
+    @WebMethod
+    String eliminarProponente(String nick, LocalDate fechaEliminacion);
+
+    List<Object[]> obtenerTodPropConPropuDeEli(String nick);
+
+    List<String> listarProponentesElim();
 
 
 }

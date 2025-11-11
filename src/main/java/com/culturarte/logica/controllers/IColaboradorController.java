@@ -5,6 +5,7 @@ import com.culturarte.logica.dtos.DTOColaborador;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 
+import java.time.LocalDate;
 import java.util.List;
 @WebService
 public interface IColaboradorController {
@@ -21,4 +22,6 @@ public interface IColaboradorController {
     DTOColaborador obtenerColaboradorCorreo(String correo);
     @WebMethod
     List<DTOColaborador> listarTodos();
+    @WebMethod
+    String eliminarColaborador(String nick, LocalDate fechaEliminacion);
 }

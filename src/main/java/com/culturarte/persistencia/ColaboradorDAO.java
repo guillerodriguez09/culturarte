@@ -4,6 +4,7 @@ import com.culturarte.logica.clases.Colaborador;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ColaboradorDAO {
@@ -45,19 +46,14 @@ public class ColaboradorDAO {
         return buscarPorNick(nick) != null;
     }
 
-    public List<Colaborador> obtenerNomTodos() {
-        EntityManager em = JpaUtil.getEntityManager();
-        try {
-            return em.createQuery("SELECT col.nickname FROM Colaborador col", Colaborador.class).getResultList();
-        } finally {
-            em.close();
-        }
+    public boolean existeCorreo(String correo) {
+        return buscarPorCorreo(correo) != null;
     }
 
     public List<Colaborador> obtenerTodos() {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT col FROM Colaborador col", Colaborador.class).getResultList();
+            return em.createQuery("SELECT col FROM Colaborador col WHERE col.eliminado = false", Colaborador.class).getResultList();
         } finally {
             em.close();
         }
@@ -66,7 +62,7 @@ public class ColaboradorDAO {
     public List<Object[]> obtenerTodColConPropu(String nick) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT col, c, p FROM Colaborador col INNER JOIN col.colaboraciones c INNER JOIN c.propuesta p WHERE col.nickname = :nick", Object[].class)
+            return em.createQuery("SELECT col, c, p FROM Colaborador col INNER JOIN col.colaboraciones c INNER JOIN c.propuesta p WHERE col.nickname = :nick AND col.eliminado = false", Object[].class)
                     .setParameter("nick", nick).getResultList();
         } finally {
             em.close();
@@ -85,5 +81,21 @@ public class ColaboradorDAO {
         }
     }
 
+    public void eliminarColaborador(String nick, LocalDate fechaEliminacion){
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            em.createQuery("UPDATE Colaborador col SET col.eliminado = true, col.fechaEliminacion = :fechaEliminacion WHERE col.nickname = :nick")
+                    .setParameter("nick", nick).setParameter("fechaEliminacion", fechaEliminacion).executeUpdate();
+
+            em.getTransaction().commit();
+        }catch(Exception e){
+            if(em.getTransaction().isActive()){ em.getTransaction().rollback();}
+            throw e;
+        } finally{
+            em.close();
+        }
+    }
 
 }

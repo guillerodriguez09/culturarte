@@ -53,17 +53,20 @@ public class MenuPrincipal extends JFrame {
         JMenu menuUsuario = new JMenu("Usuario");
         JMenuItem itemAltaUsuario = new JMenuItem("Alta de Usuario");
         JMenuItem itemConsultaProponente = new JMenuItem("Consulta de Proponente");
+        JMenuItem itemConsultaProponenteElim = new JMenuItem("Consulta de Proponente Eliminado");
         JMenuItem itemConsultarColaborador = new JMenuItem("Consulta de Colaborador");
         JMenuItem itemSeguimientoUsuario = new JMenuItem("Seguimiento de Usuarios");
 
         itemAltaUsuario.addActionListener(e -> abrirAltaUsuario());
         itemConsultaProponente.addActionListener(e -> abrirConsultaProponente());
+        itemConsultaProponenteElim.addActionListener(e -> abrirConsultaProponenteEliminado());
         itemConsultarColaborador.addActionListener(e -> abrirConsultaColaborador());
         itemSeguimientoUsuario.addActionListener(e -> abrirSeguimientoUsuario());
 
 
         menuUsuario.add(itemAltaUsuario);
         menuUsuario.add(itemConsultaProponente);
+        menuUsuario.add(itemConsultaProponenteElim);
         menuUsuario.add(itemConsultarColaborador);
         menuUsuario.add(itemSeguimientoUsuario);
 
@@ -206,6 +209,21 @@ public class MenuPrincipal extends JFrame {
         ConsultaProponenteForm consProp = new ConsultaProponenteForm();
         JInternalFrame frame = new JInternalFrame("Consulta de Proponente", true, true, true, true);
         frame.setContentPane(consProp.getMainPanel());
+        frame.pack();
+        frame.setVisible(true);
+        desktopPane.add(frame);
+        try {
+            frame.setMaximum(true);
+            frame.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirConsultaProponenteEliminado() {
+        ConsultaProponenteElimForm consPropElim = new ConsultaProponenteElimForm();
+        JInternalFrame frame = new JInternalFrame("Consulta de Proponente Eliminado", true, true, true, true);
+        frame.setContentPane(consPropElim.getMainPanel());
         frame.pack();
         frame.setVisible(true);
         desktopPane.add(frame);
