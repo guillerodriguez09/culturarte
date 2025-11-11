@@ -61,6 +61,10 @@ public class Publicador {
             Endpoint.publish(urlSeguimiento, fabrica.getSeguimientoController());
             System.out.println("Servicio de Seguimiento publicado en: " + urlSeguimiento + "?wsdl");
 
+            String urlAcceso = urlBase + "/acceso";
+            Endpoint.publish(urlAcceso, fabrica.getAccesoController());
+            System.out.println("Servicio de Registro de Accesos publicado en: " + urlAcceso + "?wsdl");
+
 
         } catch (Exception e) {
             System.err.println("Error al publicar servicios:");
