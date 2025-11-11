@@ -1,5 +1,7 @@
 package com.culturarte.presentacion;
 
+import com.culturarte.logica.controllers.AccesoController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -93,15 +95,21 @@ public class MenuPrincipal extends JFrame {
         JMenu menuDDP = new JMenu("Datos de Prueba");
         JMenuItem itemCargarDatosDePrueba = new JMenuItem("Cargar Datos de Prueba");
 
+        JMenu menuR = new JMenu("Registro de accesos");
+        JMenuItem itemRegistrarAcceso = new JMenuItem("Ver registro de acceso");
+
+        menuR.add(itemRegistrarAcceso);
         menuDDP.add(itemCargarDatosDePrueba);
 
         itemCargarDatosDePrueba.addActionListener(e -> cargarDatosDePrueba());
+        itemRegistrarAcceso.addActionListener(e -> abrirRegistroAccesos());
 
         menuBar.add(menuPropuesta);
         menuBar.add(menuUsuario);
         menuBar.add(menuCategoria);
         menuBar.add(menuColab);
         menuBar.add(menuDDP);
+        menuBar.add(menuR);
 
         setJMenuBar(menuBar);
 
@@ -279,6 +287,8 @@ public class MenuPrincipal extends JFrame {
         }
     }
 
+
+
     private void abrirRegistrarColaboracion() {
         RegistrarColaboracion form = new RegistrarColaboracion();
         JInternalFrame frame = new JInternalFrame("Registrar Colaboración", true, true, true, true);
@@ -293,6 +303,31 @@ public class MenuPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
+
+    private void abrirRegistroAccesos() {
+        try {
+            // Evita abrirlo dos veces
+            for (JInternalFrame f : desktopPane.getAllFrames()) {
+                if (f instanceof AccesosForm) {
+                    f.setSelected(true);
+                    return;
+                }
+            }
+
+            AccesoController ctrl = new AccesoController();
+            AccesosForm form = new AccesosForm(ctrl);  // AccesosForm ya extiende de JInternalFrame
+            desktopPane.add(form);
+            form.setVisible(true);
+            form.setMaximum(true);
+            form.setSelected(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al abrir Registro de Accesos: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
 
     private void abrirConsultaColaboracionPropuesta() {
         ConsultaColaboracionPropuesta form = new ConsultaColaboracionPropuesta();

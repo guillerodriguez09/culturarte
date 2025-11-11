@@ -16,6 +16,7 @@
         <class>com.culturarte.logica.clases.Categoria</class>
         <class>com.culturarte.logica.clases.Estado</class>
         <class>com.culturarte.logica.clases.Seguimiento</class>
+        <class>com.culturarte.logica.clases.Acceso</class>
 
         <properties>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
