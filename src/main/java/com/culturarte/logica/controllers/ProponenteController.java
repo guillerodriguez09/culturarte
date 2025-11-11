@@ -353,4 +353,14 @@ public class ProponenteController implements IProponenteController {
                 .toList();
     }
 
+    @Override
+    public int existeProponente(String nickOMail){
+
+        if(proponenteDAO.existe(nickOMail) || proponenteDAO.existeCorreo(nickOMail)){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
 }

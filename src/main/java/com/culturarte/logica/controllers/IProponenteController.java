@@ -38,5 +38,8 @@ public interface IProponenteController {
 
     List<String> listarProponentesElim();
 
+    @WebMethod
+    int existeProponente(String nickOMail);
+
 
 }
