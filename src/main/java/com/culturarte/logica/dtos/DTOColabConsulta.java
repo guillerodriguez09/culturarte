@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDateTime;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DTOColabConsulta {
     private int id;
@@ -16,6 +17,7 @@ public class DTOColabConsulta {
     @XmlJavaTypeAdapter(LocalDateTimeAdaptador.class)
     private LocalDateTime fecha;
     private String propuestaNombre;
+    private Boolean constanciaEmitida;
 
     public DTOColabConsulta() {
     }
@@ -35,6 +37,7 @@ public class DTOColabConsulta {
     public ETipoRetorno getRetorno() { return retorno; }
     public LocalDateTime getFecha() { return fecha; }
     public String getPropuestaNombre() { return propuestaNombre; }
+    public Boolean getConstanciaEmitida() { return constanciaEmitida; }
 
     // Setters
     public void setId(int id) { this.id = id; }
@@ -43,11 +46,10 @@ public class DTOColabConsulta {
     public void setRetorno(ETipoRetorno retorno) { this.retorno = retorno; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
     public void setPropuestaNombre(String propuestaNombre) { this.propuestaNombre = propuestaNombre; }
+    public void setConstanciaEmitida(Boolean constanciaEmitida) { this.constanciaEmitida = constanciaEmitida; }
 
     @Override
     public String toString() {
         return "ID: " + id + " | " + colaboradorNick + " | $" + monto + " | " + fecha;
     }
-
 }
-

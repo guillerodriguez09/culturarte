@@ -6,6 +6,7 @@ import com.culturarte.logica.clases.Estado;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColabConsulta;
 import com.culturarte.logica.dtos.DTOColaboracion;
+import com.culturarte.logica.dtos.DTOConstanciaPago;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ColaboracionDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
@@ -168,5 +169,26 @@ public class ColaboracionController implements IColaboracionController {
         // Eliminar de la bd
         colaboracionDAO.eliminar(colab);
     }
+    public DTOConstanciaPago emitirConstanciaPago(int idColaboracion) {
+        Colaboracion colab = colaboracionDAO.buscarPorId(idColaboracion);
+        if(colab == null) throw new IllegalArgumentException("Colaboración no encontrada.");
 
+        if(Boolean.TRUE.equals(colab.getConstanciaEmitida())) {
+            throw new IllegalArgumentException("La constancia ya fue emitida.");
+        }
+
+        colab.setConstanciaEmitida(true);
+        colaboracionDAO.guardar(colab);
+
+        return new DTOConstanciaPago(
+                "Culturarte",
+                LocalDateTime.now(),
+                colab.getColaborador().getNick(),
+                colab.getColaborador().getNombre() + " " + colab.getColaborador().getApellido(),
+                colab.getColaborador().getCorreo(),
+                colab.getPropuesta().getTitulo(),
+                colab.getMonto(),
+                colab.getFecha()
+        );
+    }
 }

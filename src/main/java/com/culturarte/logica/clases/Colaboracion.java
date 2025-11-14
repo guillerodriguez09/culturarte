@@ -15,7 +15,7 @@ public class Colaboracion {
     @Enumerated(EnumType.STRING)
     private ETipoRetorno retorno;
     private LocalDateTime fecha;
-
+    private Boolean constanciaEmitida = false;
 
     @ManyToOne
     private Propuesta propuesta;
@@ -40,13 +40,13 @@ public class Colaboracion {
     public LocalDateTime getFecha() { return fecha; }
     public Propuesta getPropuesta() { return propuesta; }
     public Colaborador getColaborador() { return colaborador; }
-
+    public Boolean getConstanciaEmitida() { return constanciaEmitida; }
 
     public void setMonto(Integer monto) { this.monto = monto; }
     public void setRetorno(ETipoRetorno retorno) { this.retorno = retorno; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
     public void setPropuesta(Propuesta propuesta) { this.propuesta = propuesta; }
     public void setColaborador(Colaborador colaborador) { this.colaborador = colaborador; }
-
+    public void setConstanciaEmitida(Boolean constanciaEmitida) { this.constanciaEmitida = constanciaEmitida; }
 }
 
