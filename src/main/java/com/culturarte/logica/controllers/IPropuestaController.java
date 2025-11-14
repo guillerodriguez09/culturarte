@@ -35,4 +35,6 @@ public interface IPropuestaController {
     public void cancelarPropuesta(String tituloPropuesta);
     @WebMethod
     public List<DTOPropuesta> buscarPropuestas(String filtro);
+    @WebMethod
+    List<DTOPropuesta> recomendarPropuestas(String nicknameColaborador);
 }

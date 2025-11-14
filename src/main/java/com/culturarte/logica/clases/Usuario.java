@@ -60,6 +60,9 @@ public abstract class Usuario {
     }
     public boolean getEliminado(){ return eliminado; }
     public LocalDate getFechaEliminacion(){ return fechaEliminacion; }
+    public List<Seguimiento> getUsuariosSeguidos() {
+        return usuariosSeguidos;
+    }
 
     public void setNick(String nickname){
         this.nickname = nickname;

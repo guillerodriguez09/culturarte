@@ -6,6 +6,7 @@ import com.culturarte.logica.dtos.DTOPropoPropu;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,7 +40,9 @@ public class ProponenteDAO {
         EntityManager em = JpaUtil.getEntityManager();
         try {
             return em.createQuery("SELECT pro FROM Proponente pro WHERE pro.correo = :correo", Proponente.class)
-                    .setParameter("correo", correo).getSingleResult();
+                    .setParameter("correo", correo).getSingleResult();}
+        catch (NoResultException e) {
+            return null;
         } finally {
             em.close();
         }

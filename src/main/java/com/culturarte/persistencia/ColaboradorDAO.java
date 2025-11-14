@@ -3,6 +3,7 @@ package com.culturarte.persistencia;
 import com.culturarte.logica.clases.Colaborador;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +38,8 @@ public class ColaboradorDAO {
         try {
             return em.createQuery("SELECT col FROM Colaborador col WHERE col.correo = :correo", Colaborador.class)
                     .setParameter("correo", correo).getSingleResult();
+        } catch (NoResultException e) {
+        return null;
         } finally {
             em.close();
         }
