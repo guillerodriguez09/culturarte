@@ -71,5 +71,22 @@ public class ColaboracionDAO {
         }
     }
 
+    public void actualizar(Colaboracion colaboracion) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(colaboracion);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
 

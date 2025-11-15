@@ -6,6 +6,7 @@ import com.culturarte.logica.clases.Estado;
 import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.dtos.DTOColabConsulta;
 import com.culturarte.logica.dtos.DTOColaboracion;
+import com.culturarte.logica.dtos.DTOConstanciaPago;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 import com.culturarte.persistencia.ColaboracionDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
@@ -15,6 +16,7 @@ import jakarta.jws.WebService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 @WebService(endpointInterface = "com.culturarte.logica.controllers.IColaboracionController")
 public class ColaboracionController implements IColaboracionController {
@@ -118,8 +120,14 @@ public class ColaboracionController implements IColaboracionController {
         if (col == null) throw new IllegalArgumentException("Colaborador no encontrado.");
 
         List<DTOColabConsulta> dtos = new ArrayList<>();
+
         if (col.getColaboraciones() != null) {
-            for (Colaboracion c : col.getColaboraciones()) {
+
+            List<Colaboracion> colabs = new ArrayList<>(col.getColaboraciones());
+            colabs.sort(Comparator.comparing(Colaboracion::getFecha));
+
+            for (Colaboracion c : colabs) {
+
                 DTOColabConsulta dto = new DTOColabConsulta(
                         c.getId(),
                         col.getNick(),
@@ -128,21 +136,19 @@ public class ColaboracionController implements IColaboracionController {
                         c.getFecha()
                 );
 
-
-              //anade el nom de la propuesta al dto
                 if (c.getPropuesta() != null) {
                     dto.setPropuestaNombre(c.getPropuesta().getTitulo());
                 } else {
-                    dto.setPropuestaNombre("Propuesta no disponible"); // Por si acaso
+                    dto.setPropuestaNombre("Propuesta no disponible");
                 }
-
+                dto.setConstanciaEmitida(c.getConstanciaEmitida());
                 dtos.add(dto);
             }
         }
+
         return dtos;
     }
 
-// ...
 
     public void cancelarColaboracion(int id) {
         // Busca la colab por el id
@@ -167,6 +173,37 @@ public class ColaboracionController implements IColaboracionController {
 
         // Eliminar de la bd
         colaboracionDAO.eliminar(colab);
+    }
+    public DTOConstanciaPago emitirConstanciaPago(int idColaboracion) {
+        Colaboracion colab = colaboracionDAO.buscarPorId(idColaboracion);
+        if(colab == null) throw new IllegalArgumentException("Colaboración no encontrada.");
+
+        if(Boolean.TRUE.equals(colab.getConstanciaEmitida())) {
+            return new DTOConstanciaPago(
+                    "Culturarte",
+                    LocalDateTime.now(),
+                    colab.getColaborador().getNick(),
+                    colab.getColaborador().getNombre() + " " + colab.getColaborador().getApellido(),
+                    colab.getColaborador().getCorreo(),
+                    colab.getPropuesta().getTitulo(),
+                    colab.getMonto(),
+                    colab.getFecha()
+            );
+        }
+
+        colab.setConstanciaEmitida(true);
+        colaboracionDAO.actualizar(colab);
+
+        return new DTOConstanciaPago(
+                "Culturarte",
+                LocalDateTime.now(),
+                colab.getColaborador().getNick(),
+                colab.getColaborador().getNombre() + " " + colab.getColaborador().getApellido(),
+                colab.getColaborador().getCorreo(),
+                colab.getPropuesta().getTitulo(),
+                colab.getMonto(),
+                colab.getFecha()
+        );
     }
 
 }

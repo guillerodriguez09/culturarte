@@ -2,6 +2,7 @@ package com.culturarte.logica.controllers;
 
 import com.culturarte.logica.dtos.DTOColabConsulta;
 import com.culturarte.logica.dtos.DTOColaboracion;
+import com.culturarte.logica.dtos.DTOConstanciaPago;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 
@@ -16,4 +17,6 @@ public interface IColaboracionController {
     public List<DTOColabConsulta> listarColaboraciones();
     @WebMethod
     public List<DTOColabConsulta> consultarColaboracionesPorColaborador(String colaboradorNick);
+    @WebMethod
+    DTOConstanciaPago emitirConstanciaPago(int idColaboracion);
 }
