@@ -179,11 +179,20 @@ public class ColaboracionController implements IColaboracionController {
         if(colab == null) throw new IllegalArgumentException("Colaboración no encontrada.");
 
         if(Boolean.TRUE.equals(colab.getConstanciaEmitida())) {
-            throw new IllegalArgumentException("La constancia ya fue emitida.");
+            return new DTOConstanciaPago(
+                    "Culturarte",
+                    LocalDateTime.now(),
+                    colab.getColaborador().getNick(),
+                    colab.getColaborador().getNombre() + " " + colab.getColaborador().getApellido(),
+                    colab.getColaborador().getCorreo(),
+                    colab.getPropuesta().getTitulo(),
+                    colab.getMonto(),
+                    colab.getFecha()
+            );
         }
 
         colab.setConstanciaEmitida(true);
-        colaboracionDAO.guardar(colab);
+        colaboracionDAO.actualizar(colab);
 
         return new DTOConstanciaPago(
                 "Culturarte",
@@ -196,4 +205,5 @@ public class ColaboracionController implements IColaboracionController {
                 colab.getFecha()
         );
     }
+
 }
