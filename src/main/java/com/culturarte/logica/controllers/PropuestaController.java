@@ -5,13 +5,14 @@ import com.culturarte.logica.dtos.DTOPropuesta;
 import com.culturarte.logica.enums.EEstadoPropuesta;
 
 import com.culturarte.persistencia.CategoriaDAO;
+import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.ProponenteDAO;
 import com.culturarte.persistencia.PropuestaDAO;
 import jakarta.jws.WebService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @WebService(endpointInterface = "com.culturarte.logica.controllers.IPropuestaController")
 public class PropuestaController implements IPropuestaController {
@@ -19,6 +20,7 @@ public class PropuestaController implements IPropuestaController {
     private final PropuestaDAO  propuestaDAO  = new PropuestaDAO(); // para acceso a bd
     private final CategoriaDAO  categoriaDAO  = new CategoriaDAO();
     private final ProponenteDAO proponenteDAO = new ProponenteDAO();
+    private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
 
     @Override
     public void altaPropuesta(DTOPropuesta dto) {
@@ -95,9 +97,7 @@ public class PropuestaController implements IPropuestaController {
 
     @Override
     public DTOPropuesta consultarPropuesta(String titulo) {
-        // Forzar una recarga limpia del estado desde la BD, me daba problemas en el web.
-        PropuestaDAO daoNuevo = new PropuestaDAO();
-        Propuesta propuesta = daoNuevo.buscarPorTitulo(titulo);
+        Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
 
         if (propuesta == null) {
             throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
@@ -352,7 +352,144 @@ public class PropuestaController implements IPropuestaController {
         return dtos;
     }
 
+    @Override
+    public List<DTOPropuesta> recomendarPropuestas(String nicknameColaborador) {
 
+        Colaborador targetColaborador = colaboradorDAO.buscarPorNick(nicknameColaborador);
+        if (targetColaborador == null) {
+            throw new IllegalArgumentException("Colaborador no encontrado: " + nicknameColaborador);
+        }
+
+        Set<String> propuestasYaColaboradas = targetColaborador.getColaboraciones().stream()
+                .map(colab -> colab.getPropuesta().getTitulo())
+                .collect(Collectors.toSet());
+
+        Set<Propuesta> propuestasCandidatas = new HashSet<>();
+
+        for (Seguimiento seg : targetColaborador.getUsuariosSeguidos()) {
+
+            String nickSeguido = seg.getUsuarioSeguido();
+
+            Usuario usuarioSeguido = null;
+            Colaborador colab = colaboradorDAO.buscarPorNick(nickSeguido);
+
+            if (colab != null) {
+                usuarioSeguido = colab;
+            } else {
+                Proponente prop = proponenteDAO.buscarPorNick(nickSeguido);
+                if (prop != null) {
+                    usuarioSeguido = prop;
+                }
+            }
+
+            if (usuarioSeguido != null && usuarioSeguido instanceof Colaborador) {
+                Colaborador colabSeguido = (Colaborador) usuarioSeguido;
+
+                for (Colaboracion colabDeSeguido : colabSeguido.getColaboraciones()) {
+                    propuestasCandidatas.add(colabDeSeguido.getPropuesta());
+                }
+            }
+        }
+        for (Colaboracion miColab : targetColaborador.getColaboraciones()) {
+            Propuesta p = miColab.getPropuesta();
+
+            for (Colaboracion otraColab : p.getColaboraciones()) {
+                Colaborador coColaborador = otraColab.getColaborador();
+
+                if (coColaborador.getNick().equals(targetColaborador.getNick())) {
+                    continue;
+                }
+
+                for (Colaboracion colabDeCoColaborador : coColaborador.getColaboraciones()) {
+                    propuestasCandidatas.add(colabDeCoColaborador.getPropuesta());
+                }
+            }
+        }
+
+        List<PropuestaConPuntaje> propuestasPuntuadas = new ArrayList<>();
+
+        for (Propuesta p : propuestasCandidatas) {
+
+            if (propuestasYaColaboradas.contains(p.getTitulo())) {
+                continue;
+            }
+
+            if (p.getEstadoActual() == null) {
+                continue;
+            }
+
+            EEstadoPropuesta estadoActual = p.getEstadoActual().getNombre();
+
+            if (estadoActual != EEstadoPropuesta.PUBLICADA && estadoActual != EEstadoPropuesta.EN_FINANCIACION) {
+                continue;
+            }
+
+            int puntajeColaboradores = p.getColaboraciones().size();
+
+            int puntajeFinanciacion = calcularPuntajeFinanciacion(p);
+
+            int puntajeTotal = puntajeColaboradores + puntajeFinanciacion;
+            propuestasPuntuadas.add(new PropuestaConPuntaje(p, puntajeTotal));
+        }
+
+        propuestasPuntuadas.sort(Comparator.comparingInt(PropuestaConPuntaje::puntaje).reversed());
+
+        return propuestasPuntuadas.stream()
+                .limit(10)
+                .map(puntuada -> {
+                    DTOPropuesta dto = convertirPropuestaADTO(puntuada.propuesta());
+                    // agrega puntaje calculado
+                    dto.setPuntaje(puntuada.puntaje());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    private record PropuestaConPuntaje(Propuesta propuesta, int puntaje) {}
+
+    private int calcularPuntajeFinanciacion(Propuesta p) {
+        if (p.getMontoAReunir() == null || p.getMontoAReunir() <= 0) {
+            return 0;
+        }
+
+        double porcentaje = (double) p.getMontoRecaudado() / p.getMontoAReunir();
+
+        if (porcentaje <= 0.25) return 1;
+        if (porcentaje <= 0.50) return 2;
+        if (porcentaje <= 0.75) return 3;
+        return 4;
+    }
+
+    private DTOPropuesta convertirPropuestaADTO(Propuesta p) {
+        DTOPropuesta dto = new DTOPropuesta();
+        dto.setTitulo(p.getTitulo());
+        dto.setDescripcion(p.getDescripcion());
+        dto.setLugar(p.getLugar());
+        dto.setFecha(p.getFecha());
+        dto.setMontoAReunir(p.getMontoAReunir());
+        dto.setMontoRecaudado((double) p.getMontoRecaudado());
+        dto.setPrecioEntrada(p.getPrecioEntrada());
+        dto.setImagen(p.getImagen());
+
+        if (p.getEstadoActual() != null) {
+            dto.setEstadoActual(p.getEstadoActual().getNombre().toString());
+        }
+        if (p.getProponente() != null) {
+            dto.setProponenteNick(p.getProponente().getNick());
+        }
+        if (p.getCategoria() != null) {
+            dto.setCategoriaNombre(p.getCategoria().getNombre());
+        }
+        if (p.getColaboraciones() != null) {
+            dto.setColaboradores(
+                    p.getColaboraciones().stream()
+                            .map(c -> c.getColaborador().getNick())
+                            .toList()
+            );
+        }
+        dto.setRetornos(p.getRetornos());
+        return dto;
+    }
 
 
 }

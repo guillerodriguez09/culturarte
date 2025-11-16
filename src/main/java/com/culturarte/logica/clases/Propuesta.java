@@ -121,4 +121,18 @@ public class Propuesta {
                 .mapToInt(Colaboracion::getMonto)
                 .sum();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Propuesta propuesta = (Propuesta) o;
+        // son iguales si tienen el mismo título
+        return titulo != null && titulo.equals(propuesta.titulo);
+    }
+
+    @Override
+    public int hashCode() {
+        return titulo != null ? titulo.hashCode() : 0;
+    }
 }

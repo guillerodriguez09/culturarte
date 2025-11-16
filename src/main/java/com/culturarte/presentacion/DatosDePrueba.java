@@ -81,7 +81,7 @@ public class DatosDePrueba {
         dtoP.setApellido("Rubino");
         dtoP.setContrasenia("Nada");
         dtoP.setFechaNac(LocalDate.of(1962, 02, 25));
-        dtoP.setDirImagen("/imagenes/hrubino.JPG");
+        dtoP.setDirImagen("imagenes/hrubino.JPG");
         dtoP.setDireccion("18 de Julio 1234");
         dtoP.setLink("https://twitter.com/horaciorubino");
         dtoP.setBiografia("Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval " +
@@ -96,7 +96,7 @@ public class DatosDePrueba {
         dtoP2.setApellido("Buscaglia");
         dtoP2.setContrasenia("Nada");
         dtoP2.setFechaNac(LocalDate.of(1972, 06, 25));
-        dtoP2.setDirImagen("/imagenes/mbusca.jpg");
+        dtoP2.setDirImagen("imagenes/mbusca.jpg");
         dtoP2.setDireccion("Colonia 4321");
         dtoP2.setLink("http://www.martinbuscaglia.com/");
         dtoP2.setBiografia("Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda " +
@@ -114,7 +114,7 @@ public class DatosDePrueba {
         dtoP3.setApellido("Guido");
         dtoP3.setContrasenia("Nada");
         dtoP3.setFechaNac(LocalDate.of(1954, 01, 07));
-        dtoP3.setDirImagen("/imagenes/404.png");
+        dtoP3.setDirImagen("imagenes/404.png");
         dtoP3.setDireccion("Gral. Flores 5645");
         dtoP3.setLink("");
         dtoP3.setBiografia("En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y " +
@@ -134,7 +134,7 @@ public class DatosDePrueba {
         dtoP4.setApellido("Cardozo");
         dtoP4.setContrasenia("Nada");
         dtoP4.setFechaNac(LocalDate.of(1971, 07, 24));
-        dtoP4.setDirImagen("/imagenes/404.png");
+        dtoP4.setDirImagen("imagenes/404.png");
         dtoP4.setDireccion("Santiago Rivas 1212");
         dtoP4.setLink("https://www.facebook.com/Tabar%C3%A9-Cardozo-55179094281/?ref=br_rs");
         dtoP4.setBiografia("Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por " +
@@ -149,7 +149,7 @@ public class DatosDePrueba {
         dtoP5.setApellido("Silva");
         dtoP5.setContrasenia("Nada");
         dtoP5.setFechaNac(LocalDate.of(1947, 01, 01));
-        dtoP5.setDirImagen("/imagenes/404.png");
+        dtoP5.setDirImagen("imagenes/404.png");
         dtoP5.setDireccion("Br. Artigas 4567");
         dtoP5.setLink("https://www.facebook.com/C1080?ref=br_rs");
         dtoP5.setBiografia("Nace en el año 1947 en el conventillo “Medio Mundo” ubicado en pleno Barrio Sur. Es heredero parcialmente- " +
@@ -191,7 +191,7 @@ public class DatosDePrueba {
         dtoP8.setApellido("Herrera");
         dtoP8.setContrasenia("Nada");
         dtoP8.setFechaNac(LocalDate.of(1840, 04, 25));
-        dtoP8.setDirImagen("/imagenes/404.png");
+        dtoP8.setDirImagen("imagenes/404.png");
         dtoP8.setDireccion("Paraguay 1423");
         dtoP8.setLink("");
         dtoP8.setBiografia("");
@@ -204,7 +204,7 @@ public class DatosDePrueba {
         dtoP9.setApellido("Bardo");
         dtoP9.setContrasenia("Nada");
         dtoP9.setFechaNac(LocalDate.of(1980, 10, 31));
-        dtoP9.setDirImagen("/imagenes/losBardo.jpg");
+        dtoP9.setDirImagen("imagenes/losBardo.jpg");
         dtoP9.setDireccion("8 de Octubre 1429");
         dtoP9.setLink("https://bardocientifico.com/");
         dtoP9.setBiografia("Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte " +
@@ -234,7 +234,7 @@ public class DatosDePrueba {
         dtoC2.setApellido("Tinelli");
         dtoC2.setContrasenia("Nada");
         dtoC2.setFechaNac(LocalDate.of(1960, 04, 01));
-        dtoC2.setDirImagen("/imagenes/404.png");
+        dtoC2.setDirImagen("imagenes/404.png");
         controllerCol.altaColaborador(dtoC2);
 
         DTOColaborador dtoC3 = new DTOColaborador();
@@ -244,7 +244,7 @@ public class DatosDePrueba {
         dtoC3.setApellido("Novick");
         dtoC3.setContrasenia("Nada");
         dtoC3.setFechaNac(LocalDate.of(1952, 07, 17));
-        dtoC3.setDirImagen("/imagenes/404.png");
+        dtoC3.setDirImagen("imagenes/404.png");
         controllerCol.altaColaborador(dtoC3);
 
         DTOColaborador dtoC4 = new DTOColaborador();
@@ -254,7 +254,7 @@ public class DatosDePrueba {
         dtoC4.setApellido("Puglia");
         dtoC4.setContrasenia("Nada");
         dtoC4.setFechaNac(LocalDate.of(1950, 01, 28));
-        dtoC4.setDirImagen("/imagenes/sergiop.jpg");
+        dtoC4.setDirImagen("imagenes/sergiop.jpg");
         controllerCol.altaColaborador(dtoC4);
 
         DTOColaborador dtoC5 = new DTOColaborador();
@@ -274,7 +274,7 @@ public class DatosDePrueba {
         dtoC6.setApellido("Pacheco");
         dtoC6.setContrasenia("Nada");
         dtoC6.setFechaNac(LocalDate.of(1955, 02, 14));
-        dtoC6.setDirImagen("/imagenes/tonyp.jpg");
+        dtoC6.setDirImagen("imagenes/tonyp.jpg");
         controllerCol.altaColaborador(dtoC6);
 
         DTOColaborador dtoC7 = new DTOColaborador();
@@ -284,7 +284,7 @@ public class DatosDePrueba {
         dtoC7.setApellido("Jodal");
         dtoC7.setContrasenia("Nada");
         dtoC7.setFechaNac(LocalDate.of(1960, 8, 9));
-        dtoC7.setDirImagen("/imagenes/nicoj.jpg");
+        dtoC7.setDirImagen("imagenes/nicoj.jpg");
         controllerCol.altaColaborador(dtoC7);
 
         DTOColaborador dtoC8 = new DTOColaborador();
@@ -478,7 +478,7 @@ public class DatosDePrueba {
                 "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema " +
                 "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde " +
                 "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.");
-        dtoProp2.setImagen("/imagenes/404.png");
+        dtoProp2.setImagen("imagenes/404.png");
         dtoProp2.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp2);
 
@@ -495,7 +495,7 @@ public class DatosDePrueba {
                 "Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se " +
                 "parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, " +
                 "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.");
-        dtoProp3.setImagen("/imagenes/elPimientoIndomable.jpg");
+        dtoProp3.setImagen("imagenes/elPimientoIndomable.jpg");
         dtoProp3.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp3);
 
@@ -511,7 +511,7 @@ public class DatosDePrueba {
         dtoProp4.setDescripcion("La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más " +
                 "de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de " +
                 "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.");
-        dtoProp4.setImagen("/imagenes/pilsenRock.jpg");
+        dtoProp4.setImagen("imagenes/pilsenRock.jpg");
         dtoProp4.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp4);
 
@@ -528,7 +528,7 @@ public class DatosDePrueba {
                 "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, " +
                 "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó " +
                 "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.");
-        dtoProp5.setImagen("/imagenes/404.png");
+        dtoProp5.setImagen("imagenes/404.png");
         dtoProp5.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp5);
 
@@ -544,7 +544,7 @@ public class DatosDePrueba {
         dtoProp6.setDescripcion("La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las " +
                 "cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un " +
                 "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.");
-        dtoProp6.setImagen("/imagenes/unDiaDeJulio.jpg");
+        dtoProp6.setImagen("imagenes/unDiaDeJulio.jpg");
         dtoProp6.setFechaPublicacion(LocalDate.now());
         controllerP.altaPropuesta(dtoProp6);
 

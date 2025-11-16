@@ -21,6 +21,7 @@ public class DTOPropuesta {
     @XmlJavaTypeAdapter(LocalDateAdaptador.class)
     public LocalDate fechaPublicacion;
     public String imagen;
+    public int puntaje;
 
     public String proponenteNick;
     public String categoriaNombre;
@@ -48,6 +49,7 @@ public class DTOPropuesta {
     public String getEstadoActual() { return estadoActual; }
     public Double getMontoRecaudado() { return montoRecaudado;}
     public List<String> getColaboradores() { return colaboradores; }
+    public int getPuntaje() { return puntaje; }
 
     // setters
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -64,6 +66,7 @@ public class DTOPropuesta {
     public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }
     public void setMontoRecaudado(Double montoRecaudado) { this.montoRecaudado = montoRecaudado; }
     public void setColaboradores(List<String> colaboradores) { this.colaboradores = colaboradores; }
+    public void setPuntaje(int puntaje) { this.puntaje = puntaje; }
 
 
     //para caso de uso evaluar propuesta
