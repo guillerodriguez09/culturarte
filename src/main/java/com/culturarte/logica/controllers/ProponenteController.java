@@ -286,8 +286,10 @@ public class ProponenteController implements IProponenteController {
     }
 
     @Override
-    public String eliminarProponente(String nick, LocalDate fechaEliminacion){
+    public String eliminarProponente(String nick){
+        LocalDate fechaEliminacion = LocalDate.now();
         try {
+
             proponenteDAO.eliminarProponente(nick, fechaEliminacion);
             seguimientoDAO.eliminarTodosDeSeguidoor(nick);
             seguimientoDAO.eliminarTodosDeSeguido(nick);
@@ -354,12 +356,13 @@ public class ProponenteController implements IProponenteController {
     }
 
     @Override
-    public int existeProponente(String nickOMail){
+    public boolean existeProponente(String nickOMail){
 
+        //Si el nick o mail esta en uso devuelve true, si no devuelve false
         if(proponenteDAO.existe(nickOMail) || proponenteDAO.existeCorreo(nickOMail)){
-            return 1;
+            return true;
         }else{
-            return 0;
+            return false;
         }
     }
 

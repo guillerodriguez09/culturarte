@@ -32,14 +32,14 @@ public interface IProponenteController {
     List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
 
     @WebMethod
-    String eliminarProponente(String nick, LocalDate fechaEliminacion);
+    String eliminarProponente(String nick);
 
     List<Object[]> obtenerTodPropConPropuDeEli(String nick);
 
     List<String> listarProponentesElim();
 
     @WebMethod
-    int existeProponente(String nickOMail);
+    boolean existeProponente(String nickOMail);
 
 
 }
