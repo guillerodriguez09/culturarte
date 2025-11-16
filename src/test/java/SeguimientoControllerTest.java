@@ -3,226 +3,214 @@ import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Proponente;
 import com.culturarte.logica.clases.Seguimiento;
 import com.culturarte.logica.clases.Usuario;
-import com.culturarte.logica.dtos.DTOSeguimiento;
 import com.culturarte.logica.dtos.DTOUsuario;
+import com.culturarte.logica.dtos.DTOSeguimiento;
+import com.culturarte.persistencia.SeguimientoDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.ProponenteDAO;
-import com.culturarte.persistencia.SeguimientoDAO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.util.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class SeguimientoControllerTest {
 
-    static class FakeSeguimientoDAO extends SeguimientoDAO {
-        private final Map<Integer, Seguimiento> data = new HashMap<>();
-        private int idCounter = 1;
+    @Mock
+    private SeguimientoDAO seguimientoDAO;
 
-        @Override
-        public void guardar(Seguimiento s) {
-            try {
-                Field f = Seguimiento.class.getDeclaredField("Id");
-                f.setAccessible(true);
-                f.set(s, idCounter++);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            data.put(s.getId(), s);
-        }
+    @Mock
+    private ColaboradorDAO colaboradorDAO;
 
-        @Override
-        public void eliminar(Seguimiento s) {
-            data.remove(s.getId());
-        }
+    @Mock
+    private ProponenteDAO proponenteDAO;
 
-        @Override
-        public List<Seguimiento> obtenerTodos() {
-            return new ArrayList<>(data.values());
-        }
-
-        @Override
-        public Seguimiento buscarPorId(int id) {
-            return data.get(id);
-        }
-
-        @Override
-        public boolean existe(String nickSeguidor, String nickSeguido) {
-            return data.values().stream()
-                    .anyMatch(s -> s.getUsuarioSeguidor().getNick().equals(nickSeguidor)
-                            && s.getUsuarioSeguido().equals(nickSeguido));
-        }
-
-        @Override
-        public int conseguirId(String nickSeguidor, String nickSeguido) {
-            return data.values().stream()
-                    .filter(s -> s.getUsuarioSeguidor().getNick().equals(nickSeguidor)
-                            && s.getUsuarioSeguido().equals(nickSeguido))
-                    .map(Seguimiento::getId)
-                    .findFirst().orElse(0);
-        }
-
-        public List<Seguimiento> obtenerTodosDeNick(String nick) {
-            List<Seguimiento> res = new ArrayList<>();
-            for (Seguimiento s : data.values()) {
-                if (s.getUsuarioSeguidor().getNick().equals(nick)) res.add(s);
-            }
-            return res;
-        }
-
-        public List<Seguimiento> obtenerSeguidoresDeNick(String nick) {
-            List<Seguimiento> res = new ArrayList<>();
-            for (Seguimiento s : data.values()) {
-                if (s.getUsuarioSeguido().equals(nick)) res.add(s);
-            }
-            return res;
-        }
-    }
-
-    static class FakeColaboradorDAO extends ColaboradorDAO {
-        Map<String, Colaborador> data = new HashMap<>();
-
-        @Override
-        public Colaborador buscarPorNick(String nick) {
-            return data.get(nick);
-        }
-
-        @Override
-        public void guardar(Colaborador c) {
-            data.put(c.getNick(), c);
-        }
-    }
-
-    static class FakeProponenteDAO extends ProponenteDAO {
-        Map<String, Proponente> data = new HashMap<>();
-
-        @Override
-        public Proponente buscarPorNick(String nick) {
-            return data.get(nick);
-        }
-
-        @Override
-        public void guardar(Proponente p) {
-            data.put(p.getNick(), p);
-        }
-    }
-
-    SeguimientoController controller;
-    FakeSeguimientoDAO seguimientoDAO;
-    FakeColaboradorDAO colaboradorDAO;
-    FakeProponenteDAO proponenteDAO;
-
-    Colaborador colaborador;
-    Proponente proponente;
+    private SeguimientoController controller;
 
     @BeforeEach
-    void setUp() throws Exception {
-        controller = new SeguimientoController();
-
-        seguimientoDAO = new FakeSeguimientoDAO();
-        colaboradorDAO = new FakeColaboradorDAO();
-        proponenteDAO = new FakeProponenteDAO();
-
-        inject("seguimientoDAO", seguimientoDAO);
-        inject("colaboradorDAO", colaboradorDAO);
-        inject("proponenteDAO", proponenteDAO);
-
-        colaborador = crearColaborador("colab1");
-        proponente = crearProponente("prop1");
-
-        colaboradorDAO.guardar(colaborador);
-        proponenteDAO.guardar(proponente);
-    }
-
-    private void inject(String field, Object value) throws Exception {
-        Field f = SeguimientoController.class.getDeclaredField(field);
-        f.setAccessible(true);
-        f.set(controller, value);
-    }
-
-    private Colaborador crearColaborador(String nick) throws Exception {
-        Constructor<Colaborador> cons = Colaborador.class.getDeclaredConstructor();
-        cons.setAccessible(true);
-        Colaborador col = cons.newInstance();
-
-        Field fNick = Colaborador.class.getSuperclass().getDeclaredField("nickname");
-        fNick.setAccessible(true);
-        fNick.set(col, nick);
-
-        return col;
-    }
-
-    private Proponente crearProponente(String nick) throws Exception {
-        Constructor<Proponente> cons = Proponente.class.getDeclaredConstructor();
-        cons.setAccessible(true);
-        Proponente prop = cons.newInstance();
-
-        Field fNick = Proponente.class.getSuperclass().getDeclaredField("nickname");
-        fNick.setAccessible(true);
-        fNick.set(prop, nick);
-
-        return prop;
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        controller = new SeguimientoController(seguimientoDAO, colaboradorDAO, proponenteDAO);
     }
 
 
     @Test
-    void testRegistrarSeguimiento() {
-        DTOSeguimiento dto = new DTOSeguimiento();
-        dto.setUsuarioSeguidor(new DTOUsuario(colaborador.getNick(), "Nombre", "Apellido",
-                "pass", "correo@email.com", LocalDate.of(1990, 1, 1), null));
-        dto.setUsuarioSeguido(proponente.getNick());
-
-        assertDoesNotThrow(() -> controller.registrarSeguimiento(dto));
-
-        List<String> seguidos = controller.listarSeguidosDeNick(colaborador.getNick());
-        assertTrue(seguidos.contains(proponente.getNick()));
+    void registrarSeguimiento_DtoNull() {
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.registrarSeguimiento(null));
     }
 
     @Test
-    void testCancelarSeguimiento() {
-        Seguimiento s = new Seguimiento(colaborador, proponente.getNick());
-        seguimientoDAO.guardar(s);
-
-        assertDoesNotThrow(() -> controller.cancelarSeguimiento(s.getId()));
-
-        List<String> seguidos = controller.listarSeguidosDeNick(colaborador.getNick());
-        assertFalse(seguidos.contains(proponente.getNick()));
+    void registrarSeguimiento_SeguidorNull() {
+        DTOSeguimiento dto = new DTOSeguimiento(null, "A");
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.registrarSeguimiento(dto));
     }
 
     @Test
-    void testConseguirId() {
-        Seguimiento s = new Seguimiento(colaborador, proponente.getNick());
-        seguimientoDAO.guardar(s);
+    void registrarSeguimiento_SeguidoNull() {
+        DTOUsuario user = new DTOUsuario() {{ setNick("nick1"); }};
+        DTOSeguimiento dto = new DTOSeguimiento(user, null);
 
-        int id = controller.conseguirId(colaborador.getNick(), proponente.getNick());
-        assertEquals(s.getId(), id);
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.registrarSeguimiento(dto));
     }
 
     @Test
-    void testListarSeguidosYSeguidores() {
-        Seguimiento s = new Seguimiento(colaborador, proponente.getNick());
-        seguimientoDAO.guardar(s);
+    void registrarSeguimiento_YaExiste() {
+        DTOUsuario user = new DTOUsuario() {{ setNick("nick1"); }};
+        DTOSeguimiento dto = new DTOSeguimiento(user, "otro");
 
-        List<String> seguidos = controller.listarSeguidosDeNick(colaborador.getNick());
-        List<String> seguidores = controller.listarSeguidoresDeNick(proponente.getNick());
+        when(seguimientoDAO.existe("nick1", "otro")).thenReturn(true);
 
-        assertTrue(seguidos.contains(proponente.getNick()));
-        assertTrue(seguidores.contains(colaborador.getNick()));
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.registrarSeguimiento(dto));
     }
 
     @Test
-    void testListarSeguimientos() {
-        Seguimiento s = new Seguimiento(colaborador, proponente.getNick());
-        seguimientoDAO.guardar(s);
+    void registrarSeguimiento_UsuarioNoExiste() {
+        DTOUsuario usr = new DTOUsuario() {{ setNick("nickX"); }};
+        DTOSeguimiento dto = new DTOSeguimiento(usr, "otro");
 
-        List<DTOSeguimiento> lista = controller.listarSeguimientos();
-        assertFalse(lista.isEmpty());
-        assertEquals(colaborador.getNick(), lista.get(0).getUsuarioSeguidor().getNick());
-        assertEquals(proponente.getNick(), lista.get(0).getUsuarioSeguido());
+        when(seguimientoDAO.existe("nickX", "otro")).thenReturn(false);
+        when(colaboradorDAO.buscarPorNick("nickX")).thenReturn(null);
+        when(proponenteDAO.buscarPorNick("nickX")).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.registrarSeguimiento(dto));
+    }
+
+    @Test
+    void registrarSeguimiento_ComoColaborador() {
+        DTOUsuario dtoU = new DTOUsuario() {{ setNick("pepe"); }};
+        DTOSeguimiento dto = new DTOSeguimiento(dtoU, "otro");
+
+        Colaborador colab = mock(Colaborador.class);
+        when(colab.getNick()).thenReturn("pepe");
+
+        when(seguimientoDAO.existe("pepe", "otro")).thenReturn(false);
+        when(colaboradorDAO.buscarPorNick("pepe")).thenReturn(colab);
+        when(proponenteDAO.buscarPorNick("pepe")).thenReturn(null);
+
+        controller.registrarSeguimiento(dto);
+
+        verify(seguimientoDAO, times(1)).guardar(any(Seguimiento.class));
+    }
+
+    @Test
+    void registrarSeguimiento_ComoProponente() {
+        DTOUsuario dtoU = new DTOUsuario() {{ setNick("juan"); }};
+        DTOSeguimiento dto = new DTOSeguimiento(dtoU, "otro");
+
+        Proponente prop = mock(Proponente.class);
+        when(prop.getNick()).thenReturn("juan");
+
+        when(seguimientoDAO.existe("juan", "otro")).thenReturn(false);
+        when(colaboradorDAO.buscarPorNick("juan")).thenReturn(null);
+        when(proponenteDAO.buscarPorNick("juan")).thenReturn(prop);
+
+        controller.registrarSeguimiento(dto);
+
+        verify(seguimientoDAO).guardar(any(Seguimiento.class));
+    }
+
+
+    @Test
+    void conseguirId_Existe() {
+        when(seguimientoDAO.conseguirId("a", "b")).thenReturn(5);
+
+        int id = controller.conseguirId("a", "b");
+
+        assertEquals(5, id);
+    }
+
+    @Test
+    void conseguirId_NoExiste() {
+        when(seguimientoDAO.conseguirId("a", "b")).thenReturn(0);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.conseguirId("a", "b"));
+    }
+
+
+    @Test
+    void cancelarSeguimiento_NoExiste() {
+        when(seguimientoDAO.buscarPorId(10)).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                controller.cancelarSeguimiento(10));
+    }
+
+    @Test
+    void cancelarSeguimiento_Exitoso() {
+        Seguimiento seg = new Seguimiento(mock(Usuario.class), "otro");
+
+        when(seguimientoDAO.buscarPorId(15)).thenReturn(seg);
+
+        controller.cancelarSeguimiento(15);
+
+        verify(seguimientoDAO).eliminar(seg);
+    }
+
+
+    @Test
+    void listarSeguidosDeNick_Test() {
+        Seguimiento s1 = new Seguimiento(mock(Usuario.class), "p1");
+        Seguimiento s2 = new Seguimiento(mock(Usuario.class), "p2");
+
+        when(seguimientoDAO.obtenerTodosDeNick("nick"))
+                .thenReturn(List.of(s1, s2));
+
+        List<String> lista = controller.listarSeguidosDeNick("nick");
+
+        assertEquals(List.of("p1", "p2"), lista);
+    }
+
+
+    @Test
+    void listarSeguidoresDeNick_Test() {
+        Usuario u1 = mock(Usuario.class);
+        when(u1.getNick()).thenReturn("A");
+
+        Usuario u2 = mock(Usuario.class);
+        when(u2.getNick()).thenReturn("B");
+
+        Seguimiento s1 = new Seguimiento(u1, "x");
+        Seguimiento s2 = new Seguimiento(u2, "x");
+
+        when(seguimientoDAO.obtenerSeguidoresDeNick("x"))
+                .thenReturn(List.of(s1, s2));
+
+        List<String> res = controller.listarSeguidoresDeNick("x");
+
+        assertEquals(List.of("A", "B"), res);
+    }
+
+
+    @Test
+    void listarSeguimientos_TestCompleto() {
+        Proponente p = mock(Proponente.class);
+        when(p.getNick()).thenReturn("p1");
+
+        Colaborador c = mock(Colaborador.class);
+        when(c.getNick()).thenReturn("c1");
+
+        Seguimiento s1 = new Seguimiento(p, "x");
+        Seguimiento s2 = new Seguimiento(c, "y");
+
+        when(seguimientoDAO.obtenerTodos())
+                .thenReturn(List.of(s1, s2));
+
+        var lista = controller.listarSeguimientos();
+
+        assertEquals(2, lista.size());
+        assertEquals("p1", lista.get(0).getUsuarioSeguidor().getNick());
+        assertEquals("c1", lista.get(1).getUsuarioSeguidor().getNick());
     }
 }

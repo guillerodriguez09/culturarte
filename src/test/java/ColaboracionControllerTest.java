@@ -1,310 +1,303 @@
 import com.culturarte.logica.controllers.ColaboracionController;
-import com.culturarte.logica.clases.Colaboracion;
-import com.culturarte.logica.clases.Colaborador;
-import com.culturarte.logica.clases.Estado;
-import com.culturarte.logica.clases.Propuesta;
-import com.culturarte.logica.dtos.DTOColabConsulta;
-import com.culturarte.logica.dtos.DTOColaboracion;
-import com.culturarte.logica.dtos.DTOConstanciaPago;
+import com.culturarte.logica.clases.*;
+import com.culturarte.logica.dtos.*;
 import com.culturarte.logica.enums.EEstadoPropuesta;
-import com.culturarte.logica.enums.ETipoRetorno;
 import com.culturarte.persistencia.ColaboracionDAO;
 import com.culturarte.persistencia.ColaboradorDAO;
 import com.culturarte.persistencia.PropuestaDAO;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Constructor;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class ColaboracionControllerTest {
+@ExtendWith(MockitoExtension.class)
+@DisplayName("Tests Unitarios - Controlador de Colaboraciones")
+public class ColaboracionControllerTest {
 
-    //  FAKES DAO (para no usar bd real)
-    static class FakeColaboracionDAO extends ColaboracionDAO {
-        Map<Integer, Colaboracion> data = new HashMap<>();
-        int id = 1;
+    @InjectMocks
+    private ColaboracionController controller;
 
-        @Override
-        public void guardar(Colaboracion c) {
-            try {
-                Field f = Colaboracion.class.getDeclaredField("id");
-                f.setAccessible(true);
-                f.set(c, id++);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            data.put(c.getId(), c);
-        }
+    @Mock
+    private ColaboracionDAO mockColabDAO;
 
-        @Override
-        public boolean existe(String nick, String titulo) {
-            return data.values().stream().anyMatch(c ->
-                    c.getColaborador().getNick().equals(nick) &&
-                            c.getPropuesta().getTitulo().equals(titulo)
-            );
-        }
+    @Mock
+    private PropuestaDAO mockPropuestaDAO;
 
-        @Override
-        public List<Colaboracion> obtenerTodas() {
-            return new ArrayList<>(data.values());
-        }
+    @Mock
+    private ColaboradorDAO mockColaboradorDAO;
 
-        @Override
-        public Colaboracion buscarPorId(int id) {
-            return data.get(id);
-        }
-
-        @Override
-        public void eliminar(Colaboracion c) {
-            data.remove(c.getId());
-        }
-
-        @Override
-        public void actualizar(Colaboracion c) {
-            data.put(c.getId(), c);
-        }
-    }
-
-    static class FakePropuestaDAO extends PropuestaDAO {
-        Map<String, Propuesta> data = new HashMap<>();
-
-        @Override
-        public Propuesta buscarPorTitulo(String t) {
-            return data.get(t);
-        }
-
-        @Override
-        public void actualizar(Propuesta p) {
-            data.put(p.getTitulo(), p);
-        }
-    }
-
-    static class FakeColaboradorDAO extends ColaboradorDAO {
-        Map<String, Colaborador> data = new HashMap<>();
-
-        @Override
-        public Colaborador buscarPorNick(String n) {
-            return data.get(n);
-        }
-
-        @Override
-        public void actualizar(Colaborador c) {
-            data.put(c.getNick(), c);
-        }
-    }
-
-    ColaboracionController controller;
-
-    FakeColaboracionDAO fakeColabDAO;
-    FakePropuestaDAO fakePropuestaDAO;
-    FakeColaboradorDAO fakeColaboradorDAO;
+    private Propuesta propuesta;
+    private Colaborador colaborador;
 
     @BeforeEach
     void setup() throws Exception {
-        controller = new ColaboracionController();
 
-        fakeColabDAO = new FakeColaboracionDAO();
-        fakePropuestaDAO = new FakePropuestaDAO();
-        fakeColaboradorDAO = new FakeColaboradorDAO();
+        setPrivateField(controller, "colaboracionDAO", mockColabDAO);
+        setPrivateField(controller, "propuestaDAO", mockPropuestaDAO);
+        setPrivateField(controller, "colaboradorDAO", mockColaboradorDAO);
 
-        inject("colaboracionDAO", fakeColabDAO);
-        inject("propuestaDAO", fakePropuestaDAO);
-        inject("colaboradorDAO", fakeColaboradorDAO);
+        Categoria cat = new Categoria();
+        cat.setNombre("Música");
+
+        propuesta = new Propuesta(
+                cat,
+                null,
+                "RockFest",
+                "desc",
+                "Montevideo",
+                LocalDate.now(),
+                100,
+                5000,
+                LocalDate.now().plusDays(10),
+                List.of(),
+                ""
+        );
+
+        propuesta.setEstadoActual(new Estado(EEstadoPropuesta.PUBLICADA, LocalDate.now()));
+
+        colaborador = new Colaborador(
+                "juan",
+                "Juan",
+                "Perez",
+                "123",
+                "jp@gmail.com",
+                LocalDate.now(),
+                ""
+        );
     }
 
-    private void inject(String field, Object value) throws Exception {
-        Field f = ColaboracionController.class.getDeclaredField(field);
+    private static void setPrivateField(Object obj, String fieldName, Object value) throws Exception {
+        Field f = obj.getClass().getDeclaredField(fieldName);
         f.setAccessible(true);
-        f.set(controller, value);
-    }
-
-    private Propuesta crearPropuesta(String titulo, EEstadoPropuesta estadoEnum) throws Exception {
-        Constructor<Propuesta> cons = Propuesta.class.getDeclaredConstructor();
-        cons.setAccessible(true);
-        Propuesta p = cons.newInstance();
-
-        Field fTitulo = Propuesta.class.getDeclaredField("titulo");
-        fTitulo.setAccessible(true);
-        fTitulo.set(p, titulo);
-
-        Estado est = new Estado(estadoEnum, LocalDate.now());
-        p.setEstadoActual(est);
-
-        Field fColabs = Propuesta.class.getDeclaredField("colaboraciones");
-        fColabs.setAccessible(true);
-        fColabs.set(p, new ArrayList<>());
-
-        return p;
-    }
-
-    private Colaborador crearColaborador(String nick) throws Exception {
-        Constructor<Colaborador> cons = Colaborador.class.getDeclaredConstructor();
-        cons.setAccessible(true);
-        Colaborador col = cons.newInstance();
-
-        Field fNick = Colaborador.class.getSuperclass().getDeclaredField("nickname");
-        fNick.setAccessible(true);
-        fNick.set(col, nick);
-
-        Field fColabs = Colaborador.class.getDeclaredField("colaboraciones");
-        fColabs.setAccessible(true);
-        fColabs.set(col, new ArrayList<>());
-
-        return col;
+        f.set(obj, value);
     }
 
 
     @Test
-    void testRegistrarColaboracionCorrecta() throws Exception {
-        Propuesta p = crearPropuesta("TituloX", EEstadoPropuesta.PUBLICADA);
-        fakePropuestaDAO.data.put("TituloX", p);
-
-        Colaborador col = crearColaborador("nick1");
-        fakeColaboradorDAO.data.put("nick1", col);
+    @DisplayName("registrarColaboracion - Flujo Correcto")
+    void testRegistrarColaboracion_OK() {
 
         DTOColaboracion dto = new DTOColaboracion();
-        dto.setColaboradorNick("nick1");
-        dto.setPropuestaTitulo("TituloX");
-        dto.setMonto(500);
-        dto.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
+        dto.monto = 1000;
+        dto.retorno = null;
+        dto.retorno = com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS;
+        dto.colaboradorNick = "juan";
+        dto.propuestaTitulo = "RockFest";
+
+        when(mockPropuestaDAO.buscarPorTitulo("RockFest")).thenReturn(propuesta);
+        when(mockColaboradorDAO.buscarPorNick("juan")).thenReturn(colaborador);
+        when(mockColabDAO.existe("juan", "RockFest")).thenReturn(false);
 
         controller.registrarColaboracion(dto);
 
-        assertEquals(1, fakeColabDAO.data.size());
-        assertEquals(1, col.getColaboraciones().size());
-        assertEquals(EEstadoPropuesta.EN_FINANCIACION, p.getEstadoActual().getNombre());
+        verify(mockColabDAO).guardar(any(Colaboracion.class));
+        verify(mockPropuestaDAO, atLeastOnce()).actualizar(propuesta);
+        verify(mockColaboradorDAO).actualizar(colaborador);
+
+        assertEquals(EEstadoPropuesta.EN_FINANCIACION, propuesta.getEstadoActual().getNombre());
     }
 
+
     @Test
-    void testRegistrarColaboracionMontoInvalido() {
+    void testRegistrarColaboracion_PropuestaNoExiste() {
+
         DTOColaboracion dto = new DTOColaboracion();
-        dto.setMonto(0);
+        dto.monto = 100;
+        dto.retorno = com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS;
+        dto.colaboradorNick = "juan";
+        dto.propuestaTitulo = "NoExiste";
 
-        assertThrows(IllegalArgumentException.class, () -> controller.registrarColaboracion(dto));
+        when(mockPropuestaDAO.buscarPorTitulo("NoExiste")).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.registrarColaboracion(dto));
     }
 
+
     @Test
-    void testRegistrarColaboracionPropuestaNoExiste() {
+    void testRegistrarColaboracion_ColaboradorNoExiste() {
+
         DTOColaboracion dto = new DTOColaboracion();
-        dto.setMonto(100);
-        dto.setRetorno(ETipoRetorno.ENTRADAS_GRATIS);
-        dto.setPropuestaTitulo("NoExiste");
+        dto.monto = 100;
+        dto.retorno = com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS;
+        dto.colaboradorNick = "x";
+        dto.propuestaTitulo = "RockFest";
 
-        assertThrows(IllegalArgumentException.class, () -> controller.registrarColaboracion(dto));
+        when(mockPropuestaDAO.buscarPorTitulo("RockFest")).thenReturn(propuesta);
+        when(mockColaboradorDAO.buscarPorNick("x")).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.registrarColaboracion(dto));
+    }
+
+
+    @Test
+    void testRegistrarColaboracion_YaExiste() {
+
+        DTOColaboracion dto = new DTOColaboracion();
+        dto.monto = 100;
+        dto.retorno = com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS;
+        dto.colaboradorNick = "juan";
+        dto.propuestaTitulo = "RockFest";
+
+        when(mockPropuestaDAO.buscarPorTitulo("RockFest")).thenReturn(propuesta);
+        when(mockColaboradorDAO.buscarPorNick("juan")).thenReturn(colaborador);
+        when(mockColabDAO.existe("juan", "RockFest")).thenReturn(true);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.registrarColaboracion(dto));
+    }
+
+
+    @Test
+    void testListarColaboraciones() {
+        Colaboracion c = new Colaboracion(
+                500,
+                com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS,
+                LocalDateTime.now(),
+                propuesta,
+                colaborador
+        );
+        c.setId(10);
+
+        when(mockColabDAO.obtenerTodas()).thenReturn(List.of(c));
+
+        List<DTOColabConsulta> out = controller.listarColaboraciones();
+
+        assertEquals(1, out.size());
+        assertEquals(10, out.get(0).getId());
+        assertEquals("juan", out.get(0).getColaboradorNick());
+        assertEquals("RockFest", out.get(0).getPropuestaNombre());
+    }
+
+
+    @Test
+    void testConsultarColaboracionesPorColaborador() {
+
+        Colaboracion c = new Colaboracion(
+                500,
+                com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS,
+                LocalDateTime.now(),
+                propuesta,
+                colaborador
+        );
+        c.setId(50);
+
+        colaborador.setColaboraciones(List.of(c));
+
+        when(mockColaboradorDAO.buscarPorNick("juan")).thenReturn(colaborador);
+
+        List<DTOColabConsulta> out = controller.consultarColaboracionesPorColaborador("juan");
+
+        assertEquals(1, out.size());
+        assertEquals(50, out.get(0).getId());
+        assertEquals("RockFest", out.get(0).getPropuestaNombre());
     }
 
     @Test
-    void testListarColaboraciones() throws Exception {
-        Propuesta p = crearPropuesta("Test", EEstadoPropuesta.PUBLICADA);
-        fakePropuestaDAO.data.put("Test", p);
+    void testConsultarColaboracionesPorColaborador_NoExiste() {
 
-        Colaborador col = crearColaborador("u");
-        fakeColaboradorDAO.data.put("u", col);
+        when(mockColaboradorDAO.buscarPorNick("x")).thenReturn(null);
 
-        Colaboracion c = new Colaboracion(100, ETipoRetorno.ENTRADAS_GRATIS, LocalDateTime.now(), p, col);
-        Field fId = Colaboracion.class.getDeclaredField("id");
-        fId.setAccessible(true);
-        fId.set(c, 1);
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.consultarColaboracionesPorColaborador("x"));
+    }
 
-        fakeColabDAO.data.put(1, c);
 
-        List<DTOColabConsulta> lista = controller.listarColaboraciones();
-        assertEquals(1, lista.size());
-        Field fNick = DTOColabConsulta.class.getDeclaredField("colaboradorNick");
-        fNick.setAccessible(true);
-        assertEquals("u", fNick.get(lista.get(0)));
+    @Test
+    void testCancelarColaboracion() {
+
+        Colaboracion col = new Colaboracion(
+                500,
+                com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS,
+                LocalDateTime.now(),
+                propuesta,
+                colaborador
+        );
+        col.setId(3);
+
+        propuesta.setColaboraciones(new ArrayList<>(List.of(col)));
+        colaborador.setColaboraciones(new ArrayList<>(List.of(col)));
+
+        when(mockColabDAO.buscarPorId(3)).thenReturn(col);
+
+        controller.cancelarColaboracion(3);
+
+        verify(mockColabDAO).eliminar(col);
+        verify(mockPropuestaDAO).actualizar(propuesta);
+        verify(mockColaboradorDAO).actualizar(colaborador);
+
+        assertTrue(propuesta.getColaboraciones().isEmpty());
+        assertTrue(colaborador.getColaboraciones().isEmpty());
     }
 
     @Test
-    void testConsultarColaboracionesPorColaborador() throws Exception {
-        Colaborador col = crearColaborador("u");
-        fakeColaboradorDAO.data.put("u", col);
+    void testCancelarColaboracion_NoExiste() {
 
-        Propuesta p = crearPropuesta("PP", EEstadoPropuesta.PUBLICADA);
-        fakePropuestaDAO.data.put("PP", p);
+        when(mockColabDAO.buscarPorId(99)).thenReturn(null);
 
-        Colaboracion c = new Colaboracion(50, ETipoRetorno.ENTRADAS_GRATIS, LocalDateTime.now(), p, col);
-        Field fId = Colaboracion.class.getDeclaredField("id");
-        fId.setAccessible(true);
-        fId.set(c, 1);
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.cancelarColaboracion(99));
+    }
 
-        col.addColaboracion(c);
 
-        List<DTOColabConsulta> res = controller.consultarColaboracionesPorColaborador("u");
-        assertEquals(1, res.size());
+    @Test
+    void testEmitirConstanciaPago_PrimeraVez() {
 
-        Field fProp = DTOColabConsulta.class.getDeclaredField("propuestaNombre");
-        fProp.setAccessible(true);
-        assertEquals("PP", fProp.get(res.get(0)));
+        Colaboracion col = new Colaboracion(
+                500,
+                com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS,
+                LocalDateTime.now(),
+                propuesta,
+                colaborador
+        );
+        col.setId(200);
+        col.setConstanciaEmitida(false);
+
+        when(mockColabDAO.buscarPorId(200)).thenReturn(col);
+
+        DTOConstanciaPago dto = controller.emitirConstanciaPago(200);
+
+        verify(mockColabDAO).actualizar(col);
+        assertTrue(col.getConstanciaEmitida());
+        assertEquals("juan", dto.getColaboradorNick());
     }
 
     @Test
-    void testCancelarColaboracion() throws Exception {
-        Colaborador col = crearColaborador("u");
-        fakeColaboradorDAO.data.put("u", col);
+    void testEmitirConstanciaPago_YaEmitida() {
 
-        Propuesta p = crearPropuesta("PP", EEstadoPropuesta.PUBLICADA);
-        fakePropuestaDAO.data.put("PP", p);
+        Colaboracion col = new Colaboracion(
+                100,
+                com.culturarte.logica.enums.ETipoRetorno.ENTRADAS_GRATIS,
+                LocalDateTime.now(),
+                propuesta,
+                colaborador
+        );
+        col.setId(201);
+        col.setConstanciaEmitida(true);
 
-        Colaboracion c = new Colaboracion(10, ETipoRetorno.ENTRADAS_GRATIS, LocalDateTime.now(), p, col);
-        Field fId = Colaboracion.class.getDeclaredField("id");
-        fId.setAccessible(true);
-        fId.set(c, 1);
+        when(mockColabDAO.buscarPorId(201)).thenReturn(col);
 
-        col.addColaboracion(c);
-        p.addColaboracion(c);
-        fakeColabDAO.data.put(1, c);
+        DTOConstanciaPago dto = controller.emitirConstanciaPago(201);
 
-        controller.cancelarColaboracion(1);
-
-        assertTrue(fakeColabDAO.data.isEmpty());
-        assertTrue(p.getColaboraciones().isEmpty());
-        assertTrue(col.getColaboraciones().isEmpty());
+        verify(mockColabDAO, never()).actualizar(any());
+        assertEquals("juan", dto.getColaboradorNick());
     }
 
     @Test
-    void testEmitirConstanciaPagoCorrecta() throws Exception {
-        Colaborador col = crearColaborador("u");
-        fakeColaboradorDAO.data.put("u", col);
+    void testEmitirConstanciaPago_NoExiste() {
+        when(mockColabDAO.buscarPorId(5)).thenReturn(null);
 
-        Propuesta p = crearPropuesta("PP", EEstadoPropuesta.PUBLICADA);
-        fakePropuestaDAO.data.put("PP", p);
-
-        Colaboracion c = new Colaboracion(20, ETipoRetorno.ENTRADAS_GRATIS, LocalDateTime.now(), p, col);
-        Field fId = Colaboracion.class.getDeclaredField("id");
-        fId.setAccessible(true);
-        fId.set(c, 1);
-
-        fakeColabDAO.data.put(1, c);
-
-        DTOConstanciaPago dto = controller.emitirConstanciaPago(1);
-        assertEquals("u", dto.getColaboradorNick());
-        assertTrue(c.getConstanciaEmitida());
-    }
-
-    @Test
-    void testEmitirConstanciaPagoYaEmitida() throws Exception {
-        Colaborador col = crearColaborador("u");
-        fakeColaboradorDAO.data.put("u", col);
-
-        Propuesta p = crearPropuesta("PP", EEstadoPropuesta.PUBLICADA);
-        fakePropuestaDAO.data.put("PP", p);
-
-        Colaboracion c = new Colaboracion(20, ETipoRetorno.ENTRADAS_GRATIS, LocalDateTime.now(), p, col);
-        Field fId = Colaboracion.class.getDeclaredField("id");
-        fId.setAccessible(true);
-        fId.set(c, 1);
-
-        c.setConstanciaEmitida(true);
-        fakeColabDAO.data.put(1, c);
-
-        DTOConstanciaPago dto = controller.emitirConstanciaPago(1);
-        assertEquals("u", dto.getColaboradorNick());
-        assertTrue(c.getConstanciaEmitida());
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.emitirConstanciaPago(5));
     }
 }

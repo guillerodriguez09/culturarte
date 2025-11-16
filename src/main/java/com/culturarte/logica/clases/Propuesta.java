@@ -98,6 +98,7 @@ public class Propuesta {
     public void setProponente(Proponente proponente) { this.proponente = proponente; }
     public void setRetornos(List<ETipoRetorno> retornos) { this.retornos = retornos; }
     public void setEstadoActual(Estado estadoActual) { this.estadoActual = estadoActual; }
+    public void setColaboraciones(List<Colaboracion> colaboraciones) { this.colaboraciones = colaboraciones; }
 
     public void cambiarEstado(Estado nuevoEstado) {
         this.estadoActual = nuevoEstado;
