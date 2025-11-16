@@ -16,7 +16,16 @@ import java.util.List;
 @WebService(endpointInterface = "com.culturarte.logica.controllers.IColaboradorController")
 public class ColaboradorController implements IColaboradorController {
 
-    private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
+    private final ColaboradorDAO colaboradorDAO;
+
+    public ColaboradorController(){
+        this.colaboradorDAO = new ColaboradorDAO();
+    }
+
+    // Constructor usado SOLO para tests (inyección de dependencias)
+    public ColaboradorController(ColaboradorDAO colaboradorDAO){
+        this.colaboradorDAO = colaboradorDAO;
+    }
 
     @Override
     public void altaColaborador(DTOColaborador dtoC){
@@ -96,6 +105,7 @@ public class ColaboradorController implements IColaboradorController {
         return dtoCol;
     }
 
+    //AAAAAAAAAAAAAAAAAAAAAAAAAAAA
     @Override
     public List<DTOColPropu> obtenerTodColConPropu(String nick) {
         List<Object[]> filas = colaboradorDAO.obtenerTodColConPropu(nick);
@@ -218,7 +228,8 @@ public class ColaboradorController implements IColaboradorController {
     }
 
     @Override
-    public String eliminarColaborador(String nick, LocalDate fechaEliminacion){
+    public String eliminarColaborador(String nick){
+        LocalDate fechaEliminacion = LocalDate.now();
         try {
             colaboradorDAO.eliminarColaborador(nick, fechaEliminacion);
         }catch (Exception e){

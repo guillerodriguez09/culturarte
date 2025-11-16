@@ -17,8 +17,19 @@ import java.util.List;
 @WebService(endpointInterface = "com.culturarte.logica.controllers.IProponenteController")
 public class ProponenteController implements IProponenteController {
 
-    private final ProponenteDAO proponenteDAO = new ProponenteDAO();
-    private final SeguimientoDAO seguimientoDAO = new SeguimientoDAO();
+    private final ProponenteDAO proponenteDAO;
+    private final SeguimientoDAO seguimientoDAO;
+
+    public ProponenteController() {
+        this.proponenteDAO = new ProponenteDAO();
+        this.seguimientoDAO = new SeguimientoDAO();
+    }
+
+    // Constructor usado SOLO para tests (inyección de dependencias)
+    public ProponenteController(ProponenteDAO proponenteDAO, SeguimientoDAO seguimientoDAO) {
+        this.proponenteDAO = proponenteDAO;
+        this.seguimientoDAO = seguimientoDAO;
+    }
 
     @Override
     public void altaProponente(DTOProponente dtoP) {

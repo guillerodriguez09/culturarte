@@ -11,7 +11,7 @@ import java.util.List;
 public interface IColaboradorController {
 
     @WebMethod
-    public void altaColaborador(DTOColaborador dtoColaborador);
+    void altaColaborador(DTOColaborador dtoColaborador);
     @WebMethod
     List<String> listarColaboradores();
     @WebMethod
@@ -23,5 +23,5 @@ public interface IColaboradorController {
     @WebMethod
     List<DTOColaborador> listarTodos();
     @WebMethod
-    String eliminarColaborador(String nick, LocalDate fechaEliminacion);
+    String eliminarColaborador(String nick);
 }
