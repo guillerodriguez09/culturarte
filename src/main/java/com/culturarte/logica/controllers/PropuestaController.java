@@ -97,9 +97,7 @@ public class PropuestaController implements IPropuestaController {
 
     @Override
     public DTOPropuesta consultarPropuesta(String titulo) {
-        // Forzar una recarga limpia del estado desde la BD, me daba problemas en el web.
-        PropuestaDAO daoNuevo = new PropuestaDAO();
-        Propuesta propuesta = daoNuevo.buscarPorTitulo(titulo);
+        Propuesta propuesta = propuestaDAO.buscarPorTitulo(titulo);
 
         if (propuesta == null) {
             throw new IllegalArgumentException("La propuesta con título '" + titulo + "' no existe.");
