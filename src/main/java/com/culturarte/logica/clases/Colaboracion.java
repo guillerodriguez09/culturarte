@@ -48,5 +48,6 @@ public class Colaboracion {
     public void setPropuesta(Propuesta propuesta) { this.propuesta = propuesta; }
     public void setColaborador(Colaborador colaborador) { this.colaborador = colaborador; }
     public void setConstanciaEmitida(Boolean constanciaEmitida) { this.constanciaEmitida = constanciaEmitida; }
+    public void setId(int id) { this.id = id; }
 }
 

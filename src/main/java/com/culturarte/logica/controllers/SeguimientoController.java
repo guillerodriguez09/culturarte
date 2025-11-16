@@ -19,10 +19,21 @@ import java.util.List;
 @WebService(endpointInterface = "com.culturarte.logica.controllers.ISeguimientoController")
 public class SeguimientoController implements ISeguimientoController {
 
-    private final SeguimientoDAO seguimientoDAO = new SeguimientoDAO();
-    private final ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
-    private final ProponenteDAO proponenteDAO = new ProponenteDAO();
+    private final SeguimientoDAO seguimientoDAO;
+    private final ColaboradorDAO colaboradorDAO;
+    private final ProponenteDAO proponenteDAO;
 
+    public SeguimientoController(SeguimientoDAO seguimientoDAO, ColaboradorDAO colaboradorDAO, ProponenteDAO proponenteDAO) {
+        this.seguimientoDAO = seguimientoDAO;
+        this.colaboradorDAO = colaboradorDAO;
+        this.proponenteDAO = proponenteDAO;
+    }
+
+    public SeguimientoController() {
+        this.seguimientoDAO = new SeguimientoDAO();
+        this.colaboradorDAO = new ColaboradorDAO();
+        this.proponenteDAO = new ProponenteDAO();
+    }
 
     @Override
     public void registrarSeguimiento(DTOSeguimiento dtoSegui) {
