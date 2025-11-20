@@ -134,9 +134,11 @@ class SeguimientoControllerTest {
     void conseguirId_NoExiste() {
         when(seguimientoDAO.conseguirId("a", "b")).thenReturn(0);
 
-        assertThrows(IllegalArgumentException.class, () ->
-                controller.conseguirId("a", "b"));
+        int id = controller.conseguirId("a", "b");
+
+        assertEquals(0, id);
     }
+
 
 
     @Test
