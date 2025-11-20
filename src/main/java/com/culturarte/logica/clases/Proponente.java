@@ -28,6 +28,14 @@ public class Proponente extends Usuario {
         this.link = link;
     }
 
+    public Proponente(String nickname, String nombre, String apellido, String contrasenia, String correo, LocalDate fechaNac, String dirImagen, String direccion, String biografia, String link, LocalDate fechaEliminacion){
+        super(nickname, nombre, apellido, contrasenia, correo, fechaNac, dirImagen);
+        this.direccion = direccion;
+        this.biografia = biografia;
+        this.link = link;
+        this.fechaEliminacion = fechaEliminacion;
+    }
+
     public String getDireccion() {
         return direccion;
     }

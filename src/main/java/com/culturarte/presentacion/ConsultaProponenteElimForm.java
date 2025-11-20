@@ -119,15 +119,19 @@ public class ConsultaProponenteElimForm {
         List<String> elem = new ArrayList<>();
 
         for(Object[] fila : propConPropuDeElim) {
-            DTOProponente dtoCol = (DTOProponente) fila[0];
+            DTOProponente dtoPro = (DTOProponente) fila[0];
             DTOPropuesta dtoCP = (DTOPropuesta) fila[1];
 
             String colaboradores = String.join(", ", dtoCP.getColaboradores());
             String linea = dtoCP.titulo + " - " + colaboradores + " - Monto: " + dtoCP.montoRecaudado;
             elem.add(linea);
-        }
 
+
+        }
+        //txtFechaElim.setText(dtoPro.getFechaEliminacion().toString());
         listPropuDeElim.setListData(elem.toArray(new String[0]));
+
+
     }
 
 }

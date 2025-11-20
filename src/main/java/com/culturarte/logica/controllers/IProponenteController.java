@@ -24,6 +24,12 @@ public interface IProponenteController {
     List<DTOProponente> listarTodosProponente();
     @WebMethod
     DTOProponente obtenerProponenteCorreo(String correo);
+
+    @WebMethod
+    DTOProponente obtenerProponenteTODOS(String nick);
+    @WebMethod
+    DTOProponente obtenerProponenteCorreoTODOS(String correo);
+
     @WebMethod
     List<Object[]> obtenerPropConPropuYEstado (EEstadoPropuesta estado, String nick);
     @WebMethod

@@ -48,6 +48,28 @@ public class ProponenteDAO {
         }
     }
 
+    public Proponente buscarPorNickTODOS(String nick) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT pro FROM Proponente pro WHERE pro.nickname = :nick AND pro.eliminado=false", Proponente.class)
+                    .setParameter("nick", nick).getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Proponente buscarPorCorreoTODOS(String correo) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT pro FROM Proponente pro WHERE pro.correo = :correo AND pro.eliminado=false", Proponente.class)
+                    .setParameter("correo", correo).getSingleResult();}
+        catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
     public boolean existe(String nick) {
         return buscarPorNick(nick) != null;
     }
@@ -55,6 +77,15 @@ public class ProponenteDAO {
     public boolean existeCorreo(String correo) {
         return buscarPorCorreo(correo) != null;
     }
+
+    public boolean existeTODOS(String nick) {
+        return buscarPorNickTODOS(nick) != null;
+    }
+
+    public boolean existeCorreoTODOS(String correo) {
+        return buscarPorCorreoTODOS(correo) != null;
+    }
+
 
     public List<Proponente> obtenerTodos() {
         EntityManager em = JpaUtil.getEntityManager();

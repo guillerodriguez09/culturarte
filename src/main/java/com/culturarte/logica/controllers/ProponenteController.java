@@ -174,6 +174,58 @@ public class ProponenteController implements IProponenteController {
         return dtoProp;
     }
 
+    @Override
+    public DTOProponente obtenerProponenteTODOS(String nick){
+
+        Proponente prop = proponenteDAO.buscarPorNickTODOS(nick);
+
+        if(prop == null){return null;}
+
+        DTOProponente dtoProp = new DTOProponente();
+
+        dtoProp.setNick(prop.getNick());
+        dtoProp.setNombre(prop.getNombre());
+        dtoProp.setApellido(prop.getApellido());
+        dtoProp.setContrasenia(prop.getContrasenia());
+        dtoProp.setCorreo(prop.getCorreo());
+        dtoProp.setFechaNac(prop.getFechaNac());
+        dtoProp.setDirImagen(prop.getDirImagen());
+        dtoProp.setBiografia(prop.getBiografia());
+        dtoProp.setDireccion(prop.getDireccion());
+        dtoProp.setLink(prop.getLink());
+
+        return dtoProp;
+
+    }
+
+    @Override
+    public DTOProponente obtenerProponenteCorreoTODOS(String correo){
+
+        DTOProponente dtoProp = new DTOProponente();
+
+        try {
+            Proponente prop = proponenteDAO.buscarPorCorreoTODOS(correo);
+
+            if (prop == null) {return null;}
+
+            dtoProp.setNick(prop.getNick());
+            dtoProp.setNombre(prop.getNombre());
+            dtoProp.setApellido(prop.getApellido());
+            dtoProp.setContrasenia(prop.getContrasenia());
+            dtoProp.setCorreo(prop.getCorreo());
+            dtoProp.setFechaNac(prop.getFechaNac());
+            dtoProp.setDirImagen(prop.getDirImagen());
+            dtoProp.setBiografia(prop.getBiografia());
+            dtoProp.setDireccion(prop.getDireccion());
+            dtoProp.setLink(prop.getLink());
+
+        }catch(Exception e){
+            return null;
+        }
+
+        return dtoProp;
+    }
+
 
     @Override
     public List <DTOPropoPropu> obtenerTodPropConPropu(String nick) {
@@ -333,6 +385,7 @@ public class ProponenteController implements IProponenteController {
             dtoProp.setDireccion(prop.getDireccion());
             dtoProp.setBiografia(prop.getBiografia());
             dtoProp.setLink(prop.getLink());
+            dtoProp.setFechaEliminacion(prop.getFechaEliminacion());
 
             dtoPropu.titulo = p.getTitulo();
             if (p.getEstadoActual() != null) {

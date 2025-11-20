@@ -39,6 +39,17 @@ public abstract class Usuario {
         this.dirImagen = dirImagen;
     }
 
+    public Usuario(String nickname, String nombre, String apellido,String contrasenia, String correo, LocalDate fechaNac, String dirImagen, LocalDate fechaEliminacion) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contrasenia = contrasenia;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+        this.dirImagen = dirImagen;
+        this.fechaEliminacion = fechaEliminacion;
+    }
+
     public String getNick(){
         return nickname;
     }
