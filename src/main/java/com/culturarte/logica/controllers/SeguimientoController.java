@@ -78,15 +78,9 @@ public class SeguimientoController implements ISeguimientoController {
 
     @Override
     public int conseguirId(String nick, String nicky) {
-
-        int existeId = seguimientoDAO.conseguirId(nick, nicky);
-
-        if (existeId != 0) {
-            return existeId;
-        } else {
-            throw new IllegalArgumentException("Este seguimiento no existe");
-        }
+        return seguimientoDAO.conseguirId(nick, nicky); // Devuelve 0 si no existe
     }
+
 
     @Override
     public void cancelarSeguimiento(int idSeguimiento) {
